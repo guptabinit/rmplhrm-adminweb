@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
+import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
+import 'package:rmpl_hrm_admin/screens/home_screen.dart';
+import 'package:rmpl_hrm_admin/screens/leave_applications.dart';
 import 'package:rmpl_hrm_admin/screens/splash_screen.dart';
 
 late Size mq;
@@ -24,7 +27,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const SplashScreen(),
+      home: const HomeScreen(),
     );
   }
 }

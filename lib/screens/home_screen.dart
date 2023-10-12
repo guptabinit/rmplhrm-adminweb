@@ -56,13 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
     List<String> appBarTitle = [
       'Hello! Name',
       'Hello! Name',
+      'Employee\'s Details',
       'Notifications',
-      'My Attendance',
+      'Attendance',
       'Holidays',
-      'Manage Leave',
+      'Leave Application',
       'Salary Details',
-      'My Profile',
-      'Contact Admin'
+      'Probation List',
+      'Logout'
     ];
     return Scaffold(
         backgroundColor: primaryColor,

@@ -27,28 +27,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       backgroundColor: primaryColor,
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.only(top: mq.height * 0.1),
-        margin: EdgeInsets.only(top: mq.height * 0.1),
+        padding: EdgeInsets.only(top: mq.height * 0.03),
+        margin: EdgeInsets.only(top: mq.height * 0.03),
         decoration: BoxDecoration(
             color: whiteColor, borderRadius: BorderRadius.circular(20)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start ,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              color: Colors.red[800],
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: const Center(
-                child: Text(
-                  'You are under probation which will last till 2.04.2024',
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                      color: whiteColor),
-                ),
-              ),
-            ),
-            20.heightBox,
             Container(
               // padding: EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -126,54 +111,183 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                'My Dashboard',
+                'Attendance',
                 style: TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600),
               ),
             ),
             SfCircularChart(
                 legend: const Legend(
-                    isResponsive: true,
-                    // toggleSeriesVisibility: false,
-                    isVisible: true,
-                    title: LegendTitle(
-                        text: 'Attendance Report',
-                        textStyle: TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ))),
+                  isResponsive: true,
+                  // toggleSeriesVisibility: false,
+                  isVisible: true,
+                  // title: LegendTitle(
+                  //     text: 'Attendance Report',
+                  //     textStyle: TextStyle(
+                  //       fontFamily: 'Inter',
+                  //       fontWeight: FontWeight.w600,
+                  //       fontSize: 14,
+                  //     ))
+                ),
                 selectionGesture: ActivationMode.singleTap,
                 annotations: <CircularChartAnnotation>[
                   CircularChartAnnotation(
-                      angle: 300,
-                      radius: '40%',
-                      widget: const Text('25%')),
+                      angle: 300, radius: '40%', widget: const Text('25%')),
                   CircularChartAnnotation(
-                      angle: 200,
-                      radius: '40%',
-                      widget: const Text('38%')),
+                      angle: 200, radius: '40%', widget: const Text('38%')),
                   CircularChartAnnotation(
-                      angle: 100,
-                      radius: '40%',
-                      widget: const Text('34%')),
+                      angle: 100, radius: '40%', widget: const Text('34%')),
                   CircularChartAnnotation(
-                      angle: 0,
-                      radius: '40%',
-                      widget: const Text('52%')),
+                      angle: 0, radius: '40%', widget: const Text('52%')),
                 ],
                 series: <CircularSeries>[
                   // Render pie chart
                   PieSeries<ChartData, String>(
                       dataSource: chartData,
-                      pointColorMapper: (ChartData data, _) =>
-                          data.color,
+                      pointColorMapper: (ChartData data, _) => data.color,
                       xValueMapper: (ChartData data, _) => data.x,
                       yValueMapper: (ChartData data, _) => data.y)
                 ]),
-            
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Attendance Report',
+                        style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: buttonColor.withOpacity(0.3)),
+                        child: Center(
+                          child: Text(
+                            'View all',
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  8.heightBox,
+                  Text.rich(TextSpan(children: [
+                    TextSpan(
+                      text: '7 already in',
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          color: greenColor,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    TextSpan(text: '  '),
+                    TextSpan(
+                      text: '2 remaining',
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          color: redColor,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ])),
+                  const Divider(
+                    color: textGreyColor,
+                  ),
+                  // Container(
+                  //   height: 100,
+                  //   child: ListView.builder(
+                  //     itemCount: 5,
+                  //     itemBuilder: (context, index) {
+                  //     return Text(
+                  //     '1.Riya punched in at 10:35 AM Ashish',
+                  //     style: TextStyle(
+                  //           fontFamily: 'Inter',
+                  //           fontSize: 16,
+                  //           color: darkColor,
+                  //           fontWeight: FontWeight.w400),
+                  //   );
+                  //   },),
+                  // ),
+                  Text(
+                      '1.Riya punched in at 10:35 AM',
+                      style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: darkColor,
+                            fontWeight: FontWeight.w400),
+                    ),
+                    8.heightBox,
+                  Text(
+                      '2.Ashish punched in at 10:25 AM',
+                      style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: darkColor,
+                            fontWeight: FontWeight.w400),
+                    ),
+                    8.heightBox,
+                  Text(
+                      '3.Akash punched in at 10:10 AM',
+                      style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: darkColor,
+                            fontWeight: FontWeight.w400),
+                    ),
+                    8.heightBox,
+                  Text(
+                      '4.Vishesh punched in at 10:00 AM',
+                      style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: darkColor,
+                            fontWeight: FontWeight.w400),
+                    ),
+                    12.heightBox,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Probation',
+                        style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: buttonColor.withOpacity(0.3)),
+                        child: Center(
+                          child: Text(
+                            'View all',
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

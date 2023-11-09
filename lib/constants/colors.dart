@@ -8,5 +8,5 @@ const lightGreyColor = Color(0xffE6E6E6);
 const textGreyColor = Color(0xff838383);
 const whiteColor = Colors.white;
 const darkColor = Colors.black;
-const redColor = Colors.red;
+const redColor = Color(0xffDA0000);
 const greenColor = Colors.green;

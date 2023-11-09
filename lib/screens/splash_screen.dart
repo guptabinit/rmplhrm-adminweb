@@ -1,11 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/models/admin_model.dart';
 import 'package:rmpl_hrm_admin/screens/authentication/login_screen.dart';
-import 'package:rmpl_hrm_admin/screens/profile_screen.dart';
+import 'package:rmpl_hrm_admin/screens/main_nav.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../constants/colors.dart';
@@ -21,11 +23,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Future.delayed(Duration(seconds: 2), (){
-      Get.to(()=> LoginScreen());
+    Future.delayed(const Duration(seconds: 2), () {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if( user == null ){
+          Get.offAll(() => const LoginScreen());
+        } else {
+          Get.offAll(() => const MainNavScreen());
+        }
+      });
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
@@ -35,14 +44,15 @@ class _SplashScreenState extends State<SplashScreen> {
         // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Spacer(
+          const Spacer(
             flex: 2,
           ),
           Center(
-              child: Image.asset(
-            'assets/images/LOGO.png',
-            width: 170,
-          )),
+            child: Image.asset(
+              'assets/images/LOGO.png',
+              width: 170,
+            ),
+          ),
           28.heightBox,
           const Text(
             'RMPL',
@@ -61,8 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Container(
               width: double.infinity,
               height: 4,
-              decoration: BoxDecoration(
-                  color: lightGreyColor, borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(12)),
             ),
           ),
           16.heightBox,
@@ -77,7 +86,9 @@ class _SplashScreenState extends State<SplashScreen> {
               // height: 2
             ),
           ),
-          Spacer(flex: 2,),
+          const Spacer(
+            flex: 2,
+          ),
           const Text(
             'ADMIN PANEL',
             style: TextStyle(
@@ -89,17 +100,17 @@ class _SplashScreenState extends State<SplashScreen> {
               // height: 2
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 2,
           ),
-          Container(
+          const SizedBox(
             height: 40,
-            child: const LoadingIndicator(
+            child: LoadingIndicator(
               indicatorType: Indicator.lineScale,
               colors: [whiteColor],
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 1,
           ),
           const Text(
@@ -108,11 +119,11 @@ class _SplashScreenState extends State<SplashScreen> {
               fontFamily: 'Inter',
               color: whiteColor,
               fontWeight: FontWeight.w500,
-              fontSize: 20,
+              fontSize: 14,
               // height: 2
             ),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );

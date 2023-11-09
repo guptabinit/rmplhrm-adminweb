@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
-import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
-import 'package:rmpl_hrm_admin/screens/home_screen.dart';
-import 'package:rmpl_hrm_admin/screens/leave_applications.dart';
+import 'package:provider/provider.dart';
+import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/screens/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:rmpl_hrm_admin/firebase_options.dart';
+
+import 'providers/admin_provider.dart';
+
 
 late Size mq;
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -21,13 +26,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'RMPL HRM',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return MultiProvider(
+      providers : [
+        ChangeNotifierProvider(
+          create: (_) => AdminProvider(),
+        ),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'RMPL HRM ADMIN',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+        ),
+        home: const SplashScreen(),
       ),
-      home: const HomeScreen(),
     );
   }
 }

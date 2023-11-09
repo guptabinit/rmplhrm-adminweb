@@ -1,23 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
+class HolidayCardWidget extends StatelessWidget {
+  final Map<String, dynamic> snap;
+
+  const HolidayCardWidget({
+    super.key,
+    required this.snap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: primaryColor)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            snap['date'],
+            style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 16,
+                // color: textGreyColor,
+                fontWeight: FontWeight.w500),
+          ),
+          const Text(
+            ': ',
+            style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 16,
+                // color: textGreyColor,
+                fontWeight: FontWeight.w500),
+          ),
+          Expanded(
+            child: Text(
+              snap['title'],
+              style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 16,
+                color: textGreyColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 Widget holidayContainer(String date, String reason) {
   return Container(
-    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: primaryColor)),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: primaryColor)),
     child: Row(
       children: [
         Text(
           date,
-          style: TextStyle(
+          style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 16,
               // color: textGreyColor,
               fontWeight: FontWeight.w500),
         ),
-        Text(
+        const Text(
           ': ',
           style: TextStyle(
               fontFamily: 'Inter',
@@ -27,11 +74,7 @@ Widget holidayContainer(String date, String reason) {
         ),
         Text(
           reason,
-          style: TextStyle(
-              fontFamily: 'Inter',
-              fontSize: 16,
-              color: textGreyColor,
-              fontWeight: FontWeight.w500),
+          style: const TextStyle(fontFamily: 'Inter', fontSize: 16, color: textGreyColor, fontWeight: FontWeight.w500),
         ),
       ],
     ),

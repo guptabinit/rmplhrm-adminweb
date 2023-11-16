@@ -4,8 +4,8 @@ import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/update_profile_info.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class EmployeesProfileScreen extends StatefulWidget {
   final Map<String, dynamic> snap;
@@ -71,7 +71,7 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
               ),
             ),
           ),
-          16.widthBox
+          16.widthBox,
         ],
       ),
       body: Container(

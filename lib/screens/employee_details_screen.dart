@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/tabs/employee_tab.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class EmployeeDetailScreen extends StatefulWidget {
   final String branch;

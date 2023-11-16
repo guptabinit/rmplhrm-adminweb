@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 import '../../components/custom_textfield.dart';
 
 import '../../main.dart';

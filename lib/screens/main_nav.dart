@@ -16,7 +16,7 @@ import 'package:rmpl_hrm_admin/screens/other_screens/add_new_employee_screen.dar
 import 'package:rmpl_hrm_admin/screens/other_screens/add_notification_screen.dart';
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
 import 'package:rmpl_hrm_admin/screens/salary_details_screen.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../models/admin_model.dart';
 import '../resources/auth_methods.dart';

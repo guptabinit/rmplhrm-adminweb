@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/profile_screen.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../../constants/colors.dart';
 import '../buttons/secondary_button.dart';

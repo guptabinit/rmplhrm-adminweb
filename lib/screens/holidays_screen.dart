@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/models/holiday_model.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../components/buttons/secondary_button.dart';
 import '../components/holiday_container.dart';

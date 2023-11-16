@@ -4,7 +4,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/screens/authentication/login_screen.dart';
 import 'package:rmpl_hrm_admin/screens/main_nav.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../constants/colors.dart';
 

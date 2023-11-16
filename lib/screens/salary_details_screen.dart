@@ -6,6 +6,10 @@ import '../constants/colors.dart';
 class SalaryDetailScreen extends StatefulWidget {
   const SalaryDetailScreen({super.key});
 
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const SalaryDetailScreen(),
+      );
+
   @override
   State<SalaryDetailScreen> createState() => _SalaryDetailScreenState();
 }
@@ -27,12 +31,16 @@ class _SalaryDetailScreenState extends State<SalaryDetailScreen> {
         child: Center(
           child: CachedNetworkImage(
             width: MediaQuery.of(context).size.width * 0.7,
-            imageUrl: "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
+            imageUrl:
+                "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
             fit: BoxFit.fitWidth,
-            progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-              child: CircularProgressIndicator(value: downloadProgress.progress),
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(
+              child:
+                  CircularProgressIndicator(value: downloadProgress.progress),
             ),
-            errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+            errorWidget: (context, url, error) =>
+                const Center(child: Icon(Icons.error)),
           ),
         ),
       ),

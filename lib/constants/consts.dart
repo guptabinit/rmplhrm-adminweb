@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -59,7 +58,7 @@ showCustomDialog({
                   child: MainButton(
                     title: btn2,
                     onTap: () {
-                      Get.back();
+                      Navigator.of(context).pop();
                     },
                     fontSize: 14,
                   ),

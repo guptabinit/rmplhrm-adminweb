@@ -13,6 +13,10 @@ import '../components/holiday_container.dart';
 class HolidayScreen extends StatefulWidget {
   const HolidayScreen({super.key});
 
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const HolidayScreen(),
+      );
+
   @override
   State<HolidayScreen> createState() => _HolidayScreenState();
 }

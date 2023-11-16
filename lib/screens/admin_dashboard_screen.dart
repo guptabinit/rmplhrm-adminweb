@@ -12,6 +12,16 @@ class AdminDashboardScreen extends StatefulWidget {
   final bool isLogoutTrigger;
   const AdminDashboardScreen({super.key, this.isLogoutTrigger = false});
 
+  static Route<void> route(
+    bool isLogoutTrigger,
+  ) {
+    return MaterialPageRoute(
+      builder: (_) => AdminDashboardScreen(
+        isLogoutTrigger: isLogoutTrigger,
+      ),
+    );
+  }
+
   @override
   State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
 }

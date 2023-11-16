@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/utils.dart';
 import 'package:rmpl_hrm_admin/components/custom_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
@@ -14,6 +12,10 @@ import '../../resources/auth_methods.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      );
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -46,7 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = false;
     });
     if (res == 'success') {
-      Get.offAll(() => const MainNavScreen());
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MainNavScreen.route(),
+        );
+      }
     } else {
       showCustomToast(
         message: res,
@@ -75,10 +81,13 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             // height: mq.height * 0.6,
             width: double.infinity,
-            padding: mq.width > webScreenSize ? EdgeInsets.symmetric(horizontal: mq.width * 0.3, vertical: 20) : const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: mq.width > webScreenSize
+                ? EdgeInsets.symmetric(horizontal: mq.width * 0.3, vertical: 20)
+                : const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             decoration: const BoxDecoration(
               color: whiteColor,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(28), topRight: Radius.circular(28)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28), topRight: Radius.circular(28)),
               // borderRadius: BorderRadius.all(Radius.circular(28)
               // )
             ),
@@ -100,7 +109,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 20.heightBox,
                 const Text(
                   'Enter admin email address',
-                  style: TextStyle(fontFamily: 'Inter', color: darkColor, fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontFamily: 'Inter',
+                      color: darkColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
                 ),
                 8.heightBox,
                 CustomTextFormField(
@@ -111,7 +124,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 20.heightBox,
                 const Text(
                   'Enter your password',
-                  style: TextStyle(fontFamily: 'Inter', color: darkColor, fontSize: 14, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontFamily: 'Inter',
+                      color: darkColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
                 ),
                 8.heightBox,
                 CustomTextFormField(
@@ -141,13 +158,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     const Text(
                       'Need some help?',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
                     ),
                     TextButton(
                       onPressed: () {},
                       child: const Text(
                         'Contact Developers',
-                        style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
                       ),
                     )
                   ],

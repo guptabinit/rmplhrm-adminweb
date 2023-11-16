@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
@@ -26,6 +25,10 @@ import '../utils/utils.dart';
 class MainNavScreen extends StatefulWidget {
   const MainNavScreen({super.key});
 
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const MainNavScreen(),
+      );
+
   @override
   State<MainNavScreen> createState() => _MainNavScreenState();
 }
@@ -50,7 +53,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
     super.initState();
   }
 
-  var currentPage = DrawerSections.admin_dashboard;
+  var currentPage = DrawerSections.adminDashboard;
   int pageNumber = 0;
 
   bool _isLoading = false;
@@ -66,7 +69,12 @@ class _MainNavScreenState extends State<MainNavScreen> {
       _isLoading = false;
     });
     if (res == 'success') {
-      Get.offAll(() => const LoginScreen());
+      if (mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          LoginScreen.route(),
+          (route) => false,
+        );
+      }
     } else {
       showCustomToast(
         message: res,
@@ -77,10 +85,10 @@ class _MainNavScreenState extends State<MainNavScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var container;
-    if (currentPage == DrawerSections.admin_dashboard) {
+    late StatefulWidget container;
+    if (currentPage == DrawerSections.adminDashboard) {
       container = const AdminDashboardScreen();
-    } else if (currentPage == DrawerSections.employee_details) {
+    } else if (currentPage == DrawerSections.employeeDetails) {
       container = EmployeeDetailScreen(branch: branch);
     } else if (currentPage == DrawerSections.notifications) {
       container = const NotificationScreen();
@@ -88,11 +96,11 @@ class _MainNavScreenState extends State<MainNavScreen> {
       container = const AttendanceScreen();
     } else if (currentPage == DrawerSections.holidays) {
       container = const HolidayScreen();
-    } else if (currentPage == DrawerSections.leave_application) {
+    } else if (currentPage == DrawerSections.leaveApplication) {
       container = const LeaveApplicationScreen();
-    } else if (currentPage == DrawerSections.salary_details) {
+    } else if (currentPage == DrawerSections.salaryDetails) {
       container = const SalaryDetailScreen();
-    } else if (currentPage == DrawerSections.probation_list) {
+    } else if (currentPage == DrawerSections.probationList) {
       container = const ProbationListScreen();
     }
     mq = MediaQuery.of(context).size;
@@ -157,13 +165,13 @@ class _MainNavScreenState extends State<MainNavScreen> {
             onTap: () {
               if (pageNumber == 8) {
               } else if (pageNumber == 2) {
-                Get.to(() => AddNewEmployeeScreen(
-                      branch: branch,
-                    ));
+                Navigator.of(context).push(
+                  AddNewEmployeeScreen.route(branch),
+                );
               } else if (pageNumber == 3) {
-                Get.to(() => const NewNotificationScreen());
+                Navigator.of(context).push(NewNotificationScreen.route());
               } else if (pageNumber == 5) {
-                Get.to(() => const AddHolidayScreen());
+                Navigator.of(context).push(AddHolidayScreen.route());
               } else {
                 showCustomDialog(
                   context: context,
@@ -214,9 +222,9 @@ class _MainNavScreenState extends State<MainNavScreen> {
     return Column(
       children: [
         menuItem(1, "Dashboard",
-            currentPage == DrawerSections.admin_dashboard ? true : false),
+            currentPage == DrawerSections.adminDashboard ? true : false),
         menuItem(2, "Employee’s Details",
-            currentPage == DrawerSections.employee_details ? true : false),
+            currentPage == DrawerSections.employeeDetails ? true : false),
         menuItem(3, "Notifications",
             currentPage == DrawerSections.notifications ? true : false),
         menuItem(4, "Attendance",
@@ -224,11 +232,11 @@ class _MainNavScreenState extends State<MainNavScreen> {
         menuItem(5, "Holidays",
             currentPage == DrawerSections.holidays ? true : false),
         menuItem(6, "Leave Application",
-            currentPage == DrawerSections.leave_application ? true : false),
+            currentPage == DrawerSections.leaveApplication ? true : false),
         menuItem(7, "Salary Details",
-            currentPage == DrawerSections.salary_details ? true : false),
+            currentPage == DrawerSections.salaryDetails ? true : false),
         menuItem(8, "Probation List",
-            currentPage == DrawerSections.probation_list ? true : false),
+            currentPage == DrawerSections.probationList ? true : false),
       ],
     );
   }
@@ -247,10 +255,10 @@ class _MainNavScreenState extends State<MainNavScreen> {
             setState(() {
               if (id == 1) {
                 pageNumber = id;
-                currentPage = DrawerSections.admin_dashboard;
+                currentPage = DrawerSections.adminDashboard;
               } else if (id == 2) {
                 pageNumber = id;
-                currentPage = DrawerSections.employee_details;
+                currentPage = DrawerSections.employeeDetails;
               } else if (id == 3) {
                 pageNumber = id;
                 currentPage = DrawerSections.notifications;
@@ -262,13 +270,13 @@ class _MainNavScreenState extends State<MainNavScreen> {
                 currentPage = DrawerSections.holidays;
               } else if (id == 6) {
                 pageNumber = id;
-                currentPage = DrawerSections.leave_application;
+                currentPage = DrawerSections.leaveApplication;
               } else if (id == 7) {
                 pageNumber = id;
-                currentPage = DrawerSections.salary_details;
+                currentPage = DrawerSections.salaryDetails;
               } else if (id == 8) {
                 pageNumber = id;
-                currentPage = DrawerSections.probation_list;
+                currentPage = DrawerSections.probationList;
               }
             });
           },
@@ -303,14 +311,14 @@ class _MainNavScreenState extends State<MainNavScreen> {
 }
 
 enum DrawerSections {
-  admin_dashboard,
-  employee_details,
+  adminDashboard,
+  employeeDetails,
   notifications,
   attendance,
   holidays,
-  leave_application,
-  salary_details,
-  probation_list,
+  leaveApplication,
+  salaryDetails,
+  probationList,
 }
 
 class ChartData {

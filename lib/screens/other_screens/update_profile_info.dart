@@ -2,18 +2,13 @@ import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/constants/consts.dart';
-import 'package:rmpl_hrm_admin/constants/dimensions.dart';
 import 'package:rmpl_hrm_admin/main.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../components/custom_button.dart';
 import '../../components/custom_textfield.dart';
 import '../../resources/auth_methods.dart';
 import '../../utils/utils.dart';
@@ -22,6 +17,14 @@ class UpdateProfileScreen extends StatefulWidget {
   final Map<String, dynamic> snap;
   const UpdateProfileScreen({super.key, required this.snap});
 
+  static Route<void> route(
+    Map<String, dynamic> snap,
+  ) {
+    return MaterialPageRoute(
+      builder: (_) => UpdateProfileScreen(snap: snap),
+    );
+  }
+
   @override
   State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
 }
@@ -29,7 +32,7 @@ class UpdateProfileScreen extends StatefulWidget {
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   Uint8List? _image;
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   TextEditingController eidController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -146,7 +149,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           ),
         ),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+          physics: const BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.fast),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -155,16 +159,21 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 child: Column(
                   children: [
                     Container(
-                      height: mq.width * 0.4,
-                      width: mq.width * 0.3,
-                      decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(8)),
-                      child: CachedNetworkImage(
-                        imageUrl: widget.snap['profileUrl'],
-                        fit: BoxFit.cover,
-                        progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                        errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                      )
-                    ),
+                        height: mq.width * 0.4,
+                        width: mq.width * 0.3,
+                        decoration: BoxDecoration(
+                            color: lightGreyColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.snap['profileUrl'],
+                          fit: BoxFit.cover,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) =>
+                              const Center(child: Icon(Icons.error)),
+                        )),
                     12.heightBox,
                     Row(
                       children: [
@@ -184,7 +193,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               //fields
               const Text(
                 'Employee ID',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -194,7 +206,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Password',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -204,7 +219,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'First Name',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -214,7 +232,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Last Name',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -224,7 +245,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Date of Birth',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -235,7 +259,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Designation',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -245,7 +272,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Date Joined',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -256,7 +286,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Father\'s Name',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -266,7 +299,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Address',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -278,7 +314,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Email ID',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -289,7 +328,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Aadhar Number',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -300,7 +342,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'PAN Number',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -310,7 +355,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Basic Salary',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -321,7 +369,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'HRA',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -332,7 +383,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               12.heightBox,
               const Text(
                 'Field Work Allowance',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(

@@ -1,27 +1,24 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/constants/consts.dart';
-import 'package:rmpl_hrm_admin/constants/dimensions.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/resources/firestore_methods.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../components/custom_button.dart';
 import '../../components/custom_textfield.dart';
-import '../../resources/auth_methods.dart';
 
 class AddNewEmployeeScreen extends StatefulWidget {
   final String branch;
   const AddNewEmployeeScreen({super.key, required this.branch});
+
+  static Route<void> route(String branch) => MaterialPageRoute(
+        builder: (_) => AddNewEmployeeScreen(branch: branch),
+      );
 
   @override
   State<AddNewEmployeeScreen> createState() => _AddNewEmployeeScreenState();
@@ -114,7 +111,9 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
       showCustomToast(message: res);
     } else {
       showCustomToast(message: "Successfully added");
-      Get.back();
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
     }
   }
 
@@ -164,7 +163,8 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
           ),
         ),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+          physics: const BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.fast),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -175,7 +175,9 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                     Container(
                       height: mq.width * 0.4,
                       width: mq.width * 0.3,
-                      decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(
+                          color: lightGreyColor,
+                          borderRadius: BorderRadius.circular(8)),
                       child: _image != null
                           ? Image.memory(
                               _image!,
@@ -211,7 +213,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               //fields
               const Text(
                 'Employee ID',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -221,7 +226,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Password',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -231,7 +239,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'First Name',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -241,7 +252,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Last Name',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -251,7 +265,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Date of Birth',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -262,7 +279,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Designation',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -272,7 +292,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Date Joined',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -283,7 +306,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Father\'s Name',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -293,7 +319,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Address',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -305,7 +334,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Email ID',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -316,7 +348,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Aadhar Number',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -327,7 +362,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'PAN Number',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -337,7 +375,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Basic Salary',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -348,7 +389,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'HRA',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -359,7 +403,10 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               12.heightBox,
               const Text(
                 'Field Work Allowance',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               CustomTextFormField(

@@ -1,11 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm_admin/main.dart';
-import 'package:rmpl_hrm_admin/models/admin_model.dart';
 import 'package:rmpl_hrm_admin/screens/authentication/login_screen.dart';
 import 'package:rmpl_hrm_admin/screens/main_nav.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -15,6 +11,10 @@ import '../constants/colors.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const SplashScreen(),
+      );
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -22,13 +22,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     Future.delayed(const Duration(seconds: 2), () {
       FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        if( user == null ){
-          Get.offAll(() => const LoginScreen());
+        if (user == null) {
+          Navigator.of(context).pushAndRemoveUntil(
+            LoginScreen.route(),
+            (_) => false,
+          );
         } else {
-          Get.offAll(() => const MainNavScreen());
+          Navigator.of(context).pushAndRemoveUntil(
+            MainNavScreen.route(),
+            (_) => false,
+          );
         }
       });
     });
@@ -71,7 +76,9 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Container(
               width: double.infinity,
               height: 4,
-              decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(
+                  color: lightGreyColor,
+                  borderRadius: BorderRadius.circular(12)),
             ),
           ),
           16.heightBox,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/profile_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -60,9 +59,9 @@ class EmployeeTab extends StatelessWidget {
           SecondaryButton(
             title: "View more",
             onTap: () {
-              Get.to(
-                () => EmployeesProfileScreen(
-                  snap: snap,
+              Navigator.of(context).push(
+                EmployeesProfileScreen.route(
+                  snap,
                 ),
               );
             },

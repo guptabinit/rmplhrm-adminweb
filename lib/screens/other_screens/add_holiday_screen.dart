@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/models/holiday_model.dart';
@@ -12,6 +11,10 @@ import '../../utils/utils.dart';
 
 class AddHolidayScreen extends StatefulWidget {
   const AddHolidayScreen({super.key});
+
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const AddHolidayScreen(),
+      );
 
   @override
   State<AddHolidayScreen> createState() => _AddHolidayScreenState();
@@ -60,7 +63,9 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
       await docs.set(holiday.toJson());
 
       showCustomToast(message: "Successfully added");
-      Get.back();
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
     } catch (e) {
       showCustomToast(message: e.toString());
     }

@@ -5,16 +5,18 @@ Widget sideButton(String title, void Function()? ontap) {
   return GestureDetector(
     onTap: ontap,
     child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: buttonColor.withOpacity(0.3)),
       child: Center(
         child: Text(
           title,
-          style: TextStyle(
-            color: primaryColor,
-              fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w400),
+          style: const TextStyle(
+              color: primaryColor,
+              fontFamily: 'Inter',
+              fontSize: 16,
+              fontWeight: FontWeight.w400),
         ),
       ),
     ),

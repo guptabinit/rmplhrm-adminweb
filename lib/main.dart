@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/screens/splash_screen.dart';
@@ -9,9 +8,11 @@ import 'package:rmpl_hrm_admin/firebase_options.dart';
 import 'providers/admin_provider.dart';
 
 late Size mq;
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => AdminProvider(),
         ),
       ],
-      child: GetMaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'RMPL HRM ADMIN',
         theme: ThemeData(

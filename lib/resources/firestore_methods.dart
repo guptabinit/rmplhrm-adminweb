@@ -3,10 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:rmpl_hrm_admin/models/admin_model.dart';
 import 'package:rmpl_hrm_admin/models/emp_model.dart';
-import 'package:rmpl_hrm_admin/models/holiday_model.dart';
 import 'package:rmpl_hrm_admin/models/notification_model.dart';
 import 'package:rmpl_hrm_admin/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
@@ -170,7 +167,7 @@ class FirestoreMethods {
     String res = "Some error occurred";
 
     if (date.isNotEmpty && title.isNotEmpty) {
-      String holidayID = const Uuid().v1();
+      // String holidayID = const Uuid().v1();
 
       // HolidayModel holiday = HolidayModel(
       //   holidayID: holidayID,

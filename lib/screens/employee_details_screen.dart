@@ -9,6 +9,15 @@ class EmployeeDetailScreen extends StatefulWidget {
   final String branch;
   const EmployeeDetailScreen({super.key, required this.branch});
 
+  static Route<void> route({
+    required String branch,
+  }) =>
+      MaterialPageRoute(
+        builder: (_) => EmployeeDetailScreen(
+          branch: branch,
+        ),
+      );
+
   @override
   State<EmployeeDetailScreen> createState() => _EmployeeDetailScreenState();
 }

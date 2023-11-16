@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class MainButton extends StatelessWidget {
   final String title;
@@ -34,14 +33,16 @@ class MainButton extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Center(
-            child: load ? mainWidget : Text(
-              title,
-              style: TextStyle(
-                color: whiteColor,
-                fontSize: fontSize,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            child: load
+                ? mainWidget
+                : Text(
+                    title,
+                    style: TextStyle(
+                      color: whiteColor,
+                      fontSize: fontSize,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
           ),
         ),
       ),

@@ -1,25 +1,29 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/resources/firestore_methods.dart';
-import 'package:rmpl_hrm_admin/utils/utils.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../components/custom_textfield.dart';
-import 'package:intl/intl.dart';
 
 import '../../main.dart';
 
 class LeaveApplicationDetailScreen extends StatefulWidget {
   const LeaveApplicationDetailScreen({super.key});
 
+  static Route<void> route() {
+    return MaterialPageRoute(
+      builder: (_) => const LeaveApplicationDetailScreen(),
+    );
+  }
+
   @override
-  State<LeaveApplicationDetailScreen> createState() => _LeaveApplicationDetailScreenState();
+  State<LeaveApplicationDetailScreen> createState() =>
+      _LeaveApplicationDetailScreenState();
 }
 
-class _LeaveApplicationDetailScreenState extends State<LeaveApplicationDetailScreen> {
-  bool _isLoading = false;
+class _LeaveApplicationDetailScreenState
+    extends State<LeaveApplicationDetailScreen> {
+  final bool _isLoading = false;
 
   List<String> applicationList = ["Approve", "Disapprove", "Pending"];
 
@@ -62,7 +66,8 @@ class _LeaveApplicationDetailScreenState extends State<LeaveApplicationDetailScr
           ),
         ),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+          physics: const BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.fast),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -72,12 +77,19 @@ class _LeaveApplicationDetailScreenState extends State<LeaveApplicationDetailScr
                   Container(
                     height: mq.width * 0.3,
                     width: mq.width * 0.25,
-                    decoration: BoxDecoration(color: lightGreyColor, borderRadius: BorderRadius.circular(8)),
+                    decoration: BoxDecoration(
+                        color: lightGreyColor,
+                        borderRadius: BorderRadius.circular(8)),
                     child: CachedNetworkImage(
-                      imageUrl: "https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png",
+                      imageUrl:
+                          "https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png",
                       fit: BoxFit.cover,
-                      progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-                      errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                              child: CircularProgressIndicator(
+                                  value: downloadProgress.progress)),
+                      errorWidget: (context, url, error) =>
+                          const Center(child: Icon(Icons.error)),
                     ),
                   ),
                   16.widthBox,
@@ -91,17 +103,26 @@ class _LeaveApplicationDetailScreenState extends State<LeaveApplicationDetailScr
                           Spacer(),
                           Text(
                             'Durgesh Jadhav',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 18, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
                           ),
                           Spacer(),
                           Text(
                             'Sr. App Developer',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400),
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
                           ),
                           Spacer(),
                           Text(
                             'EID: NDCO2323',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400),
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
                           ),
                           Spacer(),
                         ],

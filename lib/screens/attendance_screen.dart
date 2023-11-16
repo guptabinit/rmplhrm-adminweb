@@ -8,6 +8,10 @@ import '../components/buttons/secondary_button.dart';
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
 
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const AttendanceScreen(),
+      );
+
   @override
   State<AttendanceScreen> createState() => _AttendanceScreenState();
 }
@@ -31,7 +35,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 children: [
                   SvgPicture.asset(
                     'assets/icons/Calendar.svg',
-                    color: primaryColor,
+                    colorFilter: const ColorFilter.mode(
+                      primaryColor,
+                      BlendMode.srcIn,
+                    ),
                   ),
                   8.widthBox,
                   const Text(

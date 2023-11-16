@@ -33,7 +33,10 @@ class LeaveApplicationCard extends StatelessWidget {
             children: [
               SvgPicture.asset(
                 'assets/icons/Calendar.svg',
-                color: primaryColor,
+                colorFilter: const ColorFilter.mode(
+                  primaryColor,
+                  BlendMode.srcIn,
+                ),
               ),
               8.widthBox,
               const Expanded(
@@ -47,7 +50,8 @@ class LeaveApplicationCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
                   color: Colors.green, // Variable tag color
                   borderRadius: BorderRadius.circular(12),
@@ -100,13 +104,16 @@ Widget manageLeaveCard(Color color) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
     margin: const EdgeInsets.symmetric(vertical: 8),
-    decoration: BoxDecoration(boxShadow: const [
-      BoxShadow(
-          color: borderColor,
-          blurRadius: 30,
-          // spreadRadius: 12
-          blurStyle: BlurStyle.outer)
-    ], borderRadius: BorderRadius.circular(8), border: Border.all(color: borderColor)),
+    decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(
+              color: borderColor,
+              blurRadius: 30,
+              // spreadRadius: 12
+              blurStyle: BlurStyle.outer)
+        ],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: borderColor)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -114,21 +121,31 @@ Widget manageLeaveCard(Color color) {
           children: [
             SvgPicture.asset(
               'assets/icons/Calendar.svg',
-              color: primaryColor,
+              colorFilter: const ColorFilter.mode(
+                primaryColor,
+                BlendMode.srcIn,
+              ),
             ),
             8.widthBox,
-            Expanded(
-              child: const Text(
+            const Expanded(
+              child: Text(
                 '01 Sep - 30 Sep',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(
+                  color: color, borderRadius: BorderRadius.circular(12)),
               child: const Text(
                 'Status: Pending',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500),
               ),
             ),
           ],

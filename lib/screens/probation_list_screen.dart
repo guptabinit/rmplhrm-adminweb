@@ -6,6 +6,10 @@ import '../constants/colors.dart';
 class ProbationListScreen extends StatefulWidget {
   const ProbationListScreen({super.key});
 
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const ProbationListScreen(),
+      );
+
   @override
   State<ProbationListScreen> createState() => _ProbationListScreenState();
 }
@@ -26,11 +30,16 @@ class _ProbationListScreenState extends State<ProbationListScreen> {
         ),
         child: Center(
           child: CachedNetworkImage(
-            width: MediaQuery.of(context).size.width*0.7,
-            imageUrl: "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
+            width: MediaQuery.of(context).size.width * 0.7,
+            imageUrl:
+                "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
             fit: BoxFit.fitWidth,
-            progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
-            errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(
+                    child: CircularProgressIndicator(
+                        value: downloadProgress.progress)),
+            errorWidget: (context, url, error) =>
+                const Center(child: Icon(Icons.error)),
           ),
         ),
       ),

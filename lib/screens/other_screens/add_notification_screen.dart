@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 import 'package:velocity_x/velocity_x.dart';
+
 import '../../components/custom_textfield.dart';
 import '../../resources/auth_methods.dart';
 import '../../resources/firestore_methods.dart';
 
 class NewNotificationScreen extends StatefulWidget {
   const NewNotificationScreen({super.key});
+
+  static Route<void> route() => MaterialPageRoute(
+        builder: (_) => const NewNotificationScreen(),
+      );
 
   @override
   State<NewNotificationScreen> createState() => _NewNotificationScreenState();
@@ -65,7 +69,9 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
       showCustomToast(message: res);
     } else {
       showCustomToast(message: "Successfully added");
-      Get.back();
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
     }
   }
 
@@ -119,7 +125,8 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
           ),
         ),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+          physics: const BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.fast),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -127,7 +134,10 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
               //fields
               const Text(
                 'Receiver',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               Padding(
@@ -153,7 +163,10 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
               12.heightBox,
               const Text(
                 'Notification type',
-                style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
               ),
               8.heightBox,
               Padding(

@@ -17,25 +17,24 @@ class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // function for creating a new employee
-  Future<String> createNewEmployee({
-    required String eid,
-    required String password,
-    required String branch,
-    required String firstName,
-    required String lastName,
-    required String dob,
-    required String designation,
-    required String dateJoined,
-    required String fathersName,
-    required String address,
-    required String email,
-    required String aadharNumber,
-    required String panNumber,
-    required String basicSalary,
-    required String hra,
-    required String fieldWorkAllowance,
-    required Uint8List file,
-  }) async {
+  Future<String> createNewEmployee(
+      {required String eid,
+      required String password,
+      required String branch,
+      required String firstName,
+      required String lastName,
+      required String dob,
+      required String designation,
+      required String dateJoined,
+      required String fathersName,
+      required String address,
+      required String email,
+      required String aadharNumber,
+      required String panNumber,
+      required String basicSalary,
+      required String hra,
+      required String fieldWorkAllowance,
+      required Uint8List file}) async {
     String res = "Some error occurred";
 
     if (eid.isNotEmpty &&
@@ -87,6 +86,8 @@ class FirestoreMethods {
               hra: hra,
               fieldWorkAllowance: fieldWorkAllowance,
               profileUrl: photoUrl,
+              probation: false,
+              probationTill: DateTime.now(),
             );
 
             // adding employee info in database

@@ -8,6 +8,9 @@ import 'package:rmpl_hrm_admin/main.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../models/admin_model.dart';
+import '../resources/auth_methods.dart';
+
 class AdminDashboardScreen extends StatefulWidget {
   final bool isLogoutTrigger;
   const AdminDashboardScreen({super.key, this.isLogoutTrigger = false});
@@ -17,6 +20,19 @@ class AdminDashboardScreen extends StatefulWidget {
 }
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
+
+  String inTime = "09:00 AM";
+  String outTime = "05:00 PM";
+  String workingHours = "08:00 Hrs";
+
+  getAdminData() async {
+    AdminModel adminDetails = await AuthMethods().getAdminDetails();
+    setState(() {
+      inTime = adminDetails.inTime;
+      outTime = adminDetails.outTime;
+      workingHours = adminDetails.workingHours;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,23 +91,23 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       20.widthBox,
-                      const Expanded(
+                      Expanded(
                         flex: 5,
                         child: Text(
-                          '10:00 AM',
-                          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                          inTime,
+                          style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 6,
                         child: Text(
-                          '05:00 PM',
-                          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                          outTime,
+                          style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      const Text(
-                        '08:00 Hrs',
-                        style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+                      Text(
+                        workingHours,
+                        style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                       28.widthBox
                     ],
@@ -166,24 +182,56 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     const Divider(
                       color: textGreyColor,
                     ),
-                    const Text(
-                      '1.Riya punched in at 10:35 AM',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                    Row(
+                      children: [
+                        const Icon(Icons.arrow_forward, color: primaryColor, size: 16,),
+                        2.widthBox,
+                        const Expanded(
+                          child: Text(
+                            'Riya punched in at 10:35 AM',
+                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
                     ),
                     8.heightBox,
-                    const Text(
-                      '2.Ashish punched in at 10:25 AM',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                    Row(
+                      children: [
+                        const Icon(Icons.arrow_forward, color: primaryColor, size: 16,),
+                        2.widthBox,
+                        const Expanded(
+                          child: Text(
+                            'Riya punched in at 10:35 AM',
+                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
                     ),
                     8.heightBox,
-                    const Text(
-                      '3.Akash punched in at 10:10 AM',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                    Row(
+                      children: [
+                        const Icon(Icons.arrow_forward, color: primaryColor, size: 16,),
+                        2.widthBox,
+                        const Expanded(
+                          child: Text(
+                            'Riya punched in at 10:35 AM',
+                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
                     ),
                     8.heightBox,
-                    const Text(
-                      '4.Vishesh punched in at 10:00 AM',
-                      style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                    Row(
+                      children: [
+                        const Icon(Icons.arrow_forward, color: primaryColor, size: 16,),
+                        2.widthBox,
+                        const Expanded(
+                          child: Text(
+                            'Riya punched in at 10:35 AM',
+                            style: TextStyle(fontFamily: 'Inter', fontSize: 14, color: darkColor, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ],
                     ),
                     28.heightBox,
                     Row(

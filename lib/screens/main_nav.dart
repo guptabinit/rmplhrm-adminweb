@@ -34,7 +34,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
   String branch = "Branch";
 
   getAdminData() async {
-    var adminDetails = await AuthMethods().getAdminDetails();
+    AdminModel adminDetails = await AuthMethods().getAdminDetails();
     setState(() {
       branch = adminDetails.branch;
     });
@@ -81,7 +81,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
     if (currentPage == DrawerSections.admin_dashboard) {
       container = const AdminDashboardScreen();
     } else if (currentPage == DrawerSections.employee_details) {
-      container = const EmployeeDetailScreen();
+      container = EmployeeDetailScreen(branch: branch);
     } else if (currentPage == DrawerSections.notifications) {
       container = const NotificationScreen();
     } else if (currentPage == DrawerSections.attendance) {
@@ -157,7 +157,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
             onTap: () {
               if (pageNumber == 8) {
               } else if (pageNumber == 2) {
-                Get.to(() => const AddNewEmployeeScreen());
+                Get.to(() => AddNewEmployeeScreen(branch: branch,));
               } else if (pageNumber == 3) {
                 Get.to(() => const NewNotificationScreen());
               } else if (pageNumber == 5) {

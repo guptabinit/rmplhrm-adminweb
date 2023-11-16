@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,13 +10,15 @@ import 'package:velocity_x/velocity_x.dart';
 import '../components/buttons/secondary_button.dart';
 
 class EmployeeDetailScreen extends StatefulWidget {
-  const EmployeeDetailScreen({super.key});
+  final String branch;
+  const EmployeeDetailScreen({super.key, required this.branch});
 
   @override
   State<EmployeeDetailScreen> createState() => _EmployeeDetailScreenState();
 }
 
 class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +77,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
 
               16.heightBox,
               StreamBuilder(
-                stream: FirebaseFirestore.instance.collection('employees').where('branch', isEqualTo: 'Delhi').snapshots(),
+                stream: FirebaseFirestore.instance.collection('employees').where('branch', isEqualTo: widget.branch).snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -84,7 +87,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                     );
                   }
 
-                  return ListView.builder(
+                  return snapshot.data!.docs.isNotEmpty ? ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.docs.length,
@@ -97,6 +100,14 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                       );
                     },
 
+                  ) : Center(
+                    child: CachedNetworkImage(
+                      width: MediaQuery.of(context).size.width*0.7,
+                      imageUrl: "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
+                      fit: BoxFit.fitWidth,
+                      progressIndicatorBuilder: (context, url, downloadProgress) => Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                      errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                    ),
                   );
                 },
               ),

@@ -20,6 +20,8 @@ class EmployeeProfile {
   final String hra;
   final String fieldWorkAllowance;
   final String profileUrl;
+  final bool probation;
+  final DateTime probationTill;
 
   const EmployeeProfile({
     required this.uid,
@@ -41,6 +43,8 @@ class EmployeeProfile {
     required this.hra,
     required this.fieldWorkAllowance,
     required this.profileUrl,
+    required this.probation,
+    required this.probationTill,
   });
 
   Map<String, dynamic> toJson() => {
@@ -63,6 +67,8 @@ class EmployeeProfile {
         'hra': hra,
         'fieldWorkAllowance': fieldWorkAllowance,
         'profileUrl': profileUrl,
+        'probation': probation,
+        'probationTill': probationTill,
       };
 
   static EmployeeProfile fromSnap(DocumentSnapshot snap) {
@@ -88,6 +94,8 @@ class EmployeeProfile {
       hra: snapshot['hra'],
       fieldWorkAllowance: snapshot['fieldWorkAllowance'],
       profileUrl: snapshot['profileUrl'],
+      probation: snapshot['probation'],
+      probationTill: snapshot['probationTill'],
     );
   }
 }

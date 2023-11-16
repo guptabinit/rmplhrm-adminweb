@@ -148,7 +148,7 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
               ),
 
               // if under-probation
-              Container(
+              widget.snap['probation'] ? Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 margin: const EdgeInsets.only(bottom: 12),
@@ -166,6 +166,36 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: whiteColor,
+                        ),
+                      ),
+                    ),
+                    SecondaryButton(
+                      title: "Review & Update",
+                      onTap: () {},
+                      fontSize: 14,
+                      titleColor: whiteColor,
+                      backgroundColor: whiteColor,
+                    ),
+                  ],
+                ),
+              ) : Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: const BoxDecoration(
+                  color: lightGreyColor,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        'Under Probation',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: darkColor,
                         ),
                       ),
                     ),

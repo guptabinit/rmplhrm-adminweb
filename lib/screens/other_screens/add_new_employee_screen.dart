@@ -20,7 +20,8 @@ import '../../components/custom_textfield.dart';
 import '../../resources/auth_methods.dart';
 
 class AddNewEmployeeScreen extends StatefulWidget {
-  const AddNewEmployeeScreen({super.key});
+  final String branch;
+  const AddNewEmployeeScreen({super.key, required this.branch});
 
   @override
   State<AddNewEmployeeScreen> createState() => _AddNewEmployeeScreenState();
@@ -80,25 +81,6 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
     });
   }
 
-  String branch = "Branch";
-
-  getAdminData() async {
-    var adminDetails = await AuthMethods().getAdminDetails();
-    setState(() {
-      branch = adminDetails.branch;
-    });
-  }
-
-  @override
-  void initState() {
-    try {
-      getAdminData();
-    } catch (e) {
-      print("Some error: $e");
-    }
-    super.initState();
-  }
-
   void addNewEmployee() async {
     setState(() {
       _isLoading = true;
@@ -107,7 +89,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
     String res = await FirestoreMethods().createNewEmployee(
       eid: eidController.text,
       password: passwordController.text,
-      branch: branch,
+      branch: widget.branch,
       firstName: firstNameController.text,
       lastName: lastNameController.text,
       dob: dobController.text,

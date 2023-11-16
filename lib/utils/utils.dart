@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
 pickImage(ImageSource source) async {
@@ -8,7 +9,7 @@ pickImage(ImageSource source) async {
 
   XFile? file = await imagePicker.pickImage(source: source, imageQuality: 60);
 
-  if(file != null){
+  if (file != null) {
     return await file.readAsBytes();
   }
 }
@@ -35,4 +36,10 @@ showCustomToast({
     textColor: txtColor,
     fontSize: 14.0,
   );
+}
+
+extension UtilsX on DateTime {
+  String get date {
+    return DateFormat('dd MMM yyyy').format(this);
+  }
 }

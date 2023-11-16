@@ -8,7 +8,6 @@ import 'package:rmpl_hrm_admin/firebase_options.dart';
 
 import 'providers/admin_provider.dart';
 
-
 late Size mq;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers : [
+      providers: [
         ChangeNotifierProvider(
           create: (_) => AdminProvider(),
         ),

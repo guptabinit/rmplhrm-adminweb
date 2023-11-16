@@ -1,33 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:rmpl_hrm_admin/converters/document_reference_converter.dart';
+import 'package:rmpl_hrm_admin/converters/timestamp_converter.dart';
 
-class HolidayModel {
-  final String holidayID;
-  final String date;
-  final String title;
-  final String formattedDate;
+part 'holiday_model.g.dart';
 
+@JsonSerializable()
+@DocumentReferenceConverter()
+@TimestampConverter()
+class HolidayModel extends Equatable {
   const HolidayModel({
-    required this.holidayID,
-    required this.date,
-    required this.title,
-    required this.formattedDate,
+    this.id,
+    this.date,
+    this.title,
+    this.createdAt,
   });
 
-  Map<String, dynamic> toJson() => {
-    'holidayID': holidayID,
-    'date': date,
-    'title': title,
-    'formattedDate': formattedDate,
-  };
+  factory HolidayModel.fromJson(Map<String, dynamic> json) =>
+      _$HolidayModelFromJson(json);
 
-  static HolidayModel fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  Map<String, dynamic> toJson() => _$HolidayModelToJson(this);
 
-    return HolidayModel(
-      holidayID: snapshot['holidayID'],
-      date: snapshot['date'],
-      title: snapshot['title'],
-      formattedDate: snapshot['formattedDate'],
-    );
-  }
+  final String? id;
+  final DateTime? date;
+  final String? title;
+  final DateTime? createdAt;
+
+  @override
+  List<Object?> get props => [id, date, title, createdAt];
 }

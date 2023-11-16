@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/resources/firestore_methods.dart';
-import 'package:rmpl_hrm_admin/utils/utils.dart';
+import 'package:rmpl_hrm_admin/models/holiday_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../components/custom_textfield.dart';
 import 'package:intl/intl.dart';
+
+import '../../utils/utils.dart';
 
 class AddHolidayScreen extends StatefulWidget {
   const AddHolidayScreen({super.key});
@@ -33,28 +35,39 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
   }
 
   void addNewHoliday() async {
+    if (holidayTitle.text.isEmpty) {
+      showCustomToast(message: "Enter a title for the holiday");
+    }
+
+    if (dateSelected.text.isEmpty) {
+      showCustomToast(message: "Select a date");
+    }
+
     setState(() {
       _isLoading = true;
     });
 
-    // String res = "test";
+    try {
+      final docs = FirebaseFirestore.instance.collection('holidays').doc();
 
-    String res = await FirestoreMethods().addHoliday(
-      date: dateSelected.text,
-      title: holidayTitle.text,
-      formattedDate: formatterMonth.format(date),
-    );
+      final holiday = HolidayModel(
+        id: docs.id,
+        createdAt: Timestamp.now().toDate(),
+        date: Timestamp.fromDate(date).toDate(),
+        title: holidayTitle.text,
+      );
+
+      await docs.set(holiday.toJson());
+
+      showCustomToast(message: "Successfully added");
+      Get.back();
+    } catch (e) {
+      showCustomToast(message: e.toString());
+    }
 
     setState(() {
       _isLoading = false;
     });
-
-    if (res != 'success') {
-      showCustomToast(message: res);
-    } else {
-      showCustomToast(message: "Successfully added");
-      Get.back();
-    }
   }
 
   @override
@@ -90,7 +103,8 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
           ),
         ),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+          physics: const BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.fast),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -109,19 +123,14 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                 controller: dateSelected,
                 text: 'Date',
                 suffixIcon: IconButton(
-                  onPressed: () {
-                    showDatePicker(
+                  onPressed: () async {
+                    final dt = await showDatePicker(
                       context: context,
                       initialDate: date,
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2100),
-                    ).then((dt) {
-                      if (dt != null) {
-                        setState(() {
-                          date = dt;
-                        });
-                      }
-                    });
+                    );
+                    if (dt != null) setState(() => date = dt);
                   },
                   icon: const Icon(
                     Icons.calendar_today,

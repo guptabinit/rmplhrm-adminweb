@@ -60,10 +60,12 @@ class FirestoreMethods {
       );
 
       try {
-        UserCredential userCredential = await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(email: email, password: password);
+        UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+            .createUserWithEmailAndPassword(email: email, password: password);
 
         try {
-          String photoUrl = await StorageMethods().uploadImageToStorage(uid: userCredential.user!.uid, file: file);
+          String photoUrl = await StorageMethods()
+              .uploadImageToStorage(uid: userCredential.user!.uid, file: file);
 
           try {
             EmployeeProfile employee = EmployeeProfile(
@@ -91,7 +93,10 @@ class FirestoreMethods {
             );
 
             // adding employee info in database
-            await _firestore.collection('employees').doc(userCredential.user!.uid).set(employee.toJson());
+            await _firestore
+                .collection('employees')
+                .doc(userCredential.user!.uid)
+                .set(employee.toJson());
 
             res = "success";
           } catch (e) {
@@ -126,7 +131,10 @@ class FirestoreMethods {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss dd/MM/yyyy').format(now);
 
-    if (branch.isNotEmpty && type.isNotEmpty && receiver.isNotEmpty && message.isNotEmpty) {
+    if (branch.isNotEmpty &&
+        type.isNotEmpty &&
+        receiver.isNotEmpty &&
+        message.isNotEmpty) {
       String notificationID = const Uuid().v1();
 
       NotificationModel notification = NotificationModel(
@@ -140,7 +148,10 @@ class FirestoreMethods {
       );
 
       // adding employee info in database
-      await _firestore.collection('notifications').doc(notificationID).set(notification.toJson());
+      await _firestore
+          .collection('notifications')
+          .doc(notificationID)
+          .set(notification.toJson());
 
       res = "success";
     } else {
@@ -161,15 +172,18 @@ class FirestoreMethods {
     if (date.isNotEmpty && title.isNotEmpty) {
       String holidayID = const Uuid().v1();
 
-      HolidayModel holiday = HolidayModel(
-        holidayID: holidayID,
-        date: date,
-        title: title,
-        formattedDate: formattedDate,
-      );
+      // HolidayModel holiday = HolidayModel(
+      //   holidayID: holidayID,
+      //   date: date,
+      //   title: title,
+      //   formattedDate: formattedDate,
+      // );
 
       // adding employee info in database
-      await _firestore.collection('holidays').doc(holidayID).set(holiday.toJson());
+      // await _firestore
+      //     .collection('holidays')
+      //     .doc(holidayID)
+      //     .set(holiday.toJson());
 
       res = "success";
     } else {

@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
+import 'package:rmpl_hrm_admin/models/holiday_model.dart';
+import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 class HolidayCardWidget extends StatelessWidget {
-  final Map<String, dynamic> snap;
+  final HolidayModel holiday;
 
   const HolidayCardWidget({
     super.key,
-    required this.snap,
+    required this.holiday,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: primaryColor)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: primaryColor)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            snap['date'],
+            "${holiday.date?.date}",
             style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
@@ -35,7 +39,7 @@ class HolidayCardWidget extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              snap['title'],
+              "${holiday.title}",
               style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
@@ -53,7 +57,9 @@ class HolidayCardWidget extends StatelessWidget {
 Widget holidayContainer(String date, String reason) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), border: Border.all(color: primaryColor)),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: primaryColor)),
     child: Row(
       children: [
         Text(
@@ -74,7 +80,11 @@ Widget holidayContainer(String date, String reason) {
         ),
         Text(
           reason,
-          style: const TextStyle(fontFamily: 'Inter', fontSize: 16, color: textGreyColor, fontWeight: FontWeight.w500),
+          style: const TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 16,
+              color: textGreyColor,
+              fontWeight: FontWeight.w500),
         ),
       ],
     ),

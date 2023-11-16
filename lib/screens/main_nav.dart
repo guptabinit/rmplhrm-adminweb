@@ -157,7 +157,9 @@ class _MainNavScreenState extends State<MainNavScreen> {
             onTap: () {
               if (pageNumber == 8) {
               } else if (pageNumber == 2) {
-                Get.to(() => AddNewEmployeeScreen(branch: branch,));
+                Get.to(() => AddNewEmployeeScreen(
+                      branch: branch,
+                    ));
               } else if (pageNumber == 3) {
                 Get.to(() => const NewNotificationScreen());
               } else if (pageNumber == 5) {
@@ -181,7 +183,12 @@ class _MainNavScreenState extends State<MainNavScreen> {
                 color: whiteColor,
               ),
               child: Icon(
-                pageNumber == 2 || pageNumber == 3 || pageNumber == 5 || pageNumber == 8 ? Icons.add : Icons.logout,
+                pageNumber == 2 ||
+                        pageNumber == 3 ||
+                        pageNumber == 5 ||
+                        pageNumber == 8
+                    ? Icons.add
+                    : Icons.logout,
                 color: primaryColor,
               ),
             ),
@@ -206,14 +213,22 @@ class _MainNavScreenState extends State<MainNavScreen> {
   Widget myDrawerList() {
     return Column(
       children: [
-        menuItem(1, "Dashboard", currentPage == DrawerSections.admin_dashboard ? true : false),
-        menuItem(2, "Employee’s Details", currentPage == DrawerSections.employee_details ? true : false),
-        menuItem(3, "Notifications", currentPage == DrawerSections.notifications ? true : false),
-        menuItem(4, "Attendance", currentPage == DrawerSections.attendance ? true : false),
-        menuItem(5, "Holidays", currentPage == DrawerSections.holidays ? true : false),
-        menuItem(6, "Leave Application", currentPage == DrawerSections.leave_application ? true : false),
-        menuItem(7, "Salary Details", currentPage == DrawerSections.salary_details ? true : false),
-        menuItem(8, "Probation List", currentPage == DrawerSections.probation_list ? true : false),
+        menuItem(1, "Dashboard",
+            currentPage == DrawerSections.admin_dashboard ? true : false),
+        menuItem(2, "Employee’s Details",
+            currentPage == DrawerSections.employee_details ? true : false),
+        menuItem(3, "Notifications",
+            currentPage == DrawerSections.notifications ? true : false),
+        menuItem(4, "Attendance",
+            currentPage == DrawerSections.attendance ? true : false),
+        menuItem(5, "Holidays",
+            currentPage == DrawerSections.holidays ? true : false),
+        menuItem(6, "Leave Application",
+            currentPage == DrawerSections.leave_application ? true : false),
+        menuItem(7, "Salary Details",
+            currentPage == DrawerSections.salary_details ? true : false),
+        menuItem(8, "Probation List",
+            currentPage == DrawerSections.probation_list ? true : false),
       ],
     );
   }
@@ -263,13 +278,19 @@ class _MainNavScreenState extends State<MainNavScreen> {
               children: [
                 SvgPicture.asset(
                   'assets/icons/Home.svg',
-                  color: darkColor,
+                  colorFilter: const ColorFilter.mode(
+                    darkColor,
+                    BlendMode.srcIn,
+                  ),
                 ),
                 12.widthBox,
                 Expanded(
                     child: Text(
                   title,
-                  style: const TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500),
                 )),
                 const Icon(Icons.arrow_forward_ios)
               ],

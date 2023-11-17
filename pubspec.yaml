@@ -11,6 +11,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  authontication_repository:
+    path: packages/authontication_repository
   form_inputs:
     path: packages/form_inputs
   flutter_svg: ^2.0.7

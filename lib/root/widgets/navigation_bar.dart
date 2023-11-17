@@ -43,7 +43,7 @@ class NavigationBar extends StatelessWidget {
                 12.widthBox,
                 Expanded(
                   child: Text(
-                    route.title,
+                    route.name,
                     style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 16,

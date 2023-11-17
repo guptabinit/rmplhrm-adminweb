@@ -1,19 +1,21 @@
 part of 'root_cubit.dart';
 
 enum AppRoute {
-  adminDashboard(title: "Dashboard"),
-  employeeDetails(title: "Employee’s Details"),
-  notifications(title: "Notifications"),
-  attendance(title: "Attendance"),
-  holidays(title: "Holidays"),
-  leaveApplication(title: "Leave Application"),
-  salaryDetails(title: "Salary Details"),
-  probationList(title: "Probation List");
+  adminDashboard(name: "Dashboard", title: "Hello Admin!"),
+  employeeDetails(name: "Employee's Details", title: "Employee's Details"),
+  notifications(name: "Notifications", title: "Notifications"),
+  attendance(name: "Attendance", title: "Attendance"),
+  holidays(name: "Holidays", title: "Holidays"),
+  leaveApplication(name: "Leave Application", title: "Leave Application"),
+  salaryDetails(name: "Salary Details", title: "Salary Details"),
+  probationList(name: "Probation List", title: "Probation List");
 
   const AppRoute({
+    required this.name,
     required this.title,
   });
 
+  final String name;
   final String title;
 }
 

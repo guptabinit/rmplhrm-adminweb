@@ -23,7 +23,7 @@ class MainButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       borderRadius: BorderRadius.circular(8),
-      color: backgroundColor,
+      color: onTap == null ? backgroundColor.withAlpha(155) : backgroundColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: onTap,

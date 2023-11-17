@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rmpl_hrm_admin/add_holiday/add_holiday.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
@@ -11,7 +12,6 @@ import 'package:rmpl_hrm_admin/screens/employee_details_screen.dart';
 import 'package:rmpl_hrm_admin/screens/holidays_screen.dart';
 import 'package:rmpl_hrm_admin/screens/leave_applications.dart';
 import 'package:rmpl_hrm_admin/screens/notification_screen.dart';
-import 'package:rmpl_hrm_admin/screens/other_screens/add_holiday_screen.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/add_new_employee_screen.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/add_notification_screen.dart';
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
@@ -22,6 +22,7 @@ import '../models/admin_model.dart';
 import '../resources/auth_methods.dart';
 import '../utils/utils.dart';
 
+@Deprecated("Use root page instead of this")
 class MainNavScreen extends StatefulWidget {
   const MainNavScreen({super.key});
 
@@ -48,7 +49,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
     try {
       getAdminData();
     } catch (e) {
-      print("Some error: $e");
+      "Some error: $e".log();
     }
     super.initState();
   }
@@ -171,7 +172,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
               } else if (pageNumber == 3) {
                 Navigator.of(context).push(NewNotificationScreen.route());
               } else if (pageNumber == 5) {
-                Navigator.of(context).push(AddHolidayScreen.route());
+                Navigator.of(context).push(AddHolidayPage.route());
               } else {
                 showCustomDialog(
                   context: context,

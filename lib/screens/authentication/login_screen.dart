@@ -4,7 +4,7 @@ import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/dimensions.dart';
 import 'package:rmpl_hrm_admin/main.dart';
-import 'package:rmpl_hrm_admin/screens/main_nav.dart';
+import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
@@ -50,7 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res == 'success') {
       if (mounted) {
         Navigator.of(context).pushReplacement(
-          MainNavScreen.route(),
+          // MainNavScreen.route(),
+          RootPage.route(),
         );
       }
     } else {

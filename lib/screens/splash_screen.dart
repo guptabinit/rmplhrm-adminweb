@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/screens/authentication/login_screen.dart';
-import 'package:rmpl_hrm_admin/screens/main_nav.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../constants/colors.dart';
@@ -31,7 +31,8 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         } else {
           Navigator.of(context).pushAndRemoveUntil(
-            MainNavScreen.route(),
+            // MainNavScreen.route(),
+            RootPage.route(),
             (_) => false,
           );
         }

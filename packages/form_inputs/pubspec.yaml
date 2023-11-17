@@ -1,0 +1,14 @@
+name: form_inputs
+description: Form inputs packages for RMPL app.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  formz: ^0.6.1
+  validators: ^3.0.0
+
+dev_dependencies:
+  very_good_analysis: ^5.1.0

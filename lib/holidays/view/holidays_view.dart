@@ -43,7 +43,7 @@ class HolidaysView extends StatelessWidget {
                   BlocBuilder<HolidaysBloc, HolidaysState>(
                     builder: (context, state) {
                       return Text(
-                        state.date.date,
+                        state.date.monthDate,
                         style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,

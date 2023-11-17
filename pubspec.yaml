@@ -11,8 +11,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  authontication_repository:
-    path: packages/authontication_repository
+  authentication_repository:
+    path: packages/authentication_repository
   holiday_api:
     path: packages/holiday_api
   holiday_api_client:

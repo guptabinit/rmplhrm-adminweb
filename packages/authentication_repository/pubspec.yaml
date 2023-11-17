@@ -1,5 +1,5 @@
-name: authontication_repository
-description: A Very Good Project created by Very Good CLI.
+name: authentication_repository
+description: Authentication repository for Firebase Authentication
 version: 0.1.0+1
 publish_to: none
 

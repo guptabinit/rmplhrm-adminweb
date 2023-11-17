@@ -1,5 +1,7 @@
-import 'package:authontication_repository/authontication_repository.dart';
+import 'package:authentication_repository/authentication_repository.dart';
+
 import 'package:cache/cache.dart';
+
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class SignInWithEmailAndPasswordFailure implements Exception {
@@ -11,12 +13,16 @@ class SignInWithEmailAndPasswordFailure implements Exception {
     switch (code) {
       case 'invalid-email:':
         return const SignInWithEmailAndPasswordFailure('Invalid email address');
+
       case 'user-disabled':
         return const SignInWithEmailAndPasswordFailure('User is disabled');
+
       case 'user-not-found':
         return const SignInWithEmailAndPasswordFailure('User not found');
+
       case 'wrong-password':
         return const SignInWithEmailAndPasswordFailure('Wrong password');
+
       default:
         return const SignInWithEmailAndPasswordFailure();
     }
@@ -37,7 +43,9 @@ class AuthonticationRepository {
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
+
       _cache.write(key: _userCacheKey, value: user);
+
       return user;
     });
   }
@@ -71,6 +79,7 @@ class AuthonticationRepository {
   static const _userCacheKey = '__user_cache_key__';
 
   final CacheClient _cache;
+
   final firebase_auth.FirebaseAuth _firebaseAuth;
 }
 

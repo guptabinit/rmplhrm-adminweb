@@ -47,6 +47,12 @@ extension UtilsX on DateTime? {
     if (!isDate(toString())) return '';
     return DateFormat('dd MMM yyyy').format(this!);
   }
+
+  String get monthDate {
+    if (this == null) return '';
+    if (!isDate(toString())) return '';
+    return DateFormat('MMM yyyy').format(this!);
+  }
 }
 
 extension DateTimeExt on String? {

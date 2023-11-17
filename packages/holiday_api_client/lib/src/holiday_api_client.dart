@@ -9,9 +9,15 @@ class HolidayApiClient extends HolidayApi {
   final FirebaseFirestore _firestore;
 
   @override
-  Future<void> createHoliday(Holiday holiday) {
-    // TODO: implement createHoliday
-    throw UnimplementedError();
+  Future<void> createHoliday(Holiday holiday) async {
+    try {
+      await _firestore
+          .collection('holidays')
+          .doc(holiday.id)
+          .set(holiday.toJson());
+    } catch (_) {
+      throw const CreateHolidayException();
+    }
   }
 
   @override

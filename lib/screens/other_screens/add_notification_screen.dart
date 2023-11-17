@@ -44,7 +44,7 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
     try {
       getAdminData();
     } catch (e) {
-      print("Some error: $e");
+      "Some error: $e".log();
     }
     super.initState();
   }

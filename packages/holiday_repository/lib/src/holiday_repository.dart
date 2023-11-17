@@ -8,4 +8,6 @@ class HolidayRepository {
   final HolidayApi _api;
 
   Stream<List<Holiday>> getHolidays(DateTime date) => _api.getHolidays(date);
+
+  Future<void> createHoliday(Holiday holiday) => _api.createHoliday(holiday);
 }

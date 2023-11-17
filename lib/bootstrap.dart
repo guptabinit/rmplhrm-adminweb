@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday_api/holiday_api.dart';
+import 'package:holiday_repository/holiday_repository.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 
 void bootstrap({
@@ -14,5 +15,13 @@ void bootstrap({
 
   Bloc.observer = const AppBlocObserver();
 
-  runApp(const App());
+  final holidayRepository = HolidayRepository(
+    api: holidayApi,
+  );
+
+  runApp(
+    App(
+      holidayRepository: holidayRepository,
+    ),
+  );
 }

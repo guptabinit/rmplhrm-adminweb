@@ -2,16 +2,18 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
-import 'package:rmpl_hrm_admin/models/holiday_model.dart';
-import 'package:rmpl_hrm_admin/utils/utils.dart';
+import 'package:holiday_api/holiday_api.dart';
+import 'package:holiday_repository/holiday_repository.dart';
 
 part 'add_holiday_state.dart';
 
 class AddHolidayCubit extends Cubit<AddHolidayState> {
-  AddHolidayCubit() : super(const AddHolidayState());
+  AddHolidayCubit({
+    required HolidayRepository holidayRepository,
+  })  : _holidayRepository = holidayRepository,
+        super(const AddHolidayState());
 
   void dateChanged(String value) {
     final date = Date.dirty(value);
@@ -51,25 +53,24 @@ class AddHolidayCubit extends Cubit<AddHolidayState> {
       ),
     );
     try {
-      final doc = FirebaseFirestore.instance.collection('holidays').doc();
+      final date = DateTime.parse(state.date.value!);
 
-      final holiday = HolidayModel(
+      final id = '${DateTime(
+            date.year,
+            date.month,
+            date.day,
+          ).millisecondsSinceEpoch ~/ 1000}';
+
+      final doc = FirebaseFirestore.instance.collection('holidays').doc(id);
+
+      final holiday = Holiday(
         id: doc.id,
         createdAt: Timestamp.now().toDate(),
-        date: Timestamp.fromDate(DateTime.parse(state.date.value!)).toDate(),
+        date: Timestamp.fromDate(date).toDate(),
         title: state.title.value!,
       );
 
-      await doc.set(holiday.toJson());
-
-      final storageRef = FirebaseStorage.instance.ref().child("admin/hhhhhhh");
-      try {
-        final listResult = await storageRef.listAll();
-        listResult.log();
-      } on FirebaseException catch (e) {
-        // Caught an exception from Firebase.
-        "Failed with error '${e.code}': ${e.message}".log();
-      }
+      _holidayRepository.createHoliday(holiday);
 
       emit(
         state.copyWith(
@@ -84,4 +85,6 @@ class AddHolidayCubit extends Cubit<AddHolidayState> {
       );
     }
   }
+
+  final HolidayRepository _holidayRepository;
 }

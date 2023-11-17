@@ -9,7 +9,6 @@ import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
 import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
 import 'package:rmpl_hrm_admin/screens/employee_details_screen.dart';
-import 'package:rmpl_hrm_admin/screens/holidays_screen.dart';
 import 'package:rmpl_hrm_admin/screens/leave_applications.dart';
 import 'package:rmpl_hrm_admin/screens/notification_screen.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/add_new_employee_screen.dart';
@@ -25,7 +24,6 @@ const routes = <Widget>[
   ), // This branch should be replaced with the branch name by bloc listener
   NotificationScreen(),
   AttendanceScreen(),
-  // HolidayScreen(),
   HolidaysPage(),
   LeaveApplicationScreen(),
   SalaryDetailScreen(),

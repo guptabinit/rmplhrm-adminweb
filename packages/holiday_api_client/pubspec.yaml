@@ -1,5 +1,5 @@
-name: holiday_repository
-description: Holiday repositoy domain
+name: holiday_api_client
+description: Holiday API implementation
 version: 0.1.0+1
 publish_to: none
 
@@ -7,8 +7,11 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  cloud_firestore: ^4.13.1
+  flutter:
+    sdk: flutter
   holiday_api:
     path: ../holiday_api
-  
+
 dev_dependencies:
   very_good_analysis: ^5.1.0

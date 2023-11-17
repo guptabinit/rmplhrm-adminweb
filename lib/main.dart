@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:holiday_api_client/holiday_api_client.dart';
+import 'package:rmpl_hrm_admin/bootstrap.dart';
 import 'package:rmpl_hrm_admin/firebase_options.dart';
-
-import 'app/app.dart';
 
 late Size mq;
 Future<void> main() async {
@@ -12,7 +12,9 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  Bloc.observer = const AppBlocObserver();
+  final firestore = FirebaseFirestore.instance;
 
-  runApp(const App());
+  final holidayApi = HolidayApiClient(firestore: firestore);
+
+  bootstrap(holidayApi: holidayApi);
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:holiday_api/holiday_api.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/models/holiday_model.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 class HolidayCardWidget extends StatelessWidget {
-  final HolidayModel holiday;
+  final Holiday holiday;
 
   const HolidayCardWidget({
     super.key,

@@ -8,8 +8,8 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../components/buttons/secondary_button.dart';
-import '../components/holiday_container.dart';
 
+@Deprecated('Use HolidayPage instead of this class')
 class HolidayScreen extends StatefulWidget {
   const HolidayScreen({super.key});
 
@@ -148,9 +148,9 @@ class _HolidayScreenState extends State<HolidayScreen> {
 
                                 return Container(
                                   margin: const EdgeInsets.only(top: 12),
-                                  child: HolidayCardWidget(
-                                    holiday: holiday,
-                                  ),
+                                  // child: HolidayCardWidget(
+                                  //   holiday: holiday,
+                                  // ),
                                 );
                               },
                             ),

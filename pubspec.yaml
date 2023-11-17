@@ -13,6 +13,12 @@ dependencies:
     sdk: flutter
   authontication_repository:
     path: packages/authontication_repository
+  holiday_api:
+    path: packages/holiday_api
+  holiday_api_client:
+    path: packages/holiday_api_client
+  holiday_repository:
+    path: packages/holiday_repository
   form_inputs:
     path: packages/form_inputs
   flutter_svg: ^2.0.7

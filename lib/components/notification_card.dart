@@ -3,8 +3,8 @@ import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class NotificationCard extends StatefulWidget {
+  const NotificationCard({required this.snap, super.key});
   final Map<String, dynamic> snap;
-  const NotificationCard({super.key, required this.snap});
 
   @override
   State<NotificationCard> createState() => _NotificationCardState();
@@ -78,9 +78,9 @@ class _NotificationCardState extends State<NotificationCard> {
                   Icons.remove_red_eye_rounded,
                   color: primaryColor,
                 ),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

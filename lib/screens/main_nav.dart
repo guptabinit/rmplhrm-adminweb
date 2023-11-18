@@ -6,9 +6,9 @@ import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
 import 'package:rmpl_hrm_admin/login/login.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/resources/auth_methods.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
 import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
-import 'package:rmpl_hrm_admin/screens/authentication/login_screen.dart';
 import 'package:rmpl_hrm_admin/screens/employee_details_screen.dart';
 import 'package:rmpl_hrm_admin/screens/holidays_screen.dart';
 import 'package:rmpl_hrm_admin/screens/leave_applications.dart';
@@ -18,12 +18,9 @@ import 'package:rmpl_hrm_admin/screens/other_screens/add_notification_screen.dar
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
 import 'package:rmpl_hrm_admin/screens/salary_details_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
+import 'package:rmpl_hrm_admin/utils/utils.dart';
 
-import '../models/admin_model.dart';
-import '../resources/auth_methods.dart';
-import '../utils/utils.dart';
-
-@Deprecated("Use root page instead of this")
+@Deprecated('Use root page instead of this')
 class MainNavScreen extends StatefulWidget {
   const MainNavScreen({super.key});
 
@@ -36,10 +33,10 @@ class MainNavScreen extends StatefulWidget {
 }
 
 class _MainNavScreenState extends State<MainNavScreen> {
-  String branch = "Branch";
+  String branch = 'Branch';
 
   getAdminData() async {
-    AdminModel adminDetails = await AuthMethods().getAdminDetails();
+    final adminDetails = await AuthMethods().getAdminDetails();
     setState(() {
       branch = adminDetails.branch;
     });
@@ -50,36 +47,36 @@ class _MainNavScreenState extends State<MainNavScreen> {
     try {
       getAdminData();
     } catch (e) {
-      "Some error: $e".log();
+      'Some error: $e'.log();
     }
     super.initState();
   }
 
-  var currentPage = DrawerSections.adminDashboard;
+  DrawerSections currentPage = DrawerSections.adminDashboard;
   int pageNumber = 0;
 
   bool _isLoading = false;
 
-  void loggingOut() async {
+  Future<void> loggingOut() async {
     setState(() {
       _isLoading = true;
     });
 
-    String res = await AuthMethods().signOut();
+    final res = await AuthMethods().signOut();
 
     setState(() {
       _isLoading = false;
     });
     if (res == 'success') {
       if (mounted) {
-        Navigator.of(context).pushAndRemoveUntil(
+        await Navigator.of(context).pushAndRemoveUntil(
           // LoginScreen.route(),
           LoginPage.route(),
           (route) => false,
         );
       }
     } else {
-      showCustomToast(
+      await showCustomToast(
         message: res,
         bgColor: redColor,
       );
@@ -107,17 +104,17 @@ class _MainNavScreenState extends State<MainNavScreen> {
       container = const ProbationListScreen();
     }
     mq = MediaQuery.of(context).size;
-    final List<ChartData> chartData = [
+    final chartData = <ChartData>[
       ChartData('25% Attendance', 25, Colors.purple[300]!),
       ChartData('8% Leave', 38, Colors.red[300]!),
       ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
       ChartData('Others', 52, Colors.green[500]!),
     ];
 
-    List<String> appBarTitle = [
+    final appBarTitle = <String>[
       'Hello Admin!',
       'Hello Admin!',
-      'Employee\'s Details',
+      "Employee's Details",
       'Notifications',
       'Attendance',
       'Holidays',
@@ -132,13 +129,15 @@ class _MainNavScreenState extends State<MainNavScreen> {
         backgroundColor: primaryColor,
         elevation: 0,
         titleSpacing: 0,
-        leading: Builder(builder: (context) {
-          return IconButton(
-            onPressed: () => Scaffold.of(context).openDrawer(),
-            icon: const Icon(Icons.menu_outlined),
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          );
-        }),
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: const Icon(Icons.menu_outlined),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -150,17 +149,21 @@ class _MainNavScreenState extends State<MainNavScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            pageNumber == 0 || pageNumber == 1 ? 4.heightBox : Container(),
-            pageNumber == 0 || pageNumber == 1 || pageNumber == 9
-                ? Text(
-                    branch,
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                    ),
-                  )
-                : Container(),
+            if (pageNumber == 0 || pageNumber == 1)
+              4.heightBox
+            else
+              Container(),
+            if (pageNumber == 0 || pageNumber == 1 || pageNumber == 9)
+              Text(
+                branch,
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
+              )
+            else
+              Container(),
           ],
         ),
         actions: [
@@ -168,17 +171,17 @@ class _MainNavScreenState extends State<MainNavScreen> {
             onTap: () async {
               if (pageNumber == 8) {
               } else if (pageNumber == 2) {
-                Navigator.of(context).push(
+                await Navigator.of(context).push(
                   AddNewEmployeeScreen.route(branch),
                 );
               } else if (pageNumber == 3) {
-                Navigator.of(context).push(NewNotificationScreen.route());
+                await Navigator.of(context).push(NewNotificationScreen.route());
               } else if (pageNumber == 5) {
-                Navigator.of(context).push(AddHolidayPage.route());
+                await Navigator.of(context).push(AddHolidayPage.route());
               } else {
                 await showCustomDialog(
                   context: context,
-                  title: "Do you really want to log out?",
+                  title: 'Do you really want to log out?',
                   optionBuilder: () => {
                     'Logout': true,
                     'Cancel': false,
@@ -203,7 +206,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
               ),
             ),
           ),
-          16.widthBox
+          16.widthBox,
         ],
       ),
       drawer: Drawer(
@@ -223,22 +226,46 @@ class _MainNavScreenState extends State<MainNavScreen> {
   Widget myDrawerList() {
     return Column(
       children: [
-        menuItem(1, "Dashboard",
-            currentPage == DrawerSections.adminDashboard ? true : false),
-        menuItem(2, "Employee’s Details",
-            currentPage == DrawerSections.employeeDetails ? true : false),
-        menuItem(3, "Notifications",
-            currentPage == DrawerSections.notifications ? true : false),
-        menuItem(4, "Attendance",
-            currentPage == DrawerSections.attendance ? true : false),
-        menuItem(5, "Holidays",
-            currentPage == DrawerSections.holidays ? true : false),
-        menuItem(6, "Leave Application",
-            currentPage == DrawerSections.leaveApplication ? true : false),
-        menuItem(7, "Salary Details",
-            currentPage == DrawerSections.salaryDetails ? true : false),
-        menuItem(8, "Probation List",
-            currentPage == DrawerSections.probationList ? true : false),
+        menuItem(
+          1,
+          'Dashboard',
+          currentPage == DrawerSections.adminDashboard ? true : false,
+        ),
+        menuItem(
+          2,
+          'Employee’s Details',
+          currentPage == DrawerSections.employeeDetails ? true : false,
+        ),
+        menuItem(
+          3,
+          'Notifications',
+          currentPage == DrawerSections.notifications ? true : false,
+        ),
+        menuItem(
+          4,
+          'Attendance',
+          currentPage == DrawerSections.attendance ? true : false,
+        ),
+        menuItem(
+          5,
+          'Holidays',
+          currentPage == DrawerSections.holidays ? true : false,
+        ),
+        menuItem(
+          6,
+          'Leave Application',
+          currentPage == DrawerSections.leaveApplication ? true : false,
+        ),
+        menuItem(
+          7,
+          'Salary Details',
+          currentPage == DrawerSections.salaryDetails ? true : false,
+        ),
+        menuItem(
+          8,
+          'Probation List',
+          currentPage == DrawerSections.probationList ? true : false,
+        ),
       ],
     );
   }
@@ -295,14 +322,16 @@ class _MainNavScreenState extends State<MainNavScreen> {
                 ),
                 12.widthBox,
                 Expanded(
-                    child: Text(
-                  title,
-                  style: const TextStyle(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 16,
-                      fontWeight: FontWeight.w500),
-                )),
-                const Icon(Icons.arrow_forward_ios)
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.arrow_forward_ios),
               ],
             ),
           ),

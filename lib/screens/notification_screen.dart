@@ -23,7 +23,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.only(left: 16, right: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -32,7 +32,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+              decelerationRate: ScrollDecelerationRate.fast,),
           child: Container(
             margin: const EdgeInsets.only(top: 16),
             child: StreamBuilder(
@@ -41,7 +41,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   .where('branch', isEqualTo: 'Delhi')
                   .snapshots(),
               builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(
@@ -55,7 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, int index) {
-                    Map<String, dynamic> snap =
+                    final snap =
                         snapshot.data!.docs[index].data();
 
                     return Container(

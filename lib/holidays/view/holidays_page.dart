@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:holiday_repository/holiday_repository.dart';
-import 'package:rmpl_hrm_admin/holidays/holidays.dart';
 import 'package:holiday_api_client/holiday_api_client.dart';
+import 'package:holiday_repository/holiday_repository.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
+import 'package:rmpl_hrm_admin/holidays/holidays.dart';
 
 class HolidaysPage extends StatelessWidget {
   const HolidaysPage({super.key});
@@ -26,7 +27,11 @@ class HolidaysPage extends StatelessWidget {
         listenWhen: (previous, current) => previous.date != current.date,
         listener: (context, state) {
           if (!state.status.isLoading) {
-            context.read<HolidaysBloc>().add(HolidaysFetched());
+            context.read<HolidaysBloc>().add(
+                  HolidaysFetched(
+                    context.read<AppBloc>().state.user.id,
+                  ),
+                );
           }
         },
         child: const HolidaysView(),

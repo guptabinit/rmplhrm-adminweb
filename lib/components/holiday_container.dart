@@ -4,12 +4,11 @@ import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 class HolidayCardWidget extends StatelessWidget {
-  final Holiday holiday;
 
   const HolidayCardWidget({
-    super.key,
-    required this.holiday,
+    required this.holiday, super.key,
   });
+  final Holiday holiday;
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +16,17 @@ class HolidayCardWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: primaryColor)),
+          border: Border.all(color: primaryColor),),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${holiday.date?.date}",
+            '${holiday.date?.date}',
             style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
                 // color: textGreyColor,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w500,),
           ),
           const Text(
             ': ',
@@ -35,11 +34,11 @@ class HolidayCardWidget extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontSize: 16,
                 // color: textGreyColor,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w500,),
           ),
           Expanded(
             child: Text(
-              "${holiday.title}",
+              '${holiday.title}',
               style: const TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 16,
@@ -59,7 +58,7 @@ Widget holidayContainer(String date, String reason) {
     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: primaryColor)),
+        border: Border.all(color: primaryColor),),
     child: Row(
       children: [
         Text(
@@ -68,7 +67,7 @@ Widget holidayContainer(String date, String reason) {
               fontFamily: 'Inter',
               fontSize: 16,
               // color: textGreyColor,
-              fontWeight: FontWeight.w500),
+              fontWeight: FontWeight.w500,),
         ),
         const Text(
           ': ',
@@ -76,7 +75,7 @@ Widget holidayContainer(String date, String reason) {
               fontFamily: 'Inter',
               fontSize: 16,
               // color: textGreyColor,
-              fontWeight: FontWeight.w500),
+              fontWeight: FontWeight.w500,),
         ),
         Text(
           reason,
@@ -84,7 +83,7 @@ Widget holidayContainer(String date, String reason) {
               fontFamily: 'Inter',
               fontSize: 16,
               color: textGreyColor,
-              fontWeight: FontWeight.w500),
+              fontWeight: FontWeight.w500,),
         ),
       ],
     ),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
-
-import '../components/buttons/secondary_button.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -22,7 +21,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     return Scaffold(
         backgroundColor: primaryColor,
         body: Container(
-          margin: const EdgeInsets.only(top: 0),
+          margin: const EdgeInsets.only(),
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           decoration: BoxDecoration(
             color: whiteColor,
@@ -46,11 +45,11 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w500,),
                   ),
                   12.widthBox,
                   SecondaryButton(
-                    title: "Change Date",
+                    title: 'Change Date',
                     onTap: () {},
                     fontSize: 14,
                   ),
@@ -66,7 +65,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           fontFamily: 'Inter',
                           fontSize: 14,
                           color: greenColor,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w500,),
                     ),
                     TextSpan(text: '   '),
                     TextSpan(
@@ -75,7 +74,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           fontFamily: 'Inter',
                           fontSize: 14,
                           color: redColor,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w500,),
                     ),
                   ],
                 ),
@@ -90,7 +89,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     fontFamily: 'Inter',
                     fontSize: 14,
                     color: darkColor,
-                    fontWeight: FontWeight.w400),
+                    fontWeight: FontWeight.w400,),
               ),
               12.heightBox,
               const Text(
@@ -99,7 +98,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     fontFamily: 'Inter',
                     fontSize: 14,
                     color: darkColor,
-                    fontWeight: FontWeight.w400),
+                    fontWeight: FontWeight.w400,),
               ),
               12.heightBox,
               const Text(
@@ -108,7 +107,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     fontFamily: 'Inter',
                     fontSize: 14,
                     color: darkColor,
-                    fontWeight: FontWeight.w400),
+                    fontWeight: FontWeight.w400,),
               ),
               12.heightBox,
               const Text(
@@ -117,10 +116,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                     fontFamily: 'Inter',
                     fontSize: 14,
                     color: darkColor,
-                    fontWeight: FontWeight.w400),
+                    fontWeight: FontWeight.w400,),
               ),
             ],
           ),
-        ));
+        ),);
   }
 }

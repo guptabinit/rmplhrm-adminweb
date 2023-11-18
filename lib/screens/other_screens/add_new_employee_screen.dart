@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
+import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/resources/firestore_methods.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
-import '../../components/custom_textfield.dart';
-
 class AddNewEmployeeScreen extends StatefulWidget {
+  const AddNewEmployeeScreen({required this.branch, super.key});
   final String branch;
-  const AddNewEmployeeScreen({super.key, required this.branch});
 
   static Route<void> route(String branch) => MaterialPageRoute(
         builder: (_) => AddNewEmployeeScreen(branch: branch),
@@ -65,8 +64,8 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
     super.dispose();
   }
 
-  void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
+  Future<void> selectImage() async {
+    final im = await pickImage(ImageSource.gallery);
     setState(() {
       _image = im;
     });
@@ -78,12 +77,12 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
     });
   }
 
-  void addNewEmployee() async {
+  Future<void> addNewEmployee() async {
     setState(() {
       _isLoading = true;
     });
 
-    String res = await FirestoreMethods().createNewEmployee(
+    final res = await FirestoreMethods().createNewEmployee(
       eid: eidController.text,
       password: passwordController.text,
       branch: widget.branch,
@@ -108,9 +107,9 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
     });
 
     if (res != 'success') {
-      showCustomToast(message: res);
+      await showCustomToast(message: res);
     } else {
-      showCustomToast(message: "Successfully added");
+      await showCustomToast(message: 'Successfully added');
       if (mounted) {
         Navigator.of(context).pop();
       }
@@ -126,7 +125,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
         elevation: 0,
         titleSpacing: 0,
         title: const Text(
-          "Add Employee",
+          'Add Employee',
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 18,
@@ -155,7 +154,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.only(left: 16, right: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -164,7 +163,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+              decelerationRate: ScrollDecelerationRate.fast,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -177,7 +176,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                       width: mq.width * 0.3,
                       decoration: BoxDecoration(
                           color: lightGreyColor,
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8),),
                       child: _image != null
                           ? Image.memory(
                               _image!,
@@ -185,9 +184,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                             )
                           : Center(
                               child: IconButton(
-                                onPressed: () {
-                                  selectImage();
-                                },
+                                onPressed: selectImage,
                                 icon: const Icon(Icons.add_circle_outline),
                               ),
                             ),
@@ -197,10 +194,8 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                       children: [
                         const Spacer(),
                         SecondaryButton(
-                          title: "Add profile picture",
-                          onTap: () {
-                            selectImage();
-                          },
+                          title: 'Add profile picture',
+                          onTap: selectImage,
                           fontSize: 14,
                         ),
                         const Spacer(),
@@ -216,7 +211,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -229,7 +224,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -242,7 +237,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -255,7 +250,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -268,7 +263,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -282,7 +277,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -295,7 +290,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -305,16 +300,16 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
               ),
               12.heightBox,
               const Text(
-                'Father\'s Name',
+                "Father's Name",
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
                 controller: fathersNameController,
-                text: 'Father\'s Name',
+                text: "Father's Name",
               ),
               12.heightBox,
               const Text(
@@ -322,7 +317,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -337,7 +332,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -351,7 +346,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -365,7 +360,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -378,7 +373,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -392,7 +387,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -406,7 +401,7 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
               8.heightBox,
               CustomTextFormField(
@@ -414,17 +409,15 @@ class _AddNewEmployeeScreenState extends State<AddNewEmployeeScreen> {
                 text: 'Field Work Allowance (Yes/No)',
               ),
               16.heightBox,
-              _isLoading
-                  ? const Center(
+              if (_isLoading) const Center(
                       child: CircularProgressIndicator(
                         color: primaryColor,
                       ),
-                    )
-                  : MainButton(
-                      title: "Add employee",
+                    ) else MainButton(
+                      title: 'Add employee',
                       onTap: () {
                         if (_image == null) {
-                          showCustomToast(message: "Add profile picture");
+                          showCustomToast(message: 'Add profile picture');
                         } else {
                           addNewEmployee();
                         }

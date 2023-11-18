@@ -18,7 +18,7 @@ class HolidaysView extends StatelessWidget {
       backgroundColor: primaryColor,
       body: Container(
         padding: const EdgeInsets.only(top: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -56,7 +56,7 @@ class HolidaysView extends StatelessWidget {
                   BlocBuilder<HolidaysBloc, HolidaysState>(
                     builder: (context, state) {
                       return SecondaryButton(
-                        title: "Change Duration",
+                        title: 'Change Duration',
                         onTap: () async {
                           final date = await showMonthPicker(
                             context: context,
@@ -108,7 +108,7 @@ class HolidaysView extends StatelessWidget {
                     case HolidaysStatus.loading:
                       return const Center(child: CircularProgressIndicator());
                     case HolidaysStatus.failure:
-                      return const Text("Error");
+                      return const Text('Error');
                     case HolidaysStatus.success:
                       return Expanded(
                         child: ListView.separated(

@@ -8,6 +8,7 @@ import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class EmployeesProfileScreen extends StatefulWidget {
+  const EmployeesProfileScreen({required this.snap, super.key});
   final Map<String, dynamic> snap;
 
   static Route<void> route(Map<String, dynamic> snap) {
@@ -17,8 +18,6 @@ class EmployeesProfileScreen extends StatefulWidget {
       ),
     );
   }
-
-  const EmployeesProfileScreen({super.key, required this.snap});
 
   @override
   State<EmployeesProfileScreen> createState() => _EmployeesProfileScreenState();
@@ -30,7 +29,7 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    final List<ChartData> chartData = [
+    final chartData = <ChartData>[
       ChartData('25% Attendance', 25, Colors.purple[300]!),
       ChartData('8% Leave', 38, Colors.red[300]!),
       ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
@@ -77,7 +76,6 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        margin: const EdgeInsets.only(top: 0),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -86,7 +84,8 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+            decelerationRate: ScrollDecelerationRate.fast,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -94,7 +93,6 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
@@ -103,15 +101,18 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                           height: mq.width * 0.3,
                           width: mq.width * 0.25,
                           decoration: BoxDecoration(
-                              color: lightGreyColor,
-                              borderRadius: BorderRadius.circular(8)),
+                            color: lightGreyColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                           child: CachedNetworkImage(
                             imageUrl: widget.snap['profileUrl'],
                             fit: BoxFit.cover,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) => Center(
-                                    child: CircularProgressIndicator(
-                                        value: downloadProgress.progress)),
+                              child: CircularProgressIndicator(
+                                value: downloadProgress.progress,
+                              ),
+                            ),
                             errorWidget: (context, url, error) =>
                                 const Center(child: Icon(Icons.error)),
                           ),
@@ -121,38 +122,40 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                           child: SizedBox(
                             height: mq.width * 0.3,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Spacer(),
                                 Text(
                                   '${widget.snap['firstName']} ${widget.snap['lastName']}',
                                   style: const TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 const Spacer(),
                                 Text(
                                   '${widget.snap['designation']}',
                                   style: const TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                                 const Spacer(),
                                 Text(
                                   'Employee since ${widget.snap['dateJoined']}',
                                   style: const TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
+                                    fontFamily: 'Inter',
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                                 const Spacer(),
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],
@@ -167,88 +170,92 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
               ),
 
               // if under-probation
-              widget.snap['probation']
-                  ? Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
-                      margin: const EdgeInsets.only(bottom: 12),
-                      decoration: const BoxDecoration(
-                        color: redColor,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'Under Probation',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: whiteColor,
-                              ),
-                            ),
+              if (widget.snap['probation'])
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: const BoxDecoration(
+                    color: redColor,
+                  ),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          'Under Probation',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: whiteColor,
                           ),
-                          SecondaryButton(
-                            title: "Review & Update",
-                            onTap: () {},
-                            fontSize: 14,
-                            titleColor: whiteColor,
-                            backgroundColor: whiteColor,
-                          ),
-                        ],
+                        ),
                       ),
-                    )
-                  : Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 16),
-                      margin: const EdgeInsets.only(bottom: 12),
-                      decoration: const BoxDecoration(
-                        color: lightGreyColor,
+                      SecondaryButton(
+                        title: 'Review & Update',
+                        onTap: () {},
+                        fontSize: 14,
+                        titleColor: whiteColor,
+                        backgroundColor: whiteColor,
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'Under Probation',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: darkColor,
-                              ),
-                            ),
+                    ],
+                  ),
+                )
+              else
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: const BoxDecoration(
+                    color: lightGreyColor,
+                  ),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          'Under Probation',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: darkColor,
                           ),
-                          SecondaryButton(
-                            title: "Review & Update",
-                            onTap: () {},
-                            fontSize: 14,
-                            titleColor: whiteColor,
-                            backgroundColor: whiteColor,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      SecondaryButton(
+                        title: 'Review & Update',
+                        onTap: () {},
+                        fontSize: 14,
+                        titleColor: whiteColor,
+                        backgroundColor: whiteColor,
+                      ),
+                    ],
+                  ),
+                ),
               8.heightBox,
               // attendance report
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
                     const Expanded(
                       child: Text(
                         'Attendance Report:',
                         style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
+                          fontFamily: 'Inter',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     SecondaryButton(
-                      title: "More info",
+                      title: 'More info',
                       onTap: () {},
                       fontSize: 14,
                     ),
@@ -266,41 +273,55 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                   selectionGesture: ActivationMode.singleTap,
                   annotations: <CircularChartAnnotation>[
                     CircularChartAnnotation(
-                        angle: 300, radius: '40%', widget: const Text('25%')),
+                      angle: 300,
+                      radius: '40%',
+                      widget: const Text('25%'),
+                    ),
                     CircularChartAnnotation(
-                        angle: 200, radius: '40%', widget: const Text('38%')),
+                      angle: 200,
+                      radius: '40%',
+                      widget: const Text('38%'),
+                    ),
                     CircularChartAnnotation(
-                        angle: 100, radius: '40%', widget: const Text('34%')),
+                      angle: 100,
+                      radius: '40%',
+                      widget: const Text('34%'),
+                    ),
                     CircularChartAnnotation(
-                        angle: 0, radius: '40%', widget: const Text('52%')),
+                      angle: 0,
+                      radius: '40%',
+                      widget: const Text('52%'),
+                    ),
                   ],
                   series: <CircularSeries>[
                     // Render pie chart
                     PieSeries<ChartData, String>(
-                        dataSource: chartData,
-                        pointColorMapper: (ChartData data, _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y)
+                      dataSource: chartData,
+                      pointColorMapper: (ChartData data, _) => data.color,
+                      xValueMapper: (ChartData data, _) => data.x,
+                      yValueMapper: (ChartData data, _) => data.y,
+                    ),
                   ],
                 ),
               ),
               12.heightBox,
               // Salary Details
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
                     const Expanded(
                       child: Text(
                         'Salary Details:',
                         style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
+                          fontFamily: 'Inter',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                     SecondaryButton(
-                      title: "More info",
+                      title: 'More info',
                       onTap: () {},
                       fontSize: 14,
                     ),
@@ -318,13 +339,25 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                   selectionGesture: ActivationMode.singleTap,
                   annotations: <CircularChartAnnotation>[
                     CircularChartAnnotation(
-                        angle: 300, radius: '40%', widget: const Text('25%')),
+                      angle: 300,
+                      radius: '40%',
+                      widget: const Text('25%'),
+                    ),
                     CircularChartAnnotation(
-                        angle: 200, radius: '40%', widget: const Text('38%')),
+                      angle: 200,
+                      radius: '40%',
+                      widget: const Text('38%'),
+                    ),
                     CircularChartAnnotation(
-                        angle: 100, radius: '40%', widget: const Text('34%')),
+                      angle: 100,
+                      radius: '40%',
+                      widget: const Text('34%'),
+                    ),
                     CircularChartAnnotation(
-                        angle: 0, radius: '40%', widget: const Text('52%')),
+                      angle: 0,
+                      radius: '40%',
+                      widget: const Text('52%'),
+                    ),
                   ],
                   series: <CircularSeries>[
                     // Render pie chart
@@ -344,19 +377,20 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ButtonStyle(
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      backgroundColor:
-                          const MaterialStatePropertyAll(textGreyColor),
-                      elevation: const MaterialStatePropertyAll(3.0)),
+                    ),
+                    padding: const MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    backgroundColor:
+                        const MaterialStatePropertyAll(textGreyColor),
+                    elevation: const MaterialStatePropertyAll(3),
+                  ),
                   child: const Center(
-                    child: Text("Disable Account"),
+                    child: Text('Disable Account'),
                   ),
                 ),
               ),
@@ -366,18 +400,19 @@ class _EmployeesProfileScreenState extends State<EmployeesProfileScreen> {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ButtonStyle(
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      backgroundColor: const MaterialStatePropertyAll(redColor),
-                      elevation: const MaterialStatePropertyAll(3.0)),
+                    ),
+                    padding: const MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    backgroundColor: const MaterialStatePropertyAll(redColor),
+                    elevation: const MaterialStatePropertyAll(3),
+                  ),
                   child: const Center(
-                    child: Text("Delete Account"),
+                    child: Text('Delete Account'),
                   ),
                 ),
               ),

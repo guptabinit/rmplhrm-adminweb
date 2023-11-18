@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
+import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
+import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
-import '../../components/custom_textfield.dart';
-
-import '../../main.dart';
 
 class LeaveApplicationDetailScreen extends StatefulWidget {
   const LeaveApplicationDetailScreen({super.key});
@@ -25,9 +24,9 @@ class _LeaveApplicationDetailScreenState
     extends State<LeaveApplicationDetailScreen> {
   final bool _isLoading = false;
 
-  List<String> applicationList = ["Approve", "Disapprove", "Pending"];
+  List<String> applicationList = ['Approve', 'Disapprove', 'Pending'];
 
-  String _applicationStatus = "Pending";
+  String _applicationStatus = 'Pending';
 
   TextEditingController reasonController = TextEditingController();
 
@@ -46,7 +45,7 @@ class _LeaveApplicationDetailScreenState
         elevation: 0,
         titleSpacing: 0,
         title: const Text(
-          "Leave Detail",
+          'Leave Detail',
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 18,
@@ -58,7 +57,7 @@ class _LeaveApplicationDetailScreenState
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.only(left: 16, right: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -67,7 +66,7 @@ class _LeaveApplicationDetailScreenState
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+              decelerationRate: ScrollDecelerationRate.fast,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -79,15 +78,15 @@ class _LeaveApplicationDetailScreenState
                     width: mq.width * 0.25,
                     decoration: BoxDecoration(
                         color: lightGreyColor,
-                        borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(8),),
                     child: CachedNetworkImage(
                       imageUrl:
-                          "https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png",
+                          'https://www.himalmag.com/wp-content/uploads/2019/07/sample-profile-picture.png',
                       fit: BoxFit.cover,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => Center(
                               child: CircularProgressIndicator(
-                                  value: downloadProgress.progress)),
+                                  value: downloadProgress.progress,),),
                       errorWidget: (context, url, error) =>
                           const Center(child: Icon(Icons.error)),
                     ),
@@ -97,7 +96,6 @@ class _LeaveApplicationDetailScreenState
                     child: SizedBox(
                       height: mq.width * 0.3,
                       child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Spacer(),
@@ -106,7 +104,7 @@ class _LeaveApplicationDetailScreenState
                             style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 18,
-                                fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w600,),
                           ),
                           Spacer(),
                           Text(
@@ -114,7 +112,7 @@ class _LeaveApplicationDetailScreenState
                             style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w400,),
                           ),
                           Spacer(),
                           Text(
@@ -122,13 +120,13 @@ class _LeaveApplicationDetailScreenState
                             style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w400,),
                           ),
                           Spacer(),
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               12.heightBox,
@@ -334,7 +332,7 @@ class _LeaveApplicationDetailScreenState
                   ),
                   Expanded(
                     child: Text(
-                      _applicationStatus.toString(),
+                      _applicationStatus,
                       style: const TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 14,
@@ -348,7 +346,7 @@ class _LeaveApplicationDetailScreenState
               16.heightBox,
               //fields
               const Text(
-                'Admin\'s Reason (if any)',
+                "Admin's Reason (if any)",
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 14,
@@ -362,14 +360,12 @@ class _LeaveApplicationDetailScreenState
                 maxLines: 5,
               ),
               16.heightBox,
-              _isLoading
-                  ? const Center(
+              if (_isLoading) const Center(
                       child: CircularProgressIndicator(
                         color: primaryColor,
                       ),
-                    )
-                  : MainButton(
-                      title: "Update Leave Response",
+                    ) else MainButton(
+                      title: 'Update Leave Response',
                       onTap: () {},
                     ),
               24.heightBox,

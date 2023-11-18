@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/components/manage_leave_card.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/leave_application_detail_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
-import 'package:intl/intl.dart';
-
-import '../components/buttons/secondary_button.dart';
 
 class LeaveApplicationScreen extends StatefulWidget {
   const LeaveApplicationScreen({super.key});
@@ -22,15 +21,15 @@ class LeaveApplicationScreen extends StatefulWidget {
 
 class _LeaveApplicationScreenState extends State<LeaveApplicationScreen> {
   DateTime selectedDate = DateTime.now();
-  var formatterDate = DateFormat('MMM yyyy');
-  var monthFormatter = DateFormat('MM/yyyy');
+  DateFormat formatterDate = DateFormat('MMM yyyy');
+  DateFormat monthFormatter = DateFormat('MM/yyyy');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: const BoxDecoration(
           color: whiteColor,
@@ -63,7 +62,7 @@ class _LeaveApplicationScreenState extends State<LeaveApplicationScreen> {
                   ),
                   12.widthBox,
                   SecondaryButton(
-                    title: "Change Duration",
+                    title: 'Change Duration',
                     onTap: () {
                       showMonthPicker(
                         context: context,

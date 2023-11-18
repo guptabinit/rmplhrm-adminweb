@@ -8,9 +8,7 @@ import 'package:rmpl_hrm_admin/splash/splash.dart';
 
 class App extends StatelessWidget {
   const App({
-    super.key,
-    required this.authenticationRepository,
-    required this.holidayRepository,
+    required this.authenticationRepository, required this.holidayRepository, super.key,
   });
 
   @override

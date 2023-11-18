@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
 class SecondaryButton extends StatelessWidget {
+
+  const SecondaryButton({
+    required this.title, required this.onTap, super.key,
+    this.fontSize = 15,
+    this.load = false,
+    this.mainWidget,
+    this.titleColor = primaryColor,
+    this.backgroundColor = buttonColor,
+  });
   final String title;
   final void Function()? onTap;
   final double? fontSize;
@@ -9,17 +18,6 @@ class SecondaryButton extends StatelessWidget {
   final Widget? mainWidget;
   final Color titleColor;
   final Color backgroundColor;
-
-  const SecondaryButton({
-    super.key,
-    required this.title,
-    required this.onTap,
-    this.fontSize = 15,
-    this.load = false,
-    this.mainWidget,
-    this.titleColor = primaryColor,
-    this.backgroundColor = buttonColor,
-  });
 
   @override
   Widget build(BuildContext context) {

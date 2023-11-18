@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
+import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
+import 'package:rmpl_hrm_admin/resources/auth_methods.dart';
+import 'package:rmpl_hrm_admin/resources/firestore_methods.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
-
-import '../../components/custom_textfield.dart';
-import '../../resources/auth_methods.dart';
-import '../../resources/firestore_methods.dart';
 
 class NewNotificationScreen extends StatefulWidget {
   const NewNotificationScreen({super.key});
@@ -30,10 +29,10 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
     super.dispose();
   }
 
-  String branch = "Branch";
+  String branch = 'Branch';
 
   getAdminData() async {
-    var adminDetails = await AuthMethods().getAdminDetails();
+    final adminDetails = await AuthMethods().getAdminDetails();
     setState(() {
       branch = adminDetails.branch;
     });
@@ -44,17 +43,17 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
     try {
       getAdminData();
     } catch (e) {
-      "Some error: $e".log();
+      'Some error: $e'.log();
     }
     super.initState();
   }
 
-  void addNewNotification() async {
+  Future<void> addNewNotification() async {
     setState(() {
       _isLoading = true;
     });
 
-    String res = await FirestoreMethods().createNewNotification(
+    final res = await FirestoreMethods().createNewNotification(
       branch: branch,
       type: selectedNotificationTypeValue!,
       receiver: selectedReceiverValue!,
@@ -66,9 +65,9 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
     });
 
     if (res != 'success') {
-      showCustomToast(message: res);
+      await showCustomToast(message: res);
     } else {
-      showCustomToast(message: "Successfully added");
+      await showCustomToast(message: 'Successfully added');
       if (mounted) {
         Navigator.of(context).pop();
       }
@@ -77,24 +76,24 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
 
   // Dropdown Menu --> Notification Type
   List<DropdownMenuItem<String>> get dropdownReceiverItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "All", child: Text("All")),
+    final menuItems = <DropdownMenuItem<String>>[
+      const DropdownMenuItem(value: 'All', child: Text('All')),
     ];
     return menuItems;
   }
 
   // Dropdown Menu --> Receiver
   List<DropdownMenuItem<String>> get dropdownNotificationTypeItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "Common", child: Text("Common")),
-      const DropdownMenuItem(value: "Urgent", child: Text("Urgent")),
+    final menuItems = <DropdownMenuItem<String>>[
+      const DropdownMenuItem(value: 'Common', child: Text('Common')),
+      const DropdownMenuItem(value: 'Urgent', child: Text('Urgent')),
     ];
     return menuItems;
   }
 
-  String? selectedNotificationTypeValue = "Common";
+  String? selectedNotificationTypeValue = 'Common';
 
-  String? selectedReceiverValue = "All";
+  String? selectedReceiverValue = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +104,7 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
         elevation: 0,
         titleSpacing: 0,
         title: const Text(
-          "New Notification",
+          'New Notification',
           style: TextStyle(
             fontFamily: 'Inter',
             fontSize: 18,
@@ -117,7 +116,7 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.only(left: 16, right: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -126,7 +125,8 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+            decelerationRate: ScrollDecelerationRate.fast,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -135,9 +135,10 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
               const Text(
                 'Receiver',
                 style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               8.heightBox,
               Padding(
@@ -147,7 +148,7 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
                     Expanded(
                       child: DropdownButton(
                         value: selectedReceiverValue,
-                        hint: const Text("Select the receiver"),
+                        hint: const Text('Select the receiver'),
                         items: dropdownReceiverItems,
                         onChanged: (String? value) {
                           setState(() {
@@ -164,9 +165,10 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
               const Text(
                 'Notification type',
                 style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               8.heightBox,
               Padding(
@@ -176,7 +178,7 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
                     Expanded(
                       child: DropdownButton(
                         value: selectedNotificationTypeValue,
-                        hint: const Text("Select the notification type"),
+                        hint: const Text('Select the notification type'),
                         items: dropdownNotificationTypeItems,
                         onChanged: (String? value) {
                           setState(() {
@@ -205,16 +207,17 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
                 maxLines: 8,
               ),
               16.heightBox,
-              _isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: primaryColor,
-                      ),
-                    )
-                  : MainButton(
-                      title: "Add Notification",
-                      onTap: () => addNewNotification(),
-                    ),
+              if (_isLoading)
+                const Center(
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
+                )
+              else
+                MainButton(
+                  title: 'Add Notification',
+                  onTap: addNewNotification,
+                ),
               24.heightBox,
             ],
           ),

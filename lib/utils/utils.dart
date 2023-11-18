@@ -1,4 +1,5 @@
 import 'dart:developer' as devtools show log;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,10 +8,10 @@ import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:validators/validators.dart';
 
-pickImage(ImageSource source) async {
-  final ImagePicker imagePicker = ImagePicker();
+Future<Uint8List?> pickImage(ImageSource source) async {
+  final imagePicker = ImagePicker();
 
-  XFile? file = await imagePicker.pickImage(source: source, imageQuality: 60);
+  final file = await imagePicker.pickImage(source: source, imageQuality: 60);
 
   if (file != null) {
     return await file.readAsBytes();
@@ -25,7 +26,7 @@ showSnackBar(String content, BuildContext context) {
   );
 }
 
-showCustomToast({
+Future<bool?> showCustomToast({
   required String message,
   Color bgColor = primaryColor,
   Color txtColor = darkColor,
@@ -34,10 +35,9 @@ showCustomToast({
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 1,
     backgroundColor: bgColor,
     textColor: txtColor,
-    fontSize: 14.0,
+    fontSize: 14,
   );
 }
 

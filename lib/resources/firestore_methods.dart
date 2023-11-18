@@ -3,36 +3,37 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/models/emp_model.dart';
 import 'package:rmpl_hrm_admin/models/notification_model.dart';
 import 'package:rmpl_hrm_admin/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 
 class FirestoreMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // function for creating a new employee
-  Future<String> createNewEmployee(
-      {required String eid,
-      required String password,
-      required String branch,
-      required String firstName,
-      required String lastName,
-      required String dob,
-      required String designation,
-      required String dateJoined,
-      required String fathersName,
-      required String address,
-      required String email,
-      required String aadharNumber,
-      required String panNumber,
-      required String basicSalary,
-      required String hra,
-      required String fieldWorkAllowance,
-      required Uint8List file}) async {
-    String res = "Some error occurred";
+  Future<String> createNewEmployee({
+    required String eid,
+    required String password,
+    required String branch,
+    required String firstName,
+    required String lastName,
+    required String dob,
+    required String designation,
+    required String dateJoined,
+    required String fathersName,
+    required String address,
+    required String email,
+    required String aadharNumber,
+    required String panNumber,
+    required String basicSalary,
+    required String hra,
+    required String fieldWorkAllowance,
+    required Uint8List file,
+  }) async {
+    var res = 'Some error occurred';
 
     if (eid.isNotEmpty &&
         password.isNotEmpty &&
@@ -49,23 +50,22 @@ class FirestoreMethods {
         panNumber.isNotEmpty &&
         basicSalary.isNotEmpty &&
         hra.isNotEmpty &&
-        fieldWorkAllowance.isNotEmpty &&
-        file != null) {
-      FirebaseApp app = await Firebase.initializeApp(
+        fieldWorkAllowance.isNotEmpty) {
+      final app = await Firebase.initializeApp(
         name: 'Secondary',
         options: Firebase.app().options,
       );
 
       try {
-        UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+        final userCredential = await FirebaseAuth.instanceFor(app: app)
             .createUserWithEmailAndPassword(email: email, password: password);
 
         try {
-          String photoUrl = await StorageMethods()
+          final photoUrl = await StorageMethods()
               .uploadImageToStorage(uid: userCredential.user!.uid, file: file);
 
           try {
-            EmployeeProfile employee = EmployeeProfile(
+            final employee = EmployeeProfile(
               uid: userCredential.user!.uid,
               eid: eid,
               isActive: true,
@@ -95,14 +95,14 @@ class FirestoreMethods {
                 .doc(userCredential.user!.uid)
                 .set(employee.toJson());
 
-            res = "success";
+            res = 'success';
           } catch (e) {
-            userCredential.user!.delete();
-            res = "Some error occurred while uploading data";
+            await userCredential.user!.delete();
+            res = 'Some error occurred while uploading data';
           }
         } catch (e) {
-          userCredential.user!.delete();
-          res = "Some error occurred while uploading profile picture";
+          await userCredential.user!.delete();
+          res = 'Some error occurred while uploading profile picture';
         }
       } catch (e) {
         res = e.toString();
@@ -110,7 +110,7 @@ class FirestoreMethods {
 
       await app.delete();
     } else {
-      res = "Enter all the details carefully";
+      res = 'Enter all the details carefully';
     }
 
     return res;
@@ -123,18 +123,18 @@ class FirestoreMethods {
     required String receiver,
     required String message,
   }) async {
-    String res = "Some error occurred";
+    var res = 'Some error occurred';
 
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm:ss dd/MM/yyyy').format(now);
+    final now = DateTime.now();
+    final formattedDate = DateFormat('kk:mm:ss dd/MM/yyyy').format(now);
 
     if (branch.isNotEmpty &&
         type.isNotEmpty &&
         receiver.isNotEmpty &&
         message.isNotEmpty) {
-      String notificationID = const Uuid().v1();
+      final notificationID = const Uuid().v1();
 
-      NotificationModel notification = NotificationModel(
+      final notification = NotificationModel(
         notificationID: notificationID,
         branch: branch,
         type: type,
@@ -150,9 +150,9 @@ class FirestoreMethods {
           .doc(notificationID)
           .set(notification.toJson());
 
-      res = "success";
+      res = 'success';
     } else {
-      res = "We need all the fields to be filled.";
+      res = 'We need all the fields to be filled.';
     }
 
     return res;
@@ -164,7 +164,7 @@ class FirestoreMethods {
     required String formattedDate,
     required String title,
   }) async {
-    String res = "Some error occurred";
+    var res = 'Some error occurred';
 
     if (date.isNotEmpty && title.isNotEmpty) {
       // String holidayID = const Uuid().v1();
@@ -182,9 +182,9 @@ class FirestoreMethods {
       //     .doc(holidayID)
       //     .set(holiday.toJson());
 
-      res = "success";
+      res = 'success';
     } else {
-      res = "We need all the fields to be filled.";
+      res = 'We need all the fields to be filled.';
     }
 
     return res;

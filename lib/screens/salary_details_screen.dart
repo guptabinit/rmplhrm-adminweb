@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/colors.dart';
+import 'package:rmpl_hrm_admin/constants/colors.dart';
 
 class SalaryDetailScreen extends StatefulWidget {
   const SalaryDetailScreen({super.key});
@@ -21,7 +21,7 @@ class _SalaryDetailScreenState extends State<SalaryDetailScreen> {
       backgroundColor: primaryColor,
       body: Container(
         padding: const EdgeInsets.only(top: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -32,7 +32,7 @@ class _SalaryDetailScreenState extends State<SalaryDetailScreen> {
           child: CachedNetworkImage(
             width: MediaQuery.of(context).size.width * 0.7,
             imageUrl:
-                "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
+                'https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg',
             fit: BoxFit.fitWidth,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 Center(

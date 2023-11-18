@@ -11,6 +11,7 @@ part 'holiday.g.dart';
 class Holiday extends Equatable {
   const Holiday({
     this.id,
+    this.creator,
     this.date,
     this.title,
     this.createdAt,
@@ -22,10 +23,11 @@ class Holiday extends Equatable {
   Map<String, dynamic> toJson() => _$HolidayToJson(this);
 
   final String? id;
+  final DocumentReference? creator;
   final DateTime? date;
   final String? title;
   final DateTime? createdAt;
 
   @override
-  List<Object?> get props => [id, date, title, createdAt];
+  List<Object?> get props => [id, creator, date, title, createdAt];
 }

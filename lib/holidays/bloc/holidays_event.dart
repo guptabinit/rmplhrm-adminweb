@@ -7,7 +7,14 @@ sealed class HolidaysEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class HolidaysFetched extends HolidaysEvent {}
+final class HolidaysFetched extends HolidaysEvent {
+  const HolidaysFetched(this.creator);
+
+  final String creator;
+
+  @override
+  List<Object?> get props => [creator];
+}
 
 final class HolidaysDateChanged extends HolidaysEvent {
   const HolidaysDateChanged(this.date);

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:rmpl_hrm_admin/add_holiday/add_holiday.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
@@ -41,7 +42,7 @@ class AddHolidayForm extends StatelessWidget {
           elevation: 0,
           titleSpacing: 0,
           title: const Text(
-            "Add Holiday",
+            'Add Holiday',
             style: TextStyle(
               fontFamily: 'Inter',
               fontSize: 18,
@@ -54,7 +55,7 @@ class AddHolidayForm extends StatelessWidget {
           width: double.infinity,
           height: double.infinity,
           padding: const EdgeInsets.only(left: 16, right: 16),
-          margin: const EdgeInsets.only(top: 0),
+          margin: const EdgeInsets.only(),
           decoration: const BoxDecoration(
             color: whiteColor,
             borderRadius: BorderRadius.vertical(
@@ -186,10 +187,12 @@ class _AddHolidayButton extends StatelessWidget {
                 ),
               )
             : MainButton(
-                title: "Add Holiday",
+                title: 'Add Holiday',
                 onTap: !state.isValid
                     ? null
-                    : () => context.read<AddHolidayCubit>().addHoliday(),
+                    : () => context.read<AddHolidayCubit>().addHoliday(
+                          creator: context.read<AppBloc>().state.user.id,
+                        ),
               );
       },
     );

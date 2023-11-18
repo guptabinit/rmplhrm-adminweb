@@ -4,11 +4,10 @@ import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/dimensions.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/resources/auth_methods.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
-
-import '../../resources/auth_methods.dart';
 
 @Deprecated('Use LoginPage instead of LoginScreen')
 class LoginScreen extends StatefulWidget {
@@ -35,12 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void loginAdmin() async {
+  Future<void> loginAdmin() async {
     setState(() {
       _isLoading = true;
     });
 
-    String res = await AuthMethods().loginAdmin(
+    final res = await AuthMethods().loginAdmin(
       email: emailController.text,
       password: passController.text,
     );
@@ -50,13 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (res == 'success') {
       if (mounted) {
-        Navigator.of(context).pushReplacement(
+        await Navigator.of(context).pushReplacement(
           // MainNavScreen.route(),
           RootPage.route(),
         );
       }
     } else {
-      showCustomToast(
+      await showCustomToast(
         message: res,
         bgColor: redColor,
       );
@@ -70,7 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: primaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Center(
@@ -89,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
             decoration: const BoxDecoration(
               color: whiteColor,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(28), topRight: Radius.circular(28)),
+                  topLeft: Radius.circular(28), topRight: Radius.circular(28),),
               // borderRadius: BorderRadius.all(Radius.circular(28)
               // )
             ),
@@ -115,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontFamily: 'Inter',
                       color: darkColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w500,),
                 ),
                 8.heightBox,
                 CustomTextFormField(
@@ -130,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontFamily: 'Inter',
                       color: darkColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w500,),
                 ),
                 8.heightBox,
                 CustomTextFormField(
@@ -140,13 +138,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 20.heightBox,
                 CustomButton(
-                  onPress: () => loginAdmin(),
+                  onPress: loginAdmin,
                   child: _isLoading
                       ? const CircularProgressIndicator(
                           color: whiteColor,
                         )
                       : const Text(
-                          "Login",
+                          'Login',
                           style: TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w500,
@@ -163,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w500,),
                     ),
                     TextButton(
                       onPressed: () {},
@@ -172,14 +170,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
 class MainButton extends StatelessWidget {
+
+  const MainButton({
+    required this.title, required this.onTap, super.key,
+    this.fontSize = 16,
+    this.load = false,
+    this.mainWidget,
+    this.backgroundColor = primaryColor,
+  });
   final String title;
   final void Function()? onTap;
   final double? fontSize;
   final bool load;
   final Widget? mainWidget;
   final Color backgroundColor;
-
-  const MainButton({
-    super.key,
-    required this.title,
-    required this.onTap,
-    this.fontSize = 16,
-    this.load = false,
-    this.mainWidget,
-    this.backgroundColor = primaryColor,
-  });
 
   @override
   Widget build(BuildContext context) {

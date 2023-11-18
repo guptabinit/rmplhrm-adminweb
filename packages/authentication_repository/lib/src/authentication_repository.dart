@@ -1,7 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
-
 import 'package:cache/cache.dart';
-
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class SignInWithEmailAndPasswordFailure implements Exception {

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:holiday_api/holiday_api.dart';
 
 class HolidayApiClient extends HolidayApi {
@@ -21,9 +22,13 @@ class HolidayApiClient extends HolidayApi {
   }
 
   @override
-  Stream<List<Holiday>> getHolidays(DateTime date) {
+  Stream<List<Holiday>> getHolidays({
+    required DocumentReference creator,
+    required DateTime date,
+  }) {
     return _firestore
         .collection('holidays')
+        .where('creator', isEqualTo: creator)
         .where(
           'date',
           isGreaterThanOrEqualTo: DateTime(

@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/models/holiday_model.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
-
-import '../components/buttons/secondary_button.dart';
 
 @Deprecated('Use HolidayPage instead of this class')
 class HolidayScreen extends StatefulWidget {
@@ -31,7 +30,7 @@ class _HolidayScreenState extends State<HolidayScreen> {
       backgroundColor: primaryColor,
       body: Container(
         padding: const EdgeInsets.only(top: 16),
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -66,7 +65,7 @@ class _HolidayScreenState extends State<HolidayScreen> {
                       ),
                       12.widthBox,
                       SecondaryButton(
-                        title: "Change Duration",
+                        title: 'Change Duration',
                         onTap: () async {
                           final date = await showMonthPicker(
                             context: context,
@@ -97,7 +96,6 @@ class _HolidayScreenState extends State<HolidayScreen> {
                           isGreaterThanOrEqualTo: DateTime(
                             selectedDate.year,
                             selectedDate.month,
-                            1,
                           ),
                           isLessThanOrEqualTo: DateTime(
                             selectedDate.year,

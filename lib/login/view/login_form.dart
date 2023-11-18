@@ -44,7 +44,6 @@ class LoginForm extends StatelessWidget {
         backgroundColor: primaryColor,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Center(
@@ -216,7 +215,7 @@ class _LoginButton extends StatelessWidget {
                     ? null
                     : () => context.read<LoginCubit>().login(),
                 child: const Text(
-                  "Login",
+                  'Login',
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,

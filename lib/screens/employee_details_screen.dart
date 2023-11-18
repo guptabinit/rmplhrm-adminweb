@@ -6,8 +6,8 @@ import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class EmployeeDetailScreen extends StatefulWidget {
+  const EmployeeDetailScreen({required this.branch, super.key});
   final String branch;
-  const EmployeeDetailScreen({super.key, required this.branch});
 
   static Route<void> route({
     required String branch,
@@ -29,7 +29,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
       backgroundColor: primaryColor,
       body: Container(
         height: double.infinity,
-        margin: const EdgeInsets.only(top: 0),
+        margin: const EdgeInsets.only(),
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         decoration: const BoxDecoration(
           color: whiteColor,
@@ -67,7 +67,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                       ),
                       8.widthBox,
                       const Text(
-                        "Search employee",
+                        'Search employee',
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
@@ -88,7 +88,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                     .snapshots(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
+                        snapshot,) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(
@@ -103,7 +103,7 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
-                            Map<String, dynamic> snap =
+                            final snap =
                                 snapshot.data!.docs[index].data();
 
                             return Container(
@@ -118,12 +118,12 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           child: CachedNetworkImage(
                             width: MediaQuery.of(context).size.width * 0.7,
                             imageUrl:
-                                "https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg",
+                                'https://img.freepik.com/free-vector/empty-concept-illustration_114360-7416.jpg',
                             fit: BoxFit.fitWidth,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) => Center(
                                     child: CircularProgressIndicator(
-                                        value: downloadProgress.progress)),
+                                        value: downloadProgress.progress,),),
                             errorWidget: (context, url, error) =>
                                 const Center(child: Icon(Icons.error)),
                           ),

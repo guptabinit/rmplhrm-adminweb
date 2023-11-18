@@ -92,7 +92,7 @@ class SplashView extends StatelessWidget {
                       colors: [whiteColor],
                     ),
                   ),
-                  const Spacer(flex: 1),
+                  const Spacer(),
                   const Text(
                     'Powered by Quickgick',
                     style: TextStyle(

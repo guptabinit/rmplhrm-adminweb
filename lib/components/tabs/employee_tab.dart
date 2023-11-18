@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
+import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/profile_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
-import '../../constants/colors.dart';
-import '../buttons/secondary_button.dart';
-
 class EmployeeTab extends StatelessWidget {
-  final Map<String, dynamic> snap;
 
-  const EmployeeTab({super.key, required this.snap});
+  const EmployeeTab({required this.snap, super.key});
+  final Map<String, dynamic> snap;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class EmployeeTab extends StatelessWidget {
             ),
           ),
           SecondaryButton(
-            title: "View more",
+            title: 'View more',
             onTap: () {
               Navigator.of(context).push(
                 EmployeesProfileScreen.route(

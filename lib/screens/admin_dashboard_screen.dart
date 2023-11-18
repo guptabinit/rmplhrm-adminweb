@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/resources/auth_methods.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../models/admin_model.dart';
-import '../resources/auth_methods.dart';
-
 class AdminDashboardScreen extends StatefulWidget {
-  final bool isLogoutTrigger;
   const AdminDashboardScreen({super.key, this.isLogoutTrigger = false});
+  final bool isLogoutTrigger;
 
   static Route<void> route(
     bool isLogoutTrigger,
@@ -27,12 +25,12 @@ class AdminDashboardScreen extends StatefulWidget {
 }
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
-  String inTime = "09:00 AM";
-  String outTime = "05:00 PM";
-  String workingHours = "08:00 Hrs";
+  String inTime = '09:00 AM';
+  String outTime = '05:00 PM';
+  String workingHours = '08:00 Hrs';
 
   getAdminData() async {
-    AdminModel adminDetails = await AuthMethods().getAdminDetails();
+    final adminDetails = await AuthMethods().getAdminDetails();
     setState(() {
       inTime = adminDetails.inTime;
       outTime = adminDetails.outTime;
@@ -43,7 +41,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    final List<ChartData> chartData = [
+    final chartData = <ChartData>[
       ChartData('25% Attendance', 25, Colors.purple[300]!),
       ChartData('8% Leave', 38, Colors.red[300]!),
       ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
@@ -54,8 +52,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.only(top: 0),
-        margin: const EdgeInsets.only(top: 0),
+        padding: const EdgeInsets.only(),
+        margin: const EdgeInsets.only(),
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(
@@ -64,7 +62,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast),
+              decelerationRate: ScrollDecelerationRate.fast,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -79,21 +77,21 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
                       Text(
                         'Punch Out',
                         style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
                       Text(
                         'Working Hours',
                         style: TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
                     ],
                   ),
@@ -114,7 +112,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 14,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w500,),
                         ),
                       ),
                       Expanded(
@@ -124,7 +122,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           style: const TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 14,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w500,),
                         ),
                       ),
                       Text(
@@ -132,22 +130,22 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         style: const TextStyle(
                             fontFamily: 'Inter',
                             fontSize: 14,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
-                      28.widthBox
+                      28.widthBox,
                     ],
                   ),
                 ],
               ),
               20.heightBox,
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   'Attendance',
                   style: TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 20,
-                      fontWeight: FontWeight.w600),
+                      fontWeight: FontWeight.w600,),
                 ),
               ),
               SizedBox(
@@ -168,13 +166,13 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     selectionGesture: ActivationMode.singleTap,
                     annotations: <CircularChartAnnotation>[
                       CircularChartAnnotation(
-                          angle: 300, radius: '40%', widget: const Text('25%')),
+                          angle: 300, radius: '40%', widget: const Text('25%'),),
                       CircularChartAnnotation(
-                          angle: 200, radius: '40%', widget: const Text('38%')),
+                          angle: 200, radius: '40%', widget: const Text('38%'),),
                       CircularChartAnnotation(
-                          angle: 100, radius: '40%', widget: const Text('34%')),
+                          angle: 100, radius: '40%', widget: const Text('34%'),),
                       CircularChartAnnotation(
-                          angle: 0, radius: '40%', widget: const Text('52%')),
+                          angle: 0, radius: '40%', widget: const Text('52%'),),
                     ],
                     series: <CircularSeries>[
                       // Render pie chart
@@ -182,11 +180,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           dataSource: chartData,
                           pointColorMapper: (ChartData data, _) => data.color,
                           xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y)
-                    ]),
+                          yValueMapper: (ChartData data, _) => data.y,),
+                    ],),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -198,10 +196,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w600,),
                         ),
                         SecondaryButton(
-                          title: "View all",
+                          title: 'View all',
                           onTap: () {},
                         ),
                       ],
@@ -214,7 +212,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             fontFamily: 'Inter',
                             fontSize: 14,
                             color: greenColor,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
                       TextSpan(text: '    '),
                       TextSpan(
@@ -223,9 +221,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                             fontFamily: 'Inter',
                             fontSize: 14,
                             color: redColor,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,),
                       ),
-                    ])),
+                    ],),),
                     const Divider(
                       color: textGreyColor,
                     ),
@@ -244,7 +242,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                 fontFamily: 'Inter',
                                 fontSize: 14,
                                 color: darkColor,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w400,),
                           ),
                         ),
                       ],
@@ -265,7 +263,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                 fontFamily: 'Inter',
                                 fontSize: 14,
                                 color: darkColor,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w400,),
                           ),
                         ),
                       ],
@@ -286,7 +284,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                 fontFamily: 'Inter',
                                 fontSize: 14,
                                 color: darkColor,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w400,),
                           ),
                         ),
                       ],
@@ -307,7 +305,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                                 fontFamily: 'Inter',
                                 fontSize: 14,
                                 color: darkColor,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.w400,),
                           ),
                         ),
                       ],
@@ -321,10 +319,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 20,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w600,),
                         ),
                         SecondaryButton(
-                          title: "View all",
+                          title: 'View all',
                           onTap: () {},
                         ),
                       ],
@@ -338,7 +336,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           fontFamily: 'Inter',
                           fontSize: 14,
                           color: darkColor,
-                          fontWeight: FontWeight.w400),
+                          fontWeight: FontWeight.w400,),
                     ),
                     8.heightBox,
                     const Text(
@@ -347,7 +345,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           fontFamily: 'Inter',
                           fontSize: 14,
                           color: darkColor,
-                          fontWeight: FontWeight.w400),
+                          fontWeight: FontWeight.w400,),
                     ),
                     8.heightBox,
                     const Text(
@@ -356,7 +354,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           fontFamily: 'Inter',
                           fontSize: 14,
                           color: darkColor,
-                          fontWeight: FontWeight.w400),
+                          fontWeight: FontWeight.w400,),
                     ),
                     8.heightBox,
                     const Text(
@@ -365,7 +363,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           fontFamily: 'Inter',
                           fontSize: 14,
                           color: darkColor,
-                          fontWeight: FontWeight.w400),
+                          fontWeight: FontWeight.w400,),
                     ),
                     28.heightBox,
                   ],

@@ -7,9 +7,7 @@ import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class NavigationBar extends StatelessWidget {
   const NavigationBar({
-    super.key,
-    required this.route,
-    required this.selected,
+    required this.route, required this.selected, super.key,
   });
 
   final AppRoute route;
@@ -51,7 +49,7 @@ class NavigationBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Icon(Icons.arrow_forward_ios)
+                const Icon(Icons.arrow_forward_ios),
               ],
             ),
           ),

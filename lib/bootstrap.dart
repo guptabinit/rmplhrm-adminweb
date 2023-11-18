@@ -1,11 +1,11 @@
 import 'dart:developer';
 
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday_api/holiday_api.dart';
 import 'package:holiday_repository/holiday_repository.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 
 Future<void> bootstrap({
   required HolidayApi holidayApi,

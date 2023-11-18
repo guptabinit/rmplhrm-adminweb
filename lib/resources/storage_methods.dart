@@ -7,13 +7,13 @@ class StorageMethods {
   // adding image to firebase storage
   Future<String> uploadImageToStorage({required String uid, required Uint8List file}) async {
 
-    Reference ref = _storage.ref().child('profile_pic').child(uid);
+    final ref = _storage.ref().child('profile_pic').child(uid);
 
-    UploadTask uploadTask = ref.putData(file);
+    final uploadTask = ref.putData(file);
 
-    TaskSnapshot snap = await uploadTask;
+    final snap = await uploadTask;
 
-    String downloadUrl = await snap.ref.getDownloadURL();
+    final downloadUrl = await snap.ref.getDownloadURL();
 
     return downloadUrl;
   }

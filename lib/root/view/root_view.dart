@@ -21,7 +21,7 @@ import 'package:rmpl_hrm_admin/utils/box.dart';
 const routes = <Widget>[
   AdminDashboardScreen(),
   EmployeeDetailScreen(
-    branch: "Empty",
+    branch: 'Empty',
   ), // This branch should be replaced with the branch name by bloc listener
   NotificationScreen(),
   AttendanceScreen(),
@@ -54,7 +54,7 @@ class RootView extends StatelessWidget {
             ),
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           );
-        }),
+        },),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -67,18 +67,16 @@ class RootView extends StatelessWidget {
                 color: whiteColor,
               ),
             ),
-            selectedRoute.index == 0 ? 4.heightBox : Container(),
-            selectedRoute.index == 0 || selectedRoute.index == 8
-                ? const Text(
-                    "branch", // TODO: change to branch name by bloc listener
+            if (selectedRoute.index == 0) 4.heightBox else Container(),
+            if (selectedRoute.index == 0 || selectedRoute.index == 8) const Text(
+                    'branch', // TODO: change to branch name by bloc listener
                     style: TextStyle(
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       fontSize: 12,
                       color: whiteColor,
                     ),
-                  )
-                : Container(),
+                  ) else Container(),
           ],
         ),
         actions: [
@@ -86,17 +84,17 @@ class RootView extends StatelessWidget {
             onTap: () async {
               if (selectedRoute.index == 7) {
               } else if (selectedRoute.index == 1) {
-                Navigator.of(context).push(
-                  AddNewEmployeeScreen.route("branch"),
+                await Navigator.of(context).push(
+                  AddNewEmployeeScreen.route('branch'),
                 );
               } else if (selectedRoute.index == 2) {
-                Navigator.of(context).push(NewNotificationScreen.route());
+                await Navigator.of(context).push(NewNotificationScreen.route());
               } else if (selectedRoute.index == 4) {
-                Navigator.of(context).push(AddHolidayPage.route());
+                await Navigator.of(context).push(AddHolidayPage.route());
               } else {
                 final value = await showCustomDialog<bool>(
                   context: context,
-                  title: "Do you really want to log out?",
+                  title: 'Do you really want to log out?',
                   optionBuilder: () => {
                     'Logout': true,
                     'Cancel': false,
@@ -124,7 +122,7 @@ class RootView extends StatelessWidget {
               ),
             ),
           ),
-          16.widthBox
+          16.widthBox,
         ],
       ),
       drawer: Drawer(

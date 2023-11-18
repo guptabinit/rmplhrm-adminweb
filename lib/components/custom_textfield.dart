@@ -2,16 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final TextEditingController? controller;
-  final String? text;
-  final int? maxLines;
-  final TextInputType? inputType;
-  final bool isPassword;
-  final Widget? suffixIcon;
-  final Function(String)? onChanged;
-  final String? errorText;
-  final bool readOnly;
-  final Function()? onTap;
 
   const CustomTextFormField({
     super.key,
@@ -26,6 +16,16 @@ class CustomTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
   });
+  final TextEditingController? controller;
+  final String? text;
+  final int? maxLines;
+  final TextInputType? inputType;
+  final bool isPassword;
+  final Widget? suffixIcon;
+  final Function(String)? onChanged;
+  final String? errorText;
+  final bool readOnly;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {

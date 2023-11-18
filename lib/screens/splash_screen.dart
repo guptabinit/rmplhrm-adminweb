@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
-
-import '../constants/colors.dart';
 
 @Deprecated('Use SplashScreen instead of this')
 class SplashScreen extends StatefulWidget {
@@ -78,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 4,
               decoration: BoxDecoration(
                   color: lightGreyColor,
-                  borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),),
             ),
           ),
           16.heightBox,
@@ -118,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
           const Spacer(
-            flex: 1,
+            
           ),
           const Text(
             'Powered by Quickgick',

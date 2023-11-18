@@ -4,16 +4,15 @@ import 'package:rmpl_hrm_admin/constants/dimensions.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 
 class CustomButton extends StatefulWidget {
+  const CustomButton({
+    required this.onPress,
+    required this.child,
+    super.key,
+    this.backgroundColor = primaryColor,
+  });
   final void Function()? onPress;
   final Widget child;
   final Color backgroundColor;
-
-  const CustomButton({
-    super.key,
-    required this.onPress,
-    required this.child,
-    this.backgroundColor = primaryColor,
-  });
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -26,18 +25,19 @@ class _CustomButtonState extends State<CustomButton> {
     return ElevatedButton(
       onPressed: widget.onPress,
       style: ButtonStyle(
-          shape: MaterialStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
           ),
-          padding: mq.width > webScreenSize
-              ? const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20))
-              : const MaterialStatePropertyAll(
-                  EdgeInsets.symmetric(vertical: 16),
-                ),
-          backgroundColor: const MaterialStatePropertyAll(primaryColor),
-          elevation: const MaterialStatePropertyAll(3.0)),
+        ),
+        padding: mq.width > webScreenSize
+            ? const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20))
+            : const MaterialStatePropertyAll(
+                EdgeInsets.symmetric(vertical: 16),
+              ),
+        backgroundColor: const MaterialStatePropertyAll(primaryColor),
+        elevation: const MaterialStatePropertyAll(3),
+      ),
       child: Center(
         child: widget.child,
       ),
@@ -45,15 +45,23 @@ class _CustomButtonState extends State<CustomButton> {
   }
 }
 
-Widget customButton(void Function()? onPress, String text, context) {
+Widget customButton(
+  void Function()? onPress,
+  String text,
+  BuildContext context,
+) {
   mq = MediaQuery.of(context).size;
   return ElevatedButton(
     onPressed: onPress,
     style: ButtonStyle(
-        shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-        padding: mq.width > webScreenSize ? const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20)) : const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16)),
-        backgroundColor: const MaterialStatePropertyAll(buttonColor),
-        elevation: const MaterialStatePropertyAll(3.0)),
+      shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+      padding: mq.width > webScreenSize
+          ? const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 20))
+          : const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 16)),
+      backgroundColor: const MaterialStatePropertyAll(buttonColor),
+      elevation: const MaterialStatePropertyAll(3),
+    ),
     child: Center(
       child: Text(
         text,

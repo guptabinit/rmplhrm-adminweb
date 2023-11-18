@@ -5,7 +5,7 @@ import 'package:rmpl_hrm_admin/utils/box.dart';
 typedef DialogOptionBuilder<T> = Map<String, T?> Function();
 
 Future<T?> showCustomDialog<T>({
-  required context,
+  required BuildContext context,
   required String title,
   required DialogOptionBuilder optionBuilder,
 }) {
@@ -26,7 +26,7 @@ Future<T?> showCustomDialog<T>({
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "RMPL HRM",
+              'RMPL HRM',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,

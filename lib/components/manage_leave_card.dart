@@ -21,7 +21,7 @@ class LeaveApplicationCard extends StatelessWidget {
             blurRadius: 30,
             // spreadRadius: 12
             blurStyle: BlurStyle.outer,
-          )
+          ),
         ],
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: borderColor),
@@ -74,7 +74,7 @@ class LeaveApplicationCard extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontSize: 14,
                 // color: textGreyColor,
-                fontWeight: FontWeight.w400),
+                fontWeight: FontWeight.w400,),
           ),
           8.heightBox,
           const Text(
@@ -83,7 +83,7 @@ class LeaveApplicationCard extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontSize: 14,
                 // color: textGreyColor,
-                fontWeight: FontWeight.w400),
+                fontWeight: FontWeight.w400,),
           ),
           8.heightBox,
           const Text(
@@ -92,7 +92,7 @@ class LeaveApplicationCard extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontSize: 14,
                 // color: textGreyColor,
-                fontWeight: FontWeight.w400),
+                fontWeight: FontWeight.w400,),
           ),
         ],
       ),
@@ -110,10 +110,10 @@ Widget manageLeaveCard(Color color) {
               color: borderColor,
               blurRadius: 30,
               // spreadRadius: 12
-              blurStyle: BlurStyle.outer)
+              blurStyle: BlurStyle.outer,),
         ],
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor)),
+        border: Border.all(color: borderColor),),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -133,19 +133,19 @@ Widget manageLeaveCard(Color color) {
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                  color: color, borderRadius: BorderRadius.circular(12)),
+                  color: color, borderRadius: BorderRadius.circular(12),),
               child: const Text(
                 'Status: Pending',
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w500,),
               ),
             ),
           ],
@@ -157,7 +157,7 @@ Widget manageLeaveCard(Color color) {
               fontFamily: 'Inter',
               fontSize: 12,
               // color: textGreyColor,
-              fontWeight: FontWeight.w400),
+              fontWeight: FontWeight.w400,),
         ),
         8.heightBox,
         const Text(
@@ -166,7 +166,7 @@ Widget manageLeaveCard(Color color) {
               fontFamily: 'Inter',
               fontSize: 12,
               // color: textGreyColor,
-              fontWeight: FontWeight.w400),
+              fontWeight: FontWeight.w400,),
         ),
       ],
     ),

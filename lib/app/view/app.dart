@@ -1,14 +1,15 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday_repository/holiday_repository.dart';
-import 'package:provider/provider.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/providers/admin_provider.dart';
-import 'package:rmpl_hrm_admin/screens/splash_screen.dart';
+import 'package:rmpl_hrm_admin/splash/splash.dart';
 
 class App extends StatelessWidget {
   const App({
     super.key,
+    required this.authenticationRepository,
     required this.holidayRepository,
   });
 
@@ -17,13 +18,22 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(
+          value: authenticationRepository,
+        ),
+        RepositoryProvider.value(
           value: holidayRepository,
         ),
       ],
-      child: const AppView(),
+      child: BlocProvider(
+        create: (context) => AppBloc(
+          authenticationRepository: context.read<AuthenticationRepository>(),
+        ),
+        child: const AppView(),
+      ),
     );
   }
 
+  final AuthenticationRepository authenticationRepository;
   final HolidayRepository holidayRepository;
 }
 
@@ -32,20 +42,13 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => AdminProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'RMPL HRM ADMIN',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-        ),
-        home: const SplashScreen(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'RMPL HRM ADMIN',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
       ),
+      home: const SplashPage(),
     );
   }
 }

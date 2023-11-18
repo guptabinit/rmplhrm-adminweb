@@ -1,13 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:rmpl_hrm_admin/main.dart';
-import 'package:rmpl_hrm_admin/root/root.dart';
-import 'package:rmpl_hrm_admin/screens/authentication/login_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 import '../constants/colors.dart';
 
+@Deprecated('Use SplashScreen instead of this')
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -23,20 +21,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
-      FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        if (user == null) {
-          Navigator.of(context).pushAndRemoveUntil(
-            LoginScreen.route(),
-            (_) => false,
-          );
-        } else {
-          Navigator.of(context).pushAndRemoveUntil(
-            // MainNavScreen.route(),
-            RootPage.route(),
-            (_) => false,
-          );
-        }
-      });
+      // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      //   if (user == null) {
+      //     Navigator.of(context).pushAndRemoveUntil(
+      //       // LoginScreen.route(),
+      //       LoginPage.route(),
+      //       (_) => false,
+      //     );
+      //   } else {
+      //     Navigator.of(context).pushAndRemoveUntil(
+      //       // MainNavScreen.route(),
+      //       RootPage.route(),
+      //       (_) => false,
+      //     );
+      //   }
+      // });
     });
     super.initState();
   }

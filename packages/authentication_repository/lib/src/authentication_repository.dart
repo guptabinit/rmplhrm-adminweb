@@ -10,31 +10,38 @@ class SignInWithEmailAndPasswordFailure implements Exception {
   ]);
 
   factory SignInWithEmailAndPasswordFailure.fromCode(String code) {
-    switch (code) {
+    switch (code.toLowerCase()) {
+      case 'invalid_login_credentials':
+        return const SignInWithEmailAndPasswordFailure(
+          'Invalid email or password',
+        );
       case 'invalid-email:':
-        return const SignInWithEmailAndPasswordFailure('Invalid email address');
-
+        return const SignInWithEmailAndPasswordFailure(
+          'Invalid email address',
+        );
       case 'user-disabled':
-        return const SignInWithEmailAndPasswordFailure('User is disabled');
-
+        return const SignInWithEmailAndPasswordFailure(
+          'User is disabled',
+        );
       case 'user-not-found':
-        return const SignInWithEmailAndPasswordFailure('User not found');
-
+        return const SignInWithEmailAndPasswordFailure(
+          'User not found',
+        );
       case 'wrong-password':
-        return const SignInWithEmailAndPasswordFailure('Wrong password');
-
+        return const SignInWithEmailAndPasswordFailure(
+          'Wrong password',
+        );
       default:
         return const SignInWithEmailAndPasswordFailure();
     }
   }
-
   final String message;
 }
 
 class SignOutFailure implements Exception {}
 
-class AuthonticationRepository {
-  AuthonticationRepository({
+class AuthenticationRepository {
+  AuthenticationRepository({
     CacheClient? cache,
     firebase_auth.FirebaseAuth? firebaseAuth,
   })  : _cache = cache ?? CacheClient(),

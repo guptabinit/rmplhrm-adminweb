@@ -8,8 +8,8 @@ part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit({
-    required AuthonticationRepository authonticationRepository,
-  })  : _authonticationRepository = authonticationRepository,
+    required AuthenticationRepository authenticationRepository,
+  })  : _authenticationRepository = AuthenticationRepository(),
         super(const LoginState());
 
   void emailChanged(String? value) {
@@ -50,7 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
       ),
     );
     try {
-      await _authonticationRepository.loginWithEmailAndPasswordFailure(
+      await _authenticationRepository.loginWithEmailAndPasswordFailure(
         email: state.email.value!,
         password: state.password.value!,
       );
@@ -70,5 +70,5 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  final AuthonticationRepository _authonticationRepository;
+  final AuthenticationRepository _authenticationRepository;
 }

@@ -8,6 +8,7 @@ import 'package:rmpl_hrm_admin/firebase_options.dart';
 late Size mq;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -16,5 +17,5 @@ Future<void> main() async {
 
   final holidayApi = HolidayApiClient(firestore: firestore);
 
-  bootstrap(holidayApi: holidayApi);
+  await bootstrap(holidayApi: holidayApi);
 }

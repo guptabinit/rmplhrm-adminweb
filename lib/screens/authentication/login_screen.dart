@@ -10,6 +10,7 @@ import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 import '../../resources/auth_methods.dart';
 
+@Deprecated('Use LoginPage instead of LoginScreen')
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

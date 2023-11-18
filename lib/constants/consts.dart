@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
-import '../components/buttons/main_button.dart';
+typedef DialogOptionBuilder<T> = Map<String, T?> Function();
 
-showCustomDialog({
+Future<T?> showCustomDialog<T>({
   required context,
   required String title,
-  required String btn1,
-  required void Function()? btn1fun,
-  required String btn2,
+  required DialogOptionBuilder optionBuilder,
 }) {
-  showDialog(
+  final options = optionBuilder();
+  return showDialog<T>(
     context: context,
-    builder: (ctx) => Dialog(
+    builder: (context) => Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -45,26 +44,42 @@ showCustomDialog({
             ),
             16.heightBox,
             Row(
-              children: [
-                Expanded(
-                  child: MainButton(
-                    title: btn1,
-                    onTap: btn1fun,
-                    fontSize: 14,
-                  ),
-                ),
-                12.widthBox,
-                Expanded(
-                  child: MainButton(
-                    title: btn2,
-                    onTap: () {
-                      Navigator.of(context).pop();
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: options.keys.map(
+                (optionTitle) {
+                  final value = options[optionTitle];
+                  return TextButton(
+                    onPressed: () {
+                      if (value != null) {
+                        Navigator.of(context).pop(value);
+                      } else {
+                        Navigator.of(context).pop();
+                      }
                     },
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            )
+                    child: Text(optionTitle),
+                  );
+                },
+              ).toList(),
+              // children: [
+              // Expanded(
+              //   child: MainButton(
+              //     title: btn1,
+              //     onTap: btn1fun,
+              //     fontSize: 14,
+              //   ),
+              // ),
+              // 12.widthBox,
+              // Expanded(
+              //   child: MainButton(
+              //     title: btn2,
+              //     onTap: () {
+              //       Navigator.of(context).pop();
+              //     },
+              //     fontSize: 14,
+              //   ),
+              // ),
+              // ],
+            ),
           ],
         ),
       ),

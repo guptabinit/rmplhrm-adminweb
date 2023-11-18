@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide NavigationBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/add_holiday/view/add_holiday_page.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
@@ -82,7 +83,7 @@ class RootView extends StatelessWidget {
         ),
         actions: [
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               if (selectedRoute.index == 7) {
               } else if (selectedRoute.index == 1) {
                 Navigator.of(context).push(
@@ -93,15 +94,17 @@ class RootView extends StatelessWidget {
               } else if (selectedRoute.index == 4) {
                 Navigator.of(context).push(AddHolidayPage.route());
               } else {
-                showCustomDialog(
+                final value = await showCustomDialog<bool>(
                   context: context,
                   title: "Do you really want to log out?",
-                  btn1: "Logout",
-                  btn1fun: () {
-                    // loggingOut();
+                  optionBuilder: () => {
+                    'Logout': true,
+                    'Cancel': false,
                   },
-                  btn2: "Cancel",
                 );
+                if (value == true && context.mounted) {
+                  context.read<AppBloc>().add(const AppLogoutRequested());
+                }
               }
             },
             child: Container(

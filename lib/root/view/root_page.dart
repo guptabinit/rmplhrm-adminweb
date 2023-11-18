@@ -9,10 +9,12 @@ class RootPage extends StatelessWidget {
         builder: (_) => const RootPage(),
       );
 
+  static Page<void> page() => const MaterialPage<void>(child: RootPage());
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RootCubit(),
+      create: (_) => RootCubit(),
       child: const RootView(),
     );
   }

@@ -4,6 +4,7 @@ import 'package:rmpl_hrm_admin/add_holiday/add_holiday.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
+import 'package:rmpl_hrm_admin/login/login.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
 import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
@@ -72,7 +73,8 @@ class _MainNavScreenState extends State<MainNavScreen> {
     if (res == 'success') {
       if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-          LoginScreen.route(),
+          // LoginScreen.route(),
+          LoginPage.route(),
           (route) => false,
         );
       }
@@ -163,7 +165,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               if (pageNumber == 8) {
               } else if (pageNumber == 2) {
                 Navigator.of(context).push(
@@ -174,14 +176,13 @@ class _MainNavScreenState extends State<MainNavScreen> {
               } else if (pageNumber == 5) {
                 Navigator.of(context).push(AddHolidayPage.route());
               } else {
-                showCustomDialog(
+                await showCustomDialog(
                   context: context,
                   title: "Do you really want to log out?",
-                  btn1: "Logout",
-                  btn1fun: () {
-                    loggingOut();
+                  optionBuilder: () => {
+                    'Logout': true,
+                    'Cancel': false,
                   },
-                  btn2: "Cancel",
                 );
               }
             },

@@ -1,15 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference;
 import 'package:holiday_api/holiday_api.dart';
 
 abstract class HolidayApi {
   const HolidayApi();
 
   Stream<List<Holiday>> getHolidays({
-    required DocumentReference creator,
+    required String creator,
     required DateTime date,
   });
 
-  Future<void> createHoliday(Holiday holiday);
+  Future<void> createHoliday({
+    required String creator,
+    required DateTime date,
+    required String title,
+  });
 }
 
 class CreateHolidayException implements Exception {

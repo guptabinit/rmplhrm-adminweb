@@ -1,7 +1,11 @@
-/// {@template leave_repository}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
+import 'package:leave_api/leave_api.dart';
+
 class LeaveRepository {
-  /// {@macro leave_repository}
-  const LeaveRepository();
+  const LeaveRepository({
+    required LeaveApi api,
+  }) : _api = api;
+
+  Stream<List<Leave>> getLeaves(DateTime date) => _api.getLeaves(date);
+
+  final LeaveApi _api;
 }

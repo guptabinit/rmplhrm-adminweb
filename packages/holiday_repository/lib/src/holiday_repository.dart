@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference;
 import 'package:holiday_api/holiday_api.dart';
 
 class HolidayRepository {
@@ -9,7 +8,7 @@ class HolidayRepository {
   final HolidayApi _api;
 
   Stream<List<Holiday>> getHolidays({
-    required DocumentReference creator,
+    required String creator,
     required DateTime date,
   }) =>
       _api.getHolidays(
@@ -17,5 +16,14 @@ class HolidayRepository {
         date: date,
       );
 
-  Future<void> createHoliday(Holiday holiday) => _api.createHoliday(holiday);
+  Future<void> createHoliday({
+    required String creator,
+    required DateTime date,
+    required String title,
+  }) =>
+      _api.createHoliday(
+        creator: creator,
+        date: date,
+        title: title,
+      );
 }

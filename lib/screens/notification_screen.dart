@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/notification_card.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
+@Deprecated('Use NotificationPage instead of this')
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -32,7 +33,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast,),
+            decelerationRate: ScrollDecelerationRate.fast,
+          ),
           child: Container(
             margin: const EdgeInsets.only(top: 16),
             child: StreamBuilder(
@@ -40,8 +42,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   .collection('notifications')
                   .where('branch', isEqualTo: 'Delhi')
                   .snapshots(),
-              builder: (context,
-                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,) {
+              builder: (
+                context,
+                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+              ) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(
@@ -55,12 +59,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final snap =
-                        snapshot.data!.docs[index].data();
+                    final snap = snapshot.data!.docs[index].data();
 
                     return Container(
                       margin: const EdgeInsets.only(bottom: 16),
-                      child: NotificationCard(snap: snap),
+                      // child: NotificationCard(snap: snap),
                     );
                   },
                 );

@@ -19,8 +19,20 @@ dependencies:
     path: packages/holiday_api_client
   holiday_repository:
     path: packages/holiday_repository
+  notification_api:
+    path: packages/notification_api
+  notification_api_client:
+    path: packages/notification_api_client
+  notification_repository:
+    path: packages/notification_repository
   form_inputs:
     path: packages/form_inputs
+  leave_api:
+    path: packages/leave_api
+  leave_api_client:
+    path: packages/leave_api_client
+  leave_repository:
+    path: packages/leave_repository
   flutter_svg: ^2.0.7
   loading_indicator: ^3.1.1
   syncfusion_flutter_charts: ^23.1.40
@@ -47,6 +59,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.6
+  cloud_firestore_odm_generator: ^1.0.0-dev.58
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:holiday_api/holiday_api.dart';
 import 'package:holiday_repository/holiday_repository.dart';
@@ -24,9 +23,7 @@ class HolidaysBloc extends Bloc<HolidaysEvent, HolidaysState> {
 
     await emit.forEach<List<Holiday>>(
         _holidayRepository.getHolidays(
-          creator: FirebaseFirestore.instance.collection('admin').doc(
-                event.creator,
-              ),
+          creator: event.creator,
           date: state.date ?? DateTime.now(),
         ),
         onData: (holidays) => state.copyWith(
@@ -34,7 +31,6 @@ class HolidaysBloc extends Bloc<HolidaysEvent, HolidaysState> {
               status: HolidaysStatus.success,
             ),
         onError: (_, __) {
-          print(_);
           return state.copyWith(
             status: HolidaysStatus.failure,
           );

@@ -16,6 +16,8 @@ Future<Uint8List?> pickImage(ImageSource source) async {
   if (file != null) {
     return await file.readAsBytes();
   }
+
+  return null;
 }
 
 showSnackBar(String content, BuildContext context) {
@@ -53,6 +55,12 @@ extension UtilsX on DateTime? {
     if (!isDate(toString())) return '';
     return DateFormat('MMM yyyy').format(this!);
   }
+
+  String get dateWithOutYear {
+    if (this == null) return '';
+    if (!isDate(toString())) return '';
+    return DateFormat('dd MMM').format(this!);
+  }
 }
 
 extension DateTimeExt on String? {
@@ -66,5 +74,11 @@ extension DateTimeExt on String? {
 extension LogX on Object? {
   void log() {
     devtools.log(toString());
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
   }
 }

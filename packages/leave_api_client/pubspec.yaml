@@ -8,8 +8,12 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
+  cloud_firestore: ^4.13.1
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
+  leave_api:
+    path: ../leave_api
 
 dev_dependencies:
   flutter_test:

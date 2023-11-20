@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Notification;
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
+import 'package:notification_api/notification_api.dart';
+import 'package:rmpl_hrm_admin/utils/utils.dart';
 
-class NotificationCard extends StatefulWidget {
-  const NotificationCard({required this.snap, super.key});
-  final Map<String, dynamic> snap;
+@Deprecated('')
+class NotificationCard extends StatelessWidget {
+  const NotificationCard({
+    required this.notification,
+    super.key,
+  });
 
-  @override
-  State<NotificationCard> createState() => _NotificationCardState();
-}
+  final Notification notification;
 
-class _NotificationCardState extends State<NotificationCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,8 +26,7 @@ class _NotificationCardState extends State<NotificationCard> {
             color: borderColor,
             spreadRadius: 0.2,
             blurRadius: 4,
-            // blurStyle: BlurStyle.outer,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -34,7 +35,7 @@ class _NotificationCardState extends State<NotificationCard> {
         children: [
           8.heightBox,
           Text(
-            widget.snap['type'],
+            '${notification.type?.capitalize()}',
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 14,
@@ -44,7 +45,7 @@ class _NotificationCardState extends State<NotificationCard> {
           ),
           8.heightBox,
           Text(
-            widget.snap['message'],
+            '${notification.message}',
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 14,
@@ -55,7 +56,7 @@ class _NotificationCardState extends State<NotificationCard> {
             children: [
               Expanded(
                 child: Text(
-                  widget.snap['date'],
+                  notification.createdAt.date,
                   style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,

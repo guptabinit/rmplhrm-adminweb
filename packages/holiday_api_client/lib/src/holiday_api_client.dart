@@ -10,12 +10,28 @@ class HolidayApiClient extends HolidayApi {
   final FirebaseFirestore _firestore;
 
   @override
-  Future<void> createHoliday(Holiday holiday) async {
+  Future<void> createHoliday({
+    required String creator,
+    required DateTime date,
+    required String title,
+  }) async {
     try {
-      await _firestore
-          .collection('holidays')
-          .doc(holiday.id)
-          .set(holiday.toJson());
+      final unixDate = DateTime(
+            date.year,
+            date.month,
+            date.day,
+          ).millisecondsSinceEpoch ~/
+          1000;
+
+      final id = '$unixDate-$creator';
+
+      await _firestore.collection('holidays').doc(id).set({
+        'id': id,
+        'creator': _firestore.collection('admin').doc(creator),
+        'createdAt': FieldValue.serverTimestamp(),
+        'date': Timestamp.fromDate(date),
+        'title': title,
+      });
     } catch (_) {
       throw const CreateHolidayException();
     }
@@ -23,12 +39,15 @@ class HolidayApiClient extends HolidayApi {
 
   @override
   Stream<List<Holiday>> getHolidays({
-    required DocumentReference creator,
+    required String creator,
     required DateTime date,
   }) {
     return _firestore
         .collection('holidays')
-        .where('creator', isEqualTo: creator)
+        .where(
+          'creator',
+          isEqualTo: _firestore.collection('admin').doc(creator),
+        )
         .where(
           'date',
           isGreaterThanOrEqualTo: DateTime(

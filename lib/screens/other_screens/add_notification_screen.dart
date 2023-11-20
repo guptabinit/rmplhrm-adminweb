@@ -109,8 +109,10 @@ class _NewNotificationScreenState extends State<NewNotificationScreen> {
             fontFamily: 'Inter',
             fontSize: 18,
             fontWeight: FontWeight.w600,
+            color: whiteColor,
           ),
         ),
+        iconTheme: const IconThemeData(color: whiteColor),
       ),
       body: Container(
         width: double.infinity,

@@ -3,11 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
-import 'package:rmpl_hrm_admin/components/manage_leave_card.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/screens/other_screens/leave_application_detail_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
+@Deprecated('')
 class LeaveApplicationScreen extends StatefulWidget {
   const LeaveApplicationScreen({super.key});
 
@@ -123,14 +122,14 @@ class _LeaveApplicationScreenState extends State<LeaveApplicationScreen> {
                 color: textGreyColor,
               ),
               4.heightBox,
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    LeaveApplicationDetailScreen.route(),
-                  );
-                },
-                child: const LeaveApplicationCard(),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.of(context).push(
+              //       LeaveApplicationDetailScreen.route(),
+              //     );
+              //   },
+              //   child: const LeaveApplicationCard(),
+              // ),
             ],
           ),
         ),

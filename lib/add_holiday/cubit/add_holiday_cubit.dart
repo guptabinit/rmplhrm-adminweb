@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
-import 'package:holiday_api/holiday_api.dart';
 import 'package:holiday_repository/holiday_repository.dart';
 
 part 'add_holiday_state.dart';
@@ -54,28 +52,11 @@ class AddHolidayCubit extends Cubit<AddHolidayState> {
       ),
     );
     try {
-      final date = DateTime.parse(state.date.value!);
-
-      final unixDate = DateTime(
-            date.year,
-            date.month,
-            date.day,
-          ).millisecondsSinceEpoch ~/
-          1000;
-
-      final id = '$unixDate-$creator';
-
-      final doc = FirebaseFirestore.instance.collection('holidays').doc(id);
-
-      final holiday = Holiday(
-        id: doc.id,
-        creator: FirebaseFirestore.instance.collection('admin').doc(creator),
-        createdAt: Timestamp.now().toDate(),
-        date: Timestamp.fromDate(date).toDate(),
-        title: state.title.value,
+      await _holidayRepository.createHoliday(
+        creator: creator,
+        date: DateTime.parse(state.date.value!),
+        title: state.title.value!,
       );
-
-      await _holidayRepository.createHoliday(holiday);
 
       emit(
         state.copyWith(

@@ -18,7 +18,7 @@ class HRA extends FormzInput<String?, HRAValidationError> {
 }
 
 extension HRAValidationErrorX on HRAValidationError {
-  String get message => switch (this) {
+  String get text => switch (this) {
         HRAValidationError.required => 'This field is required',
         HRAValidationError.invalid => 'This field is invalid',
       };

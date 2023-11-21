@@ -25,7 +25,7 @@ class BasicSalary extends FormzInput<String?, BasicSalaryValidationError> {
 }
 
 extension BasicSalaryValidationErrorX on BasicSalaryValidationError {
-  String get message => switch (this) {
+  String get text => switch (this) {
         BasicSalaryValidationError.required => 'This field is required',
         BasicSalaryValidationError.invalid =>
           'This field must not contain spaces',

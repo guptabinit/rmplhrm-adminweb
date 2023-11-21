@@ -12,7 +12,7 @@ class UpdateEmployeeProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UpdateEmployeeProfileCubit(),
+      create: (_) => UpdateEmployeeProfileCubit(),
       child: const UpdateEmployeeProfileView(),
     );
   }

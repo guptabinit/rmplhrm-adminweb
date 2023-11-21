@@ -5,10 +5,10 @@ enum LastNameValidationError {
   invalid,
 }
 
-class FirstName extends FormzInput<String?, LastNameValidationError> {
-  const FirstName.pure() : super.pure('');
+class LastName extends FormzInput<String?, LastNameValidationError> {
+  const LastName.pure() : super.pure('');
 
-  const FirstName.dirty([super.value = '']) : super.dirty();
+  const LastName.dirty([super.value = '']) : super.dirty();
 
   static final _nameRegex = RegExp(r'^[a-zA-Z]+$');
 

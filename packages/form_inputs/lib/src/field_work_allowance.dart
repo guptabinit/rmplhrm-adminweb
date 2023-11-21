@@ -30,7 +30,7 @@ class FieldWorkAllowance
 
 extension FieldWorkAllowanceValidationErrorX
     on FieldWorkAllowanceValidationError {
-  String get message => switch (this) {
+  String get text => switch (this) {
         FieldWorkAllowanceValidationError.required =>
           'Field work allowance is required',
         FieldWorkAllowanceValidationError.invalid =>

@@ -1,11 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
+import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 class UpdateEmployeeProfileView extends StatelessWidget {
   const UpdateEmployeeProfileView({super.key});
@@ -144,6 +148,7 @@ class _EmployeeIdField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController(text: '');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -156,8 +161,21 @@ class _EmployeeIdField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Employee ID',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.employeeId != current.employeeId,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Employee ID',
+              controller: controller,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .employeeIdChanged(value);
+              },
+              errorText: state.employeeId.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -169,6 +187,7 @@ class _PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController(text: '');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -181,8 +200,21 @@ class _PasswordField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Create a Password',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.password != current.password,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Create a Password',
+              controller: controller,
+              errorText: state.password.displayError?.text,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .passwordChanged(value);
+              },
+            );
+          },
         ),
       ],
     );
@@ -194,6 +226,7 @@ class _FirstNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController(text: '');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -206,8 +239,21 @@ class _FirstNameField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'First Name',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.firstName != current.firstName,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'First Name',
+              controller: controller,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .firstNameChanged(value);
+              },
+              errorText: state.firstName.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -219,6 +265,7 @@ class _LastNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController(text: '');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -231,8 +278,21 @@ class _LastNameField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Last Name',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.lastName != current.lastName,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Last Name',
+              controller: controller,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .lastNameChanged(value);
+              },
+              errorText: state.lastName.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -256,9 +316,36 @@ class _DateOfBirthField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Date of Birth (example: 01.01.2000)',
-          inputType: TextInputType.number,
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.dateOfBirth != current.dateOfBirth,
+          builder: (context, state) {
+            final controller = TextEditingController(
+              text: state.dateOfBirth.value.toString().parseDate(),
+            );
+            return CustomTextFormField(
+              text: 'Date of Birth',
+              inputType: TextInputType.number,
+              controller: controller,
+              suffixIcon: const Icon(
+                Icons.calendar_month,
+              ),
+              readOnly: true,
+              onTap: () async {
+                final date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(1970),
+                  lastDate: DateTime(DateTime.now().year - 12),
+                );
+                if (date != null && context.mounted) {
+                  context
+                      .read<UpdateEmployeeProfileCubit>()
+                      .dateOfBirthChanged(date.toString());
+                }
+              },
+              errorText: state.dateOfBirth.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -282,8 +369,20 @@ class _DesignationField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Designation',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.designation != current.designation,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Designation',
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .designationChanged(value);
+              },
+              errorText: state.designation.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -307,9 +406,33 @@ class _DateJoinedField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Date Joined (example: 01.01.2000)',
-          inputType: TextInputType.number,
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.dateJoined != current.dateJoined,
+          builder: (context, state) {
+            final controller = TextEditingController(
+              text: state.dateJoined.value.toString().parseDate(),
+            );
+            return CustomTextFormField(
+              text: 'Date Joined (example: 01.01.2000)',
+              suffixIcon: const Icon(Icons.calendar_month),
+              controller: controller,
+              onTap: () async {
+                final date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(1970),
+                  lastDate: DateTime(DateTime.now().year),
+                );
+                if (date != null && context.mounted) {
+                  context
+                      .read<UpdateEmployeeProfileCubit>()
+                      .dateJoinedChanged(date.toString());
+                }
+              },
+              readOnly: true,
+              errorText: state.dateJoined.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -333,8 +456,20 @@ class _FathersNameField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: "Father's Name",
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.fathersName != current.fathersName,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: "Father's Name",
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .fathersNameChanged(value);
+              },
+              errorText: state.fathersName.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -358,10 +493,21 @@ class _AddressTextarea extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          maxLines: 5,
-          text: 'Address',
-          inputType: TextInputType.streetAddress,
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) => previous.address != current.address,
+          builder: (context, state) {
+            return CustomTextFormField(
+              maxLines: 5,
+              text: 'Address',
+              inputType: TextInputType.streetAddress,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .addressChanged(value);
+              },
+              errorText: state.address.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -385,9 +531,18 @@ class _EmailField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          inputType: TextInputType.emailAddress,
-          text: 'Email ID',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) => previous.email != current.email,
+          builder: (context, state) {
+            return CustomTextFormField(
+              inputType: TextInputType.emailAddress,
+              text: 'Email ID',
+              onChanged: (String? value) {
+                context.read<UpdateEmployeeProfileCubit>().emailChanged(value);
+              },
+              errorText: state.email.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -411,9 +566,21 @@ class _AadharNumberField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Aadhar Number',
-          inputType: TextInputType.number,
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.aadharCard != current.aadharCard,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Aadhar Number',
+              inputType: TextInputType.number,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .aadharCardChanged(value);
+              },
+              errorText: state.aadharCard.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -437,8 +604,19 @@ class _PanNumberField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'PAN Number',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) => previous.panCard != current.panCard,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'PAN Number',
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .panCardChanged(value);
+              },
+              errorText: state.panCard.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -462,9 +640,21 @@ class _BasicSalaryField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Basic Salary',
-          inputType: TextInputType.number,
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.basicSalary != current.basicSalary,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Basic Salary',
+              inputType: TextInputType.number,
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .basicSalaryChanged(value);
+              },
+              errorText: state.basicSalary.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -488,9 +678,18 @@ class _HRAField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'HRA',
-          inputType: TextInputType.number,
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) => previous.hra != current.hra,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'HRA',
+              inputType: TextInputType.number,
+              onChanged: (String? value) {
+                context.read<UpdateEmployeeProfileCubit>().hraChanged(value);
+              },
+              errorText: state.hra.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -514,8 +713,20 @@ class _FieldWorkAllowanceField extends StatelessWidget {
           ),
         ),
         8.heightBox,
-        const CustomTextFormField(
-          text: 'Field Work Allowance (Yes/No)',
+        BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+          buildWhen: (previous, current) =>
+              previous.fieldWorkAllowance != current.fieldWorkAllowance,
+          builder: (context, state) {
+            return CustomTextFormField(
+              text: 'Field Work Allowance (Yes/No)',
+              onChanged: (String? value) {
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .fieldWorkAllowanceChanged(value);
+              },
+              errorText: state.fieldWorkAllowance.displayError?.text,
+            );
+          },
         ),
       ],
     );
@@ -527,9 +738,13 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainButton(
-      title: 'Save Changes',
-      onTap: () {},
+    return BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+      builder: (context, state) {
+        return MainButton(
+          title: 'Save Changes',
+          onTap: !state.isValid ? null : () {},
+        );
+      },
     );
   }
 }

@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:rmpl_hrm_admin/components/tabs/employee_tab.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
+@Deprecated('This class is deprecated, please use EmployeeDetailPage')
 class EmployeeDetailScreen extends StatefulWidget {
   const EmployeeDetailScreen({required this.branch, super.key});
+
   final String branch;
 
   static Route<void> route({
@@ -86,9 +87,10 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                     .collection('employees')
                     .where('branch', isEqualTo: widget.branch)
                     .snapshots(),
-                builder: (context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot,) {
+                builder: (
+                  context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+                ) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(
@@ -103,14 +105,13 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final snap =
-                                snapshot.data!.docs[index].data();
+                            final snap = snapshot.data!.docs[index].data();
 
                             return Container(
                               margin: const EdgeInsets.only(bottom: 12),
-                              child: EmployeeTab(
-                                snap: snap,
-                              ),
+                              // child: EmployeeTab(
+                              //   snap: snap,
+                              // ),
                             );
                           },
                         )
@@ -122,8 +123,10 @@ class _EmployeeDetailScreenState extends State<EmployeeDetailScreen> {
                             fit: BoxFit.fitWidth,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) => Center(
-                                    child: CircularProgressIndicator(
-                                        value: downloadProgress.progress,),),
+                              child: CircularProgressIndicator(
+                                value: downloadProgress.progress,
+                              ),
+                            ),
                             errorWidget: (context, url, error) =>
                                 const Center(child: Icon(Icons.error)),
                           ),

@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart'
+    show DocumentReference, Timestamp;
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:json_converter/json_converter.dart';
 
 part 'employee.g.dart';
 
 @JsonSerializable()
+@TimestampConverter()
+@DocumentReferenceConverter()
 class Employee extends Equatable {
   const Employee({
     this.aadharNumber,
@@ -26,6 +31,8 @@ class Employee extends Equatable {
     this.probationTill,
     this.profileUrl,
     this.uid,
+    this.createdAt,
+    this.creator,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
@@ -55,6 +62,8 @@ class Employee extends Equatable {
         probationTill,
         profileUrl,
         uid,
+        createdAt,
+        creator,
       ];
 
   final String? aadharNumber;
@@ -74,7 +83,9 @@ class Employee extends Equatable {
   final String? panNumber;
   final String? password;
   final bool? probation;
-  final String? probationTill;
+  final DateTime? probationTill;
   final String? profileUrl;
   final String? uid;
+  final DateTime? createdAt;
+  final DocumentReference? creator;
 }

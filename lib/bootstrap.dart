@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:employee_api/employee_api.dart';
+import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday_api/holiday_api.dart';
 import 'package:holiday_repository/holiday_repository.dart';
@@ -15,6 +17,7 @@ Future<void> bootstrap({
   required HolidayApi holidayApi,
   required NotificationApi notificationApi,
   required LeaveApi leaveApi,
+  required EmployeeApi employeeApi,
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -30,6 +33,7 @@ Future<void> bootstrap({
     api: notificationApi,
   );
   final leaveRepository = LeaveRepository(api: leaveApi);
+  final employeeRepository = EmployeeRepository(api: employeeApi);
 
   await authenticationRepository.user.first;
 
@@ -39,6 +43,7 @@ Future<void> bootstrap({
       holidayRepository: holidayRepository,
       notificationRepository: notificationRepository,
       leaveRepository: leaveRepository,
+      employeeRepository: employeeRepository,
     ),
   );
 }

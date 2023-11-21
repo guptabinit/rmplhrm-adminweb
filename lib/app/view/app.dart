@@ -1,4 +1,5 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday_repository/holiday_repository.dart';
@@ -14,6 +15,7 @@ class App extends StatelessWidget {
     required this.holidayRepository,
     required this.notificationRepository,
     required this.leaveRepository,
+    required this.employeeRepository,
     super.key,
   });
 
@@ -33,6 +35,9 @@ class App extends StatelessWidget {
         RepositoryProvider.value(
           value: leaveRepository,
         ),
+        RepositoryProvider.value(
+          value: employeeRepository,
+        ),
       ],
       child: BlocProvider(
         create: (context) => AppBloc(
@@ -47,6 +52,7 @@ class App extends StatelessWidget {
   final HolidayRepository holidayRepository;
   final NotificationRepository notificationRepository;
   final LeaveRepository leaveRepository;
+  final EmployeeRepository employeeRepository;
 }
 
 class AppView extends StatelessWidget {

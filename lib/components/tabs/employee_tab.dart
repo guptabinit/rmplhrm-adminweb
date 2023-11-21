@@ -1,13 +1,16 @@
+import 'package:employee_api/employee_api.dart';
 import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/screens/other_screens/profile_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class EmployeeTab extends StatelessWidget {
+  const EmployeeTab({
+    super.key,
+    required this.employee,
+  });
 
-  const EmployeeTab({required this.snap, super.key});
-  final Map<String, dynamic> snap;
+  final Employee employee;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class EmployeeTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${snap['firstName']} ${snap['lastName']}",
+                  '${employee.firstName} ${employee.lastName}',
                   style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16,
@@ -44,7 +47,7 @@ class EmployeeTab extends StatelessWidget {
                 ),
                 8.heightBox,
                 Text(
-                  "EID: ${snap['eid']}",
+                  'EID: ${employee.eid}',
                   style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 12,
@@ -58,11 +61,9 @@ class EmployeeTab extends StatelessWidget {
           SecondaryButton(
             title: 'View more',
             onTap: () {
-              Navigator.of(context).push(
-                EmployeesProfileScreen.route(
-                  snap,
-                ),
-              );
+              // Navigator.of(context).push(
+              //   EmployeesProfileScreen.route(employee),
+              // );
             },
             fontSize: 14,
           ),

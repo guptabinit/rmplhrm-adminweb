@@ -6,13 +6,13 @@ import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
+import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
 import 'package:rmpl_hrm_admin/holidays/view/holidays_page.dart';
 import 'package:rmpl_hrm_admin/leave/leave.dart';
 import 'package:rmpl_hrm_admin/notifications/view/notifications_page.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
 import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
-import 'package:rmpl_hrm_admin/screens/employee_details_screen.dart';
 import 'package:rmpl_hrm_admin/screens/other_screens/add_new_employee_screen.dart';
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
 import 'package:rmpl_hrm_admin/screens/salary_details_screen.dart';
@@ -20,9 +20,7 @@ import 'package:rmpl_hrm_admin/utils/box.dart';
 
 const routes = <Widget>[
   AdminDashboardScreen(),
-  EmployeeDetailScreen(
-    branch: 'Empty',
-  ), // This branch should be replaced with the branch name by bloc listener
+  EmployeeDetailsPage(),
   NotificationsPage(),
   AttendanceScreen(),
   HolidaysPage(),

@@ -1,7 +1,14 @@
-/// {@template employee_repository}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
+import 'package:employee_api/employee_api.dart';
+
 class EmployeeRepository {
-  /// {@macro employee_repository}
-  const EmployeeRepository();
+  const EmployeeRepository({
+    required EmployeeApi api,
+  }) : _api = api;
+
+  Stream<List<Employee>> getEmployees({
+    required String creator,
+  }) =>
+      _api.getEmployees(creator: creator);
+
+  final EmployeeApi _api;
 }

@@ -13,6 +13,12 @@ dependencies:
     sdk: flutter
   authentication_repository:
     path: packages/authentication_repository
+  employee_api:
+    path: packages/employee_api
+  employee_api_client:
+    path: packages/employee_api_client
+  employee_repository:
+    path: packages/employee_repository
   holiday_api:
     path: packages/holiday_api
   holiday_api_client:

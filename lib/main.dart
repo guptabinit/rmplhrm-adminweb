@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_api_client/employee_api_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday_api_client/holiday_api_client.dart';
@@ -21,10 +22,12 @@ Future<void> main() async {
   final holidayApi = HolidayApiClient(firestore: firestore);
   final notificationApi = NotificationApiClient(firestore: firestore);
   final leaveApi = LeaveApiClient(firestore: firestore);
+  final employeeApi = EmployeeApiClient(firestore: firestore);
 
   await bootstrap(
     holidayApi: holidayApi,
     notificationApi: notificationApi,
     leaveApi: leaveApi,
+    employeeApi: employeeApi,
   );
 }

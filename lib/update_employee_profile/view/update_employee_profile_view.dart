@@ -51,272 +51,89 @@ class UpdateEmployeeProfileView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               16.heightBox,
-              Center(
-                child: Column(
-                  children: [
-                    Container(
-                      height: mq.width * 0.4,
-                      width: mq.width * 0.3,
-                      decoration: BoxDecoration(
-                        color: lightGreyColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: 'widget.snap[profileUrl]', // TODO: real url
-                        fit: BoxFit.cover,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => Center(
-                          child: CircularProgressIndicator(
-                            value: downloadProgress.progress,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Center(child: Icon(Icons.error)),
-                      ),
-                    ),
-                    12.heightBox,
-                    Row(
-                      children: [
-                        const Spacer(),
-                        SecondaryButton(
-                          title: 'Change profile picture',
-                          onTap: () {},
-                          fontSize: 14,
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              const _ChangeProfilePicture(),
               16.heightBox,
-              //fields
-              const Text(
-                'Employee ID',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: eidController,
-                text: 'Employee ID',
-              ),
+              const _EmployeeIdField(),
               12.heightBox,
-              const Text(
-                'Password',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: passwordController,
-                text: 'Create a Password',
-              ),
+              const _PasswordField(),
               12.heightBox,
-              const Text(
-                'First Name',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: firstNameController,
-                text: 'First Name',
-              ),
+              const _FirstNameField(),
               12.heightBox,
-              const Text(
-                'Last Name',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: lastNameController,
-                text: 'Last Name',
-              ),
+              const _LastNameField(),
               12.heightBox,
-              const Text(
-                'Date of Birth',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: dobController,
-                text: 'Date of Birth (example: 01.01.2000)',
-                inputType: TextInputType.number,
-              ),
+              const _DateOfBirthField(),
               12.heightBox,
-              const Text(
-                'Designation',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: designationController,
-                text: 'Designation',
-              ),
+              const _DesignationField(),
               12.heightBox,
-              const Text(
-                'Date Joined',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: dateJoinedController,
-                text: 'Date Joined (example: 01.01.2000)',
-                inputType: TextInputType.number,
-              ),
+              const _DateJoinedField(),
               12.heightBox,
-              const Text(
-                "Father's Name",
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: fathersNameController,
-                text: "Father's Name",
-              ),
+              const _FathersNameField(),
               12.heightBox,
-              const Text(
-                'Address',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: addressController,
-                maxLines: 5,
-                text: 'Address',
-                inputType: TextInputType.streetAddress,
-              ),
+              const _AddressTextarea(),
               12.heightBox,
-              const Text(
-                'Email ID',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: emailIDController,
-                inputType: TextInputType.emailAddress,
-                text: 'Email ID',
-              ),
+              const _EmailField(),
               12.heightBox,
-              const Text(
-                'Aadhar Number',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: aadharController,
-                text: 'Aadhar Number',
-                inputType: TextInputType.number,
-              ),
+              const _AadharNumberField(),
               12.heightBox,
-              const Text(
-                'PAN Number',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: panController,
-                text: 'PAN Number',
-              ),
+              const _PanNumberField(),
               12.heightBox,
-              const Text(
-                'Basic Salary',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: basicSalaryController,
-                text: 'Basic Salary',
-                inputType: TextInputType.number,
-              ),
+              const _BasicSalaryField(),
               12.heightBox,
-              const Text(
-                'HRA',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: hraController,
-                text: 'HRA',
-                inputType: TextInputType.number,
-              ),
+              const _HRAField(),
               12.heightBox,
-              const Text(
-                'Field Work Allowance',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              8.heightBox,
-              CustomTextFormField(
-                // controller: fieldWorkAllowanceController,
-                text: 'Field Work Allowance (Yes/No)',
-              ),
+              const _FieldWorkAllowanceField(),
               16.heightBox,
-              MainButton(
-                title: 'Save Changes',
-                onTap: () {},
-              ),
+              const _SaveButton(),
               24.heightBox,
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ChangeProfilePicture extends StatelessWidget {
+  const _ChangeProfilePicture();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Container(
+            height: mq.width * 0.4,
+            width: mq.width * 0.3,
+            decoration: BoxDecoration(
+              color: lightGreyColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: CachedNetworkImage(
+              imageUrl: 'widget.snap[profileUrl]', // TODO: real url
+              fit: BoxFit.cover,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                ),
+              ),
+              errorWidget: (context, url, error) =>
+                  const Center(child: Icon(Icons.error)),
+            ),
+          ),
+          12.heightBox,
+          Row(
+            children: [
+              const Spacer(),
+              SecondaryButton(
+                title: 'Change profile picture',
+                onTap: () {},
+                fontSize: 14,
+              ),
+              const Spacer(),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -327,7 +144,23 @@ class _EmployeeIdField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Employee ID',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Employee ID',
+        ),
+      ],
+    );
   }
 }
 
@@ -336,7 +169,23 @@ class _PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Password',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Create a Password',
+        ),
+      ],
+    );
   }
 }
 
@@ -345,7 +194,23 @@ class _FirstNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'First Name',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'First Name',
+        ),
+      ],
+    );
   }
 }
 
@@ -354,7 +219,23 @@ class _LastNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Last Name',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Last Name',
+        ),
+      ],
+    );
   }
 }
 
@@ -363,7 +244,24 @@ class _DateOfBirthField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Date of Birth',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Date of Birth (example: 01.01.2000)',
+          inputType: TextInputType.number,
+        ),
+      ],
+    );
   }
 }
 
@@ -372,7 +270,49 @@ class _DesignationField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Designation',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Designation',
+        ),
+      ],
+    );
+  }
+}
+
+class _DateJoinedField extends StatelessWidget {
+  const _DateJoinedField();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Date Joined',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Date Joined (example: 01.01.2000)',
+          inputType: TextInputType.number,
+        ),
+      ],
+    );
   }
 }
 
@@ -381,7 +321,23 @@ class _FathersNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          "Father's Name",
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: "Father's Name",
+        ),
+      ],
+    );
   }
 }
 
@@ -390,16 +346,51 @@ class _AddressTextarea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Address',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          maxLines: 5,
+          text: 'Address',
+          inputType: TextInputType.streetAddress,
+        ),
+      ],
+    );
   }
 }
 
-class _EmailIfField extends StatelessWidget {
-  const _EmailIfField();
+class _EmailField extends StatelessWidget {
+  const _EmailField();
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Email ID',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          inputType: TextInputType.emailAddress,
+          text: 'Email ID',
+        ),
+      ],
+    );
   }
 }
 
@@ -408,7 +399,24 @@ class _AadharNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Aadhar Number',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Aadhar Number',
+          inputType: TextInputType.number,
+        ),
+      ],
+    );
   }
 }
 
@@ -417,7 +425,23 @@ class _PanNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'PAN Number',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'PAN Number',
+        ),
+      ],
+    );
   }
 }
 
@@ -426,7 +450,24 @@ class _BasicSalaryField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Basic Salary',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Basic Salary',
+          inputType: TextInputType.number,
+        ),
+      ],
+    );
   }
 }
 
@@ -435,7 +476,24 @@ class _HRAField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'HRA',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'HRA',
+          inputType: TextInputType.number,
+        ),
+      ],
+    );
   }
 }
 
@@ -444,6 +502,34 @@ class _FieldWorkAllowanceField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Field Work Allowance',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        8.heightBox,
+        const CustomTextFormField(
+          text: 'Field Work Allowance (Yes/No)',
+        ),
+      ],
+    );
+  }
+}
+
+class _SaveButton extends StatelessWidget {
+  const _SaveButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return MainButton(
+      title: 'Save Changes',
+      onTap: () {},
+    );
   }
 }

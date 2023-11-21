@@ -16,6 +16,7 @@ final class EmployeeDetailsState extends Equatable {
   EmployeeDetailsState copyWith({
     EmployeeDetailsStatus? status,
     List<Employee>? employees,
+    Employee? selectedEmployee,
   }) {
     return EmployeeDetailsState(
       status: status ?? this.status,
@@ -24,7 +25,10 @@ final class EmployeeDetailsState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, employees];
+  List<Object?> get props => [
+        status,
+        employees,
+      ];
 
   final EmployeeDetailsStatus status;
   final List<Employee> employees;

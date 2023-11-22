@@ -16,7 +16,9 @@ class UpdateEmployeeProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    mq = MediaQuery.of(context).size;
+    mq = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
@@ -117,12 +119,12 @@ class _ChangeProfilePicture extends StatelessWidget {
               fit: BoxFit.cover,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Center(
-                child: CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                ),
-              ),
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                    ),
+                  ),
               errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
+              const Center(child: Icon(Icons.error)),
             ),
           ),
           12.heightBox,
@@ -163,7 +165,7 @@ class _EmployeeIdField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.employeeId != current.employeeId,
+          previous.employeeId != current.employeeId,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Employee ID',
@@ -202,7 +204,7 @@ class _PasswordField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.password != current.password,
+          previous.password != current.password,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Create a Password',
@@ -241,7 +243,7 @@ class _FirstNameField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.firstName != current.firstName,
+          previous.firstName != current.firstName,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'First Name',
@@ -280,7 +282,7 @@ class _LastNameField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.lastName != current.lastName,
+          previous.lastName != current.lastName,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Last Name',
@@ -318,7 +320,7 @@ class _DateOfBirthField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.dateOfBirth != current.dateOfBirth,
+          previous.dateOfBirth != current.dateOfBirth,
           builder: (context, state) {
             final controller = TextEditingController(
               text: state.dateOfBirth.value.toString().parseDate(),
@@ -335,7 +337,9 @@ class _DateOfBirthField extends StatelessWidget {
                 final date = await showDatePicker(
                   context: context,
                   firstDate: DateTime(1970),
-                  lastDate: DateTime(DateTime.now().year - 12),
+                  lastDate: DateTime(DateTime
+                      .now()
+                      .year - 12),
                 );
                 if (date != null && context.mounted) {
                   context
@@ -371,7 +375,7 @@ class _DesignationField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.designation != current.designation,
+          previous.designation != current.designation,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Designation',
@@ -408,7 +412,7 @@ class _DateJoinedField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.dateJoined != current.dateJoined,
+          previous.dateJoined != current.dateJoined,
           builder: (context, state) {
             final controller = TextEditingController(
               text: state.dateJoined.value.toString().parseDate(),
@@ -421,7 +425,9 @@ class _DateJoinedField extends StatelessWidget {
                 final date = await showDatePicker(
                   context: context,
                   firstDate: DateTime(1970),
-                  lastDate: DateTime(DateTime.now().year),
+                  lastDate: DateTime(DateTime
+                      .now()
+                      .year),
                 );
                 if (date != null && context.mounted) {
                   context
@@ -458,7 +464,7 @@ class _FathersNameField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.fathersName != current.fathersName,
+          previous.fathersName != current.fathersName,
           builder: (context, state) {
             return CustomTextFormField(
               text: "Father's Name",
@@ -568,7 +574,7 @@ class _AadharNumberField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.aadharCard != current.aadharCard,
+          previous.aadharCard != current.aadharCard,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Aadhar Number',
@@ -642,7 +648,7 @@ class _BasicSalaryField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.basicSalary != current.basicSalary,
+          previous.basicSalary != current.basicSalary,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Basic Salary',
@@ -715,7 +721,7 @@ class _FieldWorkAllowanceField extends StatelessWidget {
         8.heightBox,
         BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
           buildWhen: (previous, current) =>
-              previous.fieldWorkAllowance != current.fieldWorkAllowance,
+          previous.fieldWorkAllowance != current.fieldWorkAllowance,
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Field Work Allowance (Yes/No)',

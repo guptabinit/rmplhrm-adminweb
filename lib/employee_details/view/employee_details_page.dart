@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
+import 'package:rmpl_hrm_admin/employee_profile/employee_profile.dart';
 
 class EmployeeDetailsPage extends StatelessWidget {
   const EmployeeDetailsPage({super.key});
@@ -21,7 +22,20 @@ class EmployeeDetailsPage extends StatelessWidget {
             context.read<AppBloc>().state.user.id,
           ),
         ),
-      child: const EmployeeDetailsView(),
+      child: BlocListener<EmployeeDetailsBloc, EmployeeDetailsState>(
+        listenWhen: (previous, current) =>
+            previous.selectedEmployee != current.selectedEmployee,
+        listener: (context, state) {
+          if (state.selectedEmployee != null) {
+            Navigator.of(context).push(
+              EmployeeProfilePage.route(
+                context.read<EmployeeDetailsBloc>(),
+              ),
+            );
+          }
+        },
+        child: const EmployeeDetailsView(),
+      ),
     );
   }
 }

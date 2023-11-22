@@ -13,6 +13,8 @@ class EmployeeDetailsBloc
   })  : _employeeRepository = employeeRepository,
         super(const EmployeeDetailsState()) {
     on<EmployeeDetailsFetched>(_fetchEmployeeDetails);
+    on<EmployeeDetailsSelected>(_selectEmployee);
+    on<EmployeeDetailsDeselected>(_deselectEmployee);
   }
 
   Future<void> _fetchEmployeeDetails(
@@ -39,6 +41,28 @@ class EmployeeDetailsBloc
           status: EmployeeDetailsStatus.failure,
         );
       },
+    );
+  }
+
+  void _selectEmployee(
+    EmployeeDetailsSelected event,
+    Emitter<EmployeeDetailsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedEmployee: event.employee,
+      ),
+    );
+  }
+
+  void _deselectEmployee(
+    EmployeeDetailsDeselected event,
+    Emitter<EmployeeDetailsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedEmployee: null,
+      ),
     );
   }
 

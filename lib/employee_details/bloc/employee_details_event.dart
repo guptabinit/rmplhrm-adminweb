@@ -15,3 +15,19 @@ final class EmployeeDetailsFetched extends EmployeeDetailsEvent {
 
   final String creator;
 }
+
+final class EmployeeDetailsSelected extends EmployeeDetailsEvent {
+  const EmployeeDetailsSelected(this.employee);
+
+  @override
+  List<Object?> get props => [employee];
+
+  final Employee employee;
+}
+
+final class EmployeeDetailsDeselected extends EmployeeDetailsEvent {
+  const EmployeeDetailsDeselected();
+
+  @override
+  List<Object?> get props => [];
+}

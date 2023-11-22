@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:employee_api/employee_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
+import 'package:rmpl_hrm_admin/employee_details/bloc/employee_details_bloc.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -10,12 +11,7 @@ import 'package:rmpl_hrm_admin/utils/utils.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class EmployeeProfileView extends StatelessWidget {
-  const EmployeeProfileView({
-    super.key,
-    required this.employee,
-  });
-
-  final Employee employee;
+  const EmployeeProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,17 +91,26 @@ class EmployeeProfileView extends StatelessWidget {
                             color: lightGreyColor,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: '${employee.profileUrl}',
-                            fit: BoxFit.cover,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) => Center(
-                              child: CircularProgressIndicator(
-                                value: downloadProgress.progress,
-                              ),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                const Center(child: Icon(Icons.error)),
+                          child: BlocBuilder<EmployeeDetailsBloc,
+                              EmployeeDetailsState>(
+                            buildWhen: (previous, current) =>
+                                previous.selectedEmployee !=
+                                current.selectedEmployee,
+                            builder: (context, state) {
+                              return CachedNetworkImage(
+                                imageUrl:
+                                    '${state.selectedEmployee?.profileUrl}',
+                                fit: BoxFit.cover,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                    value: downloadProgress.progress,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Center(child: Icon(Icons.error)),
+                              );
+                            },
                           ),
                         ),
                         16.widthBox,
@@ -116,31 +121,55 @@ class EmployeeProfileView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Spacer(),
-                                Text(
-                                  '${employee.firstName} ${employee.lastName}',
-                                  style: const TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                BlocBuilder<EmployeeDetailsBloc,
+                                    EmployeeDetailsState>(
+                                  buildWhen: (previous, current) =>
+                                      previous.selectedEmployee !=
+                                      current.selectedEmployee,
+                                  builder: (context, state) {
+                                    return Text(
+                                      '${state.selectedEmployee?.firstName} ${state.selectedEmployee?.lastName}',
+                                      style: const TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const Spacer(),
-                                Text(
-                                  '${employee.designation}',
-                                  style: const TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                BlocBuilder<EmployeeDetailsBloc,
+                                    EmployeeDetailsState>(
+                                  buildWhen: (previous, current) =>
+                                      previous.selectedEmployee !=
+                                      current.selectedEmployee,
+                                  builder: (context, state) {
+                                    return Text(
+                                      '${state.selectedEmployee?.designation}',
+                                      style: const TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const Spacer(),
-                                Text(
-                                  'Employee since ${employee.dateJoined.date}',
-                                  style: const TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                BlocBuilder<EmployeeDetailsBloc,
+                                    EmployeeDetailsState>(
+                                  buildWhen: (previous, current) =>
+                                      previous.selectedEmployee !=
+                                      current.selectedEmployee,
+                                  builder: (context, state) {
+                                    return Text(
+                                      'Employee since ${state.selectedEmployee?.dateJoined.date}',
+                                      style: const TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const Spacer(),
                               ],
@@ -160,75 +189,82 @@ class EmployeeProfileView extends StatelessWidget {
                 indent: 16,
               ),
 
-              // if under-probation
-              if (employee.probation == true)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 16,
-                  ),
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: const BoxDecoration(
-                    color: redColor,
-                  ),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Under Probation',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: whiteColor,
+              BlocBuilder<EmployeeDetailsBloc, EmployeeDetailsState>(
+                buildWhen: (previous, current) =>
+                    previous.selectedEmployee != current.selectedEmployee,
+                builder: (context, state) {
+                  if (state.selectedEmployee != null &&
+                      state.selectedEmployee?.probation == true) {
+                    return Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
+                      ),
+                      margin: const EdgeInsets.only(bottom: 12),
+                      decoration: const BoxDecoration(
+                        color: redColor,
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Under Probation',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: whiteColor,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SecondaryButton(
-                        title: 'Review & Update',
-                        onTap: () {},
-                        fontSize: 14,
-                        titleColor: whiteColor,
-                        backgroundColor: whiteColor,
-                      ),
-                    ],
-                  ),
-                )
-              else
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 16,
-                  ),
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: const BoxDecoration(
-                    color: lightGreyColor,
-                  ),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Under Probation',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: darkColor,
+                          SecondaryButton(
+                            title: 'Review & Update',
+                            onTap: () {},
+                            fontSize: 14,
+                            titleColor: whiteColor,
+                            backgroundColor: whiteColor,
                           ),
-                        ),
+                        ],
                       ),
-                      SecondaryButton(
-                        title: 'Review & Update',
-                        onTap: () {},
-                        fontSize: 14,
-                        titleColor: whiteColor,
-                        backgroundColor: whiteColor,
+                    );
+                  } else {
+                    return Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
                       ),
-                    ],
-                  ),
-                ),
+                      margin: const EdgeInsets.only(bottom: 12),
+                      decoration: const BoxDecoration(
+                        color: lightGreyColor,
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Under Probation',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: darkColor,
+                              ),
+                            ),
+                          ),
+                          SecondaryButton(
+                            title: 'Review & Update',
+                            onTap: () {},
+                            fontSize: 14,
+                            titleColor: whiteColor,
+                            backgroundColor: whiteColor,
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              ),
               8.heightBox,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -1,25 +1,30 @@
-import 'package:employee_api/employee_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
 import 'package:rmpl_hrm_admin/employee_profile/employee_profile.dart';
 
 class EmployeeProfilePage extends StatelessWidget {
   const EmployeeProfilePage({
     super.key,
-    required this.employee,
+    required this.bloc,
   });
 
-  static Route<void> route(Employee employee) => MaterialPageRoute(
+  static Route<void> route(
+    EmployeeDetailsBloc bloc,
+  ) =>
+      MaterialPageRoute(
         builder: (_) => EmployeeProfilePage(
-          employee: employee,
+          bloc: bloc,
         ),
       );
 
-  final Employee employee;
+  final EmployeeDetailsBloc bloc;
 
   @override
   Widget build(BuildContext context) {
-    return EmployeeProfileView(
-      employee: employee,
+    return BlocProvider.value(
+      value: bloc,
+      child: const EmployeeProfileView(),
     );
   }
 }

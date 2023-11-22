@@ -11,8 +11,8 @@ import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.d
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
-class UpdateEmployeeProfileView extends StatelessWidget {
-  const UpdateEmployeeProfileView({super.key});
+class UpdateEmployeeProfileForm extends StatelessWidget {
+  const UpdateEmployeeProfileForm({super.key});
 
   @override
   Widget build(BuildContext context) {

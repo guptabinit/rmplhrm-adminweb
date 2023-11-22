@@ -13,7 +13,7 @@ class UpdateEmployeeProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => UpdateEmployeeProfileCubit(),
-      child: const UpdateEmployeeProfileView(),
+      child: const UpdateEmployeeProfileForm(),
     );
   }
 }

@@ -61,7 +61,7 @@ class EmployeeDetailsBloc
   ) {
     emit(
       state.copyWith(
-        selectedEmployee: null,
+        selectedEmployee: Employee.empty,
       ),
     );
   }

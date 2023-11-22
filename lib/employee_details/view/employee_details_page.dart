@@ -26,7 +26,8 @@ class EmployeeDetailsPage extends StatelessWidget {
         listenWhen: (previous, current) =>
             previous.selectedEmployee != current.selectedEmployee,
         listener: (context, state) {
-          if (state.selectedEmployee != null) {
+          if (state.selectedEmployee != null &&
+              state.selectedEmployee?.isNotEmpty == true) {
             Navigator.of(context).push(
               EmployeeProfilePage.route(
                 context.read<EmployeeDetailsBloc>(),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
-
   const CustomTextFormField({
     super.key,
     this.controller,
@@ -15,7 +14,9 @@ class CustomTextFormField extends StatelessWidget {
     this.errorText,
     this.readOnly = false,
     this.onTap,
+    this.initialValue,
   });
+
   final TextEditingController? controller;
   final String? text;
   final int? maxLines;
@@ -26,10 +27,12 @@ class CustomTextFormField extends StatelessWidget {
   final String? errorText;
   final bool readOnly;
   final Function()? onTap;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       controller: controller,
       maxLines: maxLines,
       keyboardType: inputType,

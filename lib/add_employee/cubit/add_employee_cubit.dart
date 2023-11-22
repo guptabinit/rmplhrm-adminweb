@@ -8,12 +8,40 @@ part 'add_employee_state.dart';
 class AddEmployeeCubit extends Cubit<AddEmployeeState> {
   AddEmployeeCubit() : super(const AddEmployeeState());
 
+  void employeeProfileImage(String? value) {
+    final profileImage = RequiredImage.dirty(value);
+    emit(
+      state.copyWith(
+        profilePicture: profileImage,
+        isValid: Formz.validate([
+          profileImage,
+          state.employeeId,
+          state.password,
+          state.firstName,
+          state.lastName,
+          state.dateOfBirth,
+          state.designation,
+          state.dateJoined,
+          state.fathersName,
+          state.address,
+          state.email,
+          state.aadharCard,
+          state.panCard,
+          state.basicSalary,
+          state.hra,
+          state.fieldWorkAllowance,
+        ]),
+      ),
+    );
+  }
+
   void employeeIdChanged(String? value) {
     final employeeId = EmployeeId.dirty(value);
     emit(
       state.copyWith(
         employeeId: employeeId,
         isValid: Formz.validate([
+          state.profilePicture,
           employeeId,
           state.password,
           state.firstName,
@@ -40,6 +68,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         password: password,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           password,
           state.firstName,
@@ -66,6 +95,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         firstName: firstName,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           firstName,
@@ -92,6 +122,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         lastName: lastName,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -118,6 +149,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         dateOfBirth: dateOfBirth,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -144,6 +176,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         designation: designation,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -170,6 +203,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         dateJoined: dateJoined,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -196,6 +230,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         fathersName: fathersName,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -222,6 +257,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         address: address,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -248,6 +284,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         email: email,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -274,6 +311,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         aadharCard: aadharCard,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -300,6 +338,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         panCard: panCard,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -326,6 +365,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         basicSalary: basicSalary,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -352,6 +392,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         hra: hra,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,
@@ -378,6 +419,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       state.copyWith(
         fieldWorkAllowance: fieldWorkAllowance,
         isValid: Formz.validate([
+          state.profilePicture,
           state.employeeId,
           state.password,
           state.firstName,

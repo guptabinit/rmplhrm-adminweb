@@ -8,7 +8,16 @@ class EmployeeRepository {
   Stream<List<Employee>> getEmployees({
     required String creator,
   }) =>
-      _api.getEmployees(creator: creator);
+      _api.getEmployees(
+        creator: creator,
+      );
+
+  Future<Employee> getEmployee(
+    String id,
+  ) =>
+      _api.getEmployee(
+        id: id,
+      );
 
   final EmployeeApi _api;
 }

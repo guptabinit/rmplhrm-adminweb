@@ -28,6 +28,7 @@ class EmployeeProfileView extends StatelessWidget {
         context
             .read<EmployeeDetailsBloc>()
             .add(const EmployeeDetailsDeselected());
+        context.read<UpdateEmployeeProfileCubit>().reset();
       },
       child: Scaffold(
         backgroundColor: primaryColor,
@@ -50,7 +51,12 @@ class EmployeeProfileView extends StatelessWidget {
           actions: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(UpdateEmployeeProfilePage.route());
+                Navigator.of(context).push(
+                  UpdateEmployeeProfilePage.route(
+                    context.read<UpdateEmployeeProfileCubit>(),
+                    context.read<EmployeeDetailsBloc>(),
+                  ),
+                );
               },
               child: Container(
                 padding: const EdgeInsets.all(8),

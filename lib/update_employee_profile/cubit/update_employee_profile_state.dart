@@ -2,6 +2,7 @@ part of 'update_employee_profile_cubit.dart';
 
 final class UpdateEmployeeProfileState extends Equatable {
   const UpdateEmployeeProfileState({
+    this.profileImage = const OptionalImage.pure(),
     this.employeeId = const EmployeeId.pure(),
     this.password = const Password.pure(),
     this.firstName = const FirstName.pure(),
@@ -23,6 +24,7 @@ final class UpdateEmployeeProfileState extends Equatable {
   });
 
   UpdateEmployeeProfileState copyWith({
+    OptionalImage? profileImage,
     EmployeeId? employeeId,
     Password? password,
     FirstName? firstName,
@@ -43,6 +45,7 @@ final class UpdateEmployeeProfileState extends Equatable {
     String? errorMessage,
   }) {
     return UpdateEmployeeProfileState(
+      profileImage: profileImage ?? this.profileImage,
       employeeId: employeeId ?? this.employeeId,
       password: password ?? this.password,
       firstName: firstName ?? this.firstName,
@@ -66,6 +69,7 @@ final class UpdateEmployeeProfileState extends Equatable {
 
   @override
   List<Object?> get props => [
+        profileImage,
         employeeId,
         password,
         firstName,
@@ -86,6 +90,7 @@ final class UpdateEmployeeProfileState extends Equatable {
         status,
       ];
 
+  final OptionalImage profileImage;
   final EmployeeId employeeId;
   final Password password;
   final FirstName firstName;

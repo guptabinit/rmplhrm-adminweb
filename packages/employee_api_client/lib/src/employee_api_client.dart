@@ -28,5 +28,21 @@ class EmployeeApiClient extends EmployeeApi {
         );
   }
 
+  @override
+  Future<Employee> getEmployee({
+    required String id,
+  }) async {
+    try {
+      final doc = await _firestore.collection('employees').doc(id).get();
+      return Employee.fromJson(doc.data()!);
+    } on FirebaseException catch (e) {
+      throw EmployeeNotFoundFailure.fromMessage(
+        e.message ?? 'Something went wrong',
+      );
+    } catch (_) {
+      throw EmployeeNotFoundFailure();
+    }
+  }
+
   final FirebaseFirestore _firestore;
 }

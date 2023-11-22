@@ -18,5 +18,7 @@ export 'src/last_name.dart';
 export 'src/message.dart';
 export 'src/notification_receiver.dart';
 export 'src/notification_type.dart';
+export 'src/optional_image.dart';
 export 'src/pan_card.dart';
 export 'src/password.dart';
+export 'src/required_image.dart';

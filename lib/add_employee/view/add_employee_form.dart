@@ -1,7 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rmpl_hrm_admin/add_employee/cubit/add_employee_cubit.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
@@ -101,43 +103,51 @@ class _ChangeProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Container(
-            height: mq.width * 0.4,
-            width: mq.width * 0.3,
-            decoration: BoxDecoration(
-              color: lightGreyColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: CachedNetworkImage(
-              imageUrl: 'widget.snap[profileUrl]', // TODO: real url
-              fit: BoxFit.cover,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  Center(
-                child: CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                ),
-              ),
-              errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
-            ),
+    return Column(
+      children: [
+        Container(
+          height: mq.width * 0.4,
+          width: mq.width * 0.3,
+          decoration: BoxDecoration(
+            color: lightGreyColor,
+            borderRadius: BorderRadius.circular(8),
           ),
-          12.heightBox,
-          Row(
-            children: [
-              const Spacer(),
-              SecondaryButton(
-                title: 'Change profile picture',
-                onTap: () {},
-                fontSize: 14,
-              ),
-              const Spacer(),
-            ],
+          child: BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
+            buildWhen: (previous, current) =>
+                previous.profilePicture != current.profilePicture,
+            builder: (context, state) {
+              return state.profilePicture.isValid
+                  ? Image.file(
+                      File(state.profilePicture.value!),
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox.shrink();
+            },
           ),
-        ],
-      ),
+        ),
+        12.heightBox,
+        Row(
+          children: [
+            const Spacer(),
+            SecondaryButton(
+              title: 'Select profile picture',
+              onTap: () async {
+                final image = await ImagePicker().pickImage(
+                  source: ImageSource.gallery,
+                  imageQuality: 25,
+                );
+                if (context.mounted) {
+                  context
+                      .read<AddEmployeeCubit>()
+                      .employeeProfileImage(image?.path);
+                }
+              },
+              fontSize: 14,
+            ),
+            const Spacer(),
+          ],
+        ),
+      ],
     );
   }
 }

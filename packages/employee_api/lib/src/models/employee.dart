@@ -33,6 +33,7 @@ class Employee extends Equatable {
     this.uid,
     this.createdAt,
     this.creator,
+    this.email,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
@@ -60,6 +61,7 @@ class Employee extends Equatable {
         fieldWorkAllowance,
         firstName,
         hra,
+        email,
         isActive,
         lastName,
         panNumber,
@@ -88,6 +90,7 @@ class Employee extends Equatable {
   final String? lastName;
   final String? panNumber;
   final String? password;
+  final String? email;
   final bool? probation;
   final DateTime? probationTill;
   final String? profileUrl;

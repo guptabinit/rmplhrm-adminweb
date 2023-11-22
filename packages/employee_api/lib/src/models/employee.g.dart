@@ -32,6 +32,7 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp?),
       creator: const DocumentReferenceConverter().fromJson(json['creator']),
+      email: json['email'] as String?,
     );
 
 Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
@@ -51,6 +52,7 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'lastName': instance.lastName,
       'panNumber': instance.panNumber,
       'password': instance.password,
+      'email': instance.email,
       'probation': instance.probation,
       'probationTill':
           const TimestampConverter().toJson(instance.probationTill),

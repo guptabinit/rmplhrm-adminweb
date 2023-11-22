@@ -10,7 +10,8 @@ class LastName extends FormzInput<String?, LastNameValidationError> {
 
   const LastName.dirty([super.value = '']) : super.dirty();
 
-  static final _nameRegex = RegExp(r'^[a-zA-Z]+$');
+  static final _nameRegex =
+      RegExp(r"^[a-zA-Z]+(([', -][a-zA-Z ])?[a-zA-Z]*)*$");
 
   @override
   LastNameValidationError? validator(String? value) {

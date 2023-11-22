@@ -10,7 +10,7 @@ class PanCard extends FormzInput<String?, PanCardValidationError> {
 
   const PanCard.dirty([super.value = '']) : super.dirty();
 
-  static final _panCardNumberRegex = RegExp(r'^[0-9]{16}$');
+  static final _panCardNumberRegex = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]$');
 
   @override
   PanCardValidationError? validator(String? value) {

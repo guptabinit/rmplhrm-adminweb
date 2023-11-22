@@ -10,8 +10,7 @@ class AadharCard extends FormzInput<String?, AadharCardValidationError> {
 
   const AadharCard.dirty([super.value = '']) : super.dirty();
 
-  static final _aadharCardRegex =
-      RegExp(r'^[A-Z]{5}[A-Z2][A-Z]{4}[0-9]{4}[A-Z]{1}$');
+  static final _aadharCardRegex = RegExp(r'^[0-9]{12}$');
 
   @override
   AadharCardValidationError? validator(String? value) {

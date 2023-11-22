@@ -10,14 +10,15 @@ class FathersName extends FormzInput<String?, FathersNameValidationError> {
 
   const FathersName.dirty([super.value = '']) : super.dirty();
 
-  static const _nameRegex = r'^[a-zA-Z]+\s[a-zA-Z]+$';
+  static final _nameRegex =
+      RegExp(r"^[a-zA-Z]+(([', -][a-zA-Z ])?[a-zA-Z]*)*$");
 
   @override
   FathersNameValidationError? validator(String? value) {
     if (value == null || value.isEmpty) {
       return FathersNameValidationError.required;
     }
-    if (!RegExp(_nameRegex).hasMatch(value)) {
+    if (!_nameRegex.hasMatch(value)) {
       return FathersNameValidationError.invalid;
     }
     return null;

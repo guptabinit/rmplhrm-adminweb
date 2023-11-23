@@ -33,10 +33,13 @@ class SignInWithEmailAndPasswordFailure implements Exception {
         return const SignInWithEmailAndPasswordFailure();
     }
   }
+
   final String message;
 }
 
-class SignOutFailure implements Exception {}
+class SignOutFailure implements Exception {
+  const SignOutFailure();
+}
 
 class AuthenticationRepository {
   AuthenticationRepository({
@@ -77,7 +80,7 @@ class AuthenticationRepository {
     try {
       await _firebaseAuth.signOut();
     } catch (_) {
-      throw SignOutFailure();
+      throw const SignOutFailure();
     }
   }
 

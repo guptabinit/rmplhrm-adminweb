@@ -28,3 +28,9 @@ final class AppState extends Equatable {
   final AppStatus status;
   final User user;
 }
+
+extension AppStatusX on AppStatus {
+  bool get isAuthenticated => this == AppStatus.authenticated;
+
+  bool get isUnauthenticated => this == AppStatus.unauthenticated;
+}

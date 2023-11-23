@@ -1,3 +1,4 @@
+import 'package:admin_profile_api_client/admin_profile_api_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_api_client/employee_api_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,11 +37,13 @@ Future<void> main() async {
     firebaseStorage: firebaseStorage,
     firebaseAuth: firebaseAuth,
   );
+  final adminProfileApi = AdminProfileApiClient(firestore: firestore);
 
   await bootstrap(
     holidayApi: holidayApi,
     notificationApi: notificationApi,
     leaveApi: leaveApi,
     employeeApi: employeeApi,
+    adminProfileApi: adminProfileApi,
   );
 }

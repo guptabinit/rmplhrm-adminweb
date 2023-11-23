@@ -2,6 +2,7 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/bloc/app_bloc.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/login/login.dart';
@@ -112,6 +113,11 @@ class SplashView extends StatelessWidget {
                 onGeneratePages: (state, pages) {
                   switch (state) {
                     case AppStatus.authenticated:
+                      context.read<AdminProfileBloc>().add(
+                            AdminProfileLoaded(
+                              context.read<AppBloc>().state.user.id,
+                            ),
+                          );
                       return [RootPage.page()];
                     case AppStatus.unauthenticated:
                       return [LoginPage.page()];

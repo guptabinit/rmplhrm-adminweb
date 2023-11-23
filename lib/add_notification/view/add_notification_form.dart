@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
 import 'package:rmpl_hrm_admin/add_notification/add_notification.dart';
+import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
@@ -243,7 +244,17 @@ class _AddNotificationButton extends StatelessWidget {
                     : () {
                         context.read<AddNotificationCubit>().addNotification(
                               creator: context.read<AppBloc>().state.user.id,
-                              branch: '',
+                              branch: context
+                                      .read<AdminProfileBloc>()
+                                      .state
+                                      .admin
+                                      .isNotEmpty
+                                  ? context
+                                      .read<AdminProfileBloc>()
+                                      .state
+                                      .admin
+                                      .branch!
+                                  : '',
                             );
                       },
               );

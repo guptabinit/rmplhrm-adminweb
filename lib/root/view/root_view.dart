@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/add_employee/add_employee.dart';
 import 'package:rmpl_hrm_admin/add_holiday/view/add_holiday_page.dart';
 import 'package:rmpl_hrm_admin/add_notification/add_notification.dart';
+import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
@@ -69,14 +70,18 @@ class RootView extends StatelessWidget {
             ),
             if (selectedRoute.index == 0) 4.heightBox else Container(),
             if (selectedRoute.index == 0 || selectedRoute.index == 8)
-              const Text(
-                'branch', // TODO: change to branch name by bloc listener
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                  color: whiteColor,
-                ),
+              BlocBuilder<AdminProfileBloc, AdminProfileState>(
+                builder: (context, state) {
+                  return Text(
+                    state.admin.branch ?? '',
+                    style: const TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: whiteColor,
+                    ),
+                  );
+                },
               )
             else
               Container(),

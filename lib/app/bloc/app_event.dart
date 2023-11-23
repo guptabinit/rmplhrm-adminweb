@@ -15,4 +15,7 @@ final class _AppUserChanged extends AppEvent {
   const _AppUserChanged(this.user);
 
   final User user;
+
+  @override
+  List<Object> get props => [user];
 }

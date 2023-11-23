@@ -11,6 +11,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  admin_profile_api:
+    path: packages/admin_profile_api
+  admin_profile_api_client:
+    path: packages/admin_profile_api_client
+  admin_profile_repository:
+    path: packages/admin_profile_repository
   authentication_repository:
     path: packages/authentication_repository
   employee_api:

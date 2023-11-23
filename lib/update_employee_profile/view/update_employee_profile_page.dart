@@ -55,7 +55,15 @@ class UpdateEmployeeProfilePage extends StatelessWidget {
           }
 
           if (state.status.isSuccess) {
-            Navigator.of(context).pop();
+            context.read<EmployeeDetailsBloc>().add(
+                  EmployeeDetailsSelected(
+                    context
+                        .read<EmployeeDetailsBloc>()
+                        .state
+                        .selectedEmployee
+                        .uid!,
+                  ),
+                );
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
@@ -66,6 +74,7 @@ class UpdateEmployeeProfilePage extends StatelessWidget {
                   ),
                 ),
               );
+            Navigator.of(context).pop();
           }
         },
         child: const UpdateEmployeeProfileForm(),

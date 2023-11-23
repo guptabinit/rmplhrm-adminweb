@@ -117,6 +117,7 @@ class EmployeeApiClient extends EmployeeApi {
         'profilePic': profilePic,
         'creator': _firestore.collection('admin').doc(creator),
         'probation': false,
+        'uid': userCredentials.user!.uid,
       });
     } on FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure(e.code);

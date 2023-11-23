@@ -447,24 +447,6 @@ class UpdateEmployeeProfileCubit extends Cubit<UpdateEmployeeProfileState> {
     );
   }
 
-  void submit() {
-    if (!state.isValid) return;
-    emit(
-      state.copyWith(
-        status: FormzSubmissionStatus.inProgress,
-      ),
-    );
-    try {} catch (_) {
-      emit(
-        state.copyWith(
-          status: FormzSubmissionStatus.failure,
-        ),
-      );
-    }
-  }
-
-  void reset() => emit(const UpdateEmployeeProfileState());
-
   Future<void> update({
     required String creator,
     required String uid,
@@ -524,6 +506,8 @@ class UpdateEmployeeProfileCubit extends Cubit<UpdateEmployeeProfileState> {
       );
     }
   }
+
+  void reset() => emit(const UpdateEmployeeProfileState());
 
   final EmployeeRepository _employeeRepository;
 }

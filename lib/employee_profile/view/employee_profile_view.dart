@@ -73,393 +73,454 @@ class EmployeeProfileView extends StatelessWidget {
             16.widthBox,
           ],
         ),
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
-            ),
-          ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                16.heightBox,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: mq.width * 0.3,
-                            width: mq.width * 0.25,
-                            decoration: BoxDecoration(
-                              color: lightGreyColor,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: BlocBuilder<EmployeeDetailsBloc,
-                                EmployeeDetailsState>(
-                              buildWhen: (previous, current) =>
-                                  previous.selectedEmployee !=
-                                  current.selectedEmployee,
-                              builder: (context, state) {
-                                return CachedNetworkImage(
-                                  imageUrl:
-                                      '${state.selectedEmployee?.profilePic}',
-                                  fit: BoxFit.cover,
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          Center(
-                                    child: CircularProgressIndicator(
-                                      value: downloadProgress.progress,
+        body: BlocConsumer<EmployeeDetailsBloc, EmployeeDetailsState>(
+          listenWhen: (previous, current) =>
+              previous.employeeDetailStatus != current.employeeDetailStatus,
+          listener: (context, state) {
+            if (state.employeeDetailStatus.isSuccess) {
+              final employee = state.selectedEmployee;
+
+              context.read<UpdateEmployeeProfileCubit>()
+                ..employeeIdChanged(employee.eid)
+                ..passwordChanged(employee.password)
+                ..firstNameChanged(employee.firstName)
+                ..lastNameChanged(employee.lastName)
+                ..dateOfBirthChanged(employee.dob.toString())
+                ..designationChanged(employee.designation)
+                ..dateJoinedChanged(employee.dateJoined.toString())
+                ..fathersNameChanged(employee.fathersName)
+                ..addressChanged(employee.address)
+                ..emailChanged(employee.email)
+                ..aadharCardChanged(employee.aadharNumber)
+                ..panCardChanged(employee.panNumber)
+                ..basicSalaryChanged(employee.basicSalary)
+                ..hraChanged(employee.hra)
+                ..fieldWorkAllowanceChanged(employee.fieldWorkAllowance);
+            }
+          },
+          buildWhen: (previous, current) =>
+              previous.employeeDetailStatus != current.employeeDetailStatus,
+          builder: (context, state) {
+            switch (state.employeeDetailStatus) {
+              case EmployeeDetailStatus.initial:
+              case EmployeeDetailStatus.loading:
+                return const SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Material(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                );
+              case EmployeeDetailStatus.success:
+                return Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(
+                      decelerationRate: ScrollDecelerationRate.fast,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        16.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: mq.width * 0.3,
+                                    width: mq.width * 0.25,
+                                    decoration: BoxDecoration(
+                                      color: lightGreyColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: BlocBuilder<EmployeeDetailsBloc,
+                                        EmployeeDetailsState>(
+                                      buildWhen: (previous, current) =>
+                                          previous.selectedEmployee !=
+                                          current.selectedEmployee,
+                                      builder: (context, state) {
+                                        return CachedNetworkImage(
+                                          imageUrl:
+                                              '${state.selectedEmployee.profilePic}',
+                                          fit: BoxFit.cover,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Center(
+                                            child: CircularProgressIndicator(
+                                              value: downloadProgress.progress,
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              const Center(
+                                                  child: Icon(Icons.error)),
+                                        );
+                                      },
                                     ),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      const Center(child: Icon(Icons.error)),
-                                );
-                              },
-                            ),
-                          ),
-                          16.widthBox,
-                          Expanded(
-                            child: SizedBox(
-                              height: mq.width * 0.3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Spacer(),
-                                  BlocBuilder<EmployeeDetailsBloc,
-                                      EmployeeDetailsState>(
-                                    buildWhen: (previous, current) =>
-                                        previous.selectedEmployee !=
-                                        current.selectedEmployee,
-                                    builder: (context, state) {
-                                      return Text(
-                                        '${state.selectedEmployee?.firstName} ${state.selectedEmployee?.lastName}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      );
-                                    },
+                                  16.widthBox,
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: mq.width * 0.3,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Spacer(),
+                                          BlocBuilder<EmployeeDetailsBloc,
+                                              EmployeeDetailsState>(
+                                            buildWhen: (previous, current) =>
+                                                previous.selectedEmployee !=
+                                                current.selectedEmployee,
+                                            builder: (context, state) {
+                                              return Text(
+                                                '${state.selectedEmployee.firstName} ${state.selectedEmployee.lastName}',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          const Spacer(),
+                                          BlocBuilder<EmployeeDetailsBloc,
+                                              EmployeeDetailsState>(
+                                            buildWhen: (previous, current) =>
+                                                previous.selectedEmployee !=
+                                                current.selectedEmployee,
+                                            builder: (context, state) {
+                                              return Text(
+                                                '${state.selectedEmployee.designation}',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          const Spacer(),
+                                          BlocBuilder<EmployeeDetailsBloc,
+                                              EmployeeDetailsState>(
+                                            buildWhen: (previous, current) =>
+                                                previous.selectedEmployee !=
+                                                current.selectedEmployee,
+                                            builder: (context, state) {
+                                              return Text(
+                                                'Employee since ${state.selectedEmployee.dateJoined?.date}',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          const Spacer(),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  const Spacer(),
-                                  BlocBuilder<EmployeeDetailsBloc,
-                                      EmployeeDetailsState>(
-                                    buildWhen: (previous, current) =>
-                                        previous.selectedEmployee !=
-                                        current.selectedEmployee,
-                                    builder: (context, state) {
-                                      return Text(
-                                        '${state.selectedEmployee?.designation}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  const Spacer(),
-                                  BlocBuilder<EmployeeDetailsBloc,
-                                      EmployeeDetailsState>(
-                                    buildWhen: (previous, current) =>
-                                        previous.selectedEmployee !=
-                                        current.selectedEmployee,
-                                    builder: (context, state) {
-                                      return Text(
-                                        'Employee since ${state.selectedEmployee?.dateJoined.date}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  const Spacer(),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                12.heightBox,
-                const Divider(
-                  thickness: 1,
-                  color: borderColor,
-                  endIndent: 16,
-                  indent: 16,
-                ),
+                        ),
+                        12.heightBox,
+                        const Divider(
+                          thickness: 1,
+                          color: borderColor,
+                          endIndent: 16,
+                          indent: 16,
+                        ),
 
-                BlocBuilder<EmployeeDetailsBloc, EmployeeDetailsState>(
-                  buildWhen: (previous, current) =>
-                      previous.selectedEmployee != current.selectedEmployee,
-                  builder: (context, state) {
-                    if (state.selectedEmployee != null &&
-                        state.selectedEmployee?.probation == true) {
-                      return Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 16,
+                        BlocBuilder<EmployeeDetailsBloc, EmployeeDetailsState>(
+                          buildWhen: (previous, current) =>
+                              previous.selectedEmployee !=
+                              current.selectedEmployee,
+                          builder: (context, state) {
+                            if (state.selectedEmployee.probation == true) {
+                              return Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: const BoxDecoration(
+                                  color: redColor,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: Text(
+                                        'Under Probation',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                    SecondaryButton(
+                                      title: 'Review & Update',
+                                      onTap: () {},
+                                      fontSize: 14,
+                                      titleColor: whiteColor,
+                                      backgroundColor: whiteColor,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
+                                ),
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: const BoxDecoration(
+                                  color: lightGreyColor,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Expanded(
+                                      child: Text(
+                                        'Under Probation',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: darkColor,
+                                        ),
+                                      ),
+                                    ),
+                                    SecondaryButton(
+                                      title: 'Review & Update',
+                                      onTap: () {},
+                                      fontSize: 14,
+                                      titleColor: whiteColor,
+                                      backgroundColor: whiteColor,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
                         ),
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: const BoxDecoration(
-                          color: redColor,
-                        ),
-                        child: Row(
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                'Under Probation',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: whiteColor,
+                        8.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  'Attendance Report:',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
+                              SecondaryButton(
+                                title: 'More info',
+                                onTap: () {},
+                                fontSize: 14,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 200,
+                          child: SfCircularChart(
+                            legend: const Legend(
+                              isResponsive: true,
+                              // toggleSeriesVisibility: false,
+                              isVisible: true,
                             ),
-                            SecondaryButton(
-                              title: 'Review & Update',
-                              onTap: () {},
-                              fontSize: 14,
-                              titleColor: whiteColor,
-                              backgroundColor: whiteColor,
-                            ),
-                          ],
+                            selectionGesture: ActivationMode.singleTap,
+                            annotations: <CircularChartAnnotation>[
+                              CircularChartAnnotation(
+                                angle: 300,
+                                radius: '40%',
+                                widget: const Text('25%'),
+                              ),
+                              CircularChartAnnotation(
+                                angle: 200,
+                                radius: '40%',
+                                widget: const Text('38%'),
+                              ),
+                              CircularChartAnnotation(
+                                angle: 100,
+                                radius: '40%',
+                                widget: const Text('34%'),
+                              ),
+                              CircularChartAnnotation(
+                                angle: 0,
+                                radius: '40%',
+                                widget: const Text('52%'),
+                              ),
+                            ],
+                            series: <CircularSeries>[
+                              // Render pie chart
+                              PieSeries<ChartData, String>(
+                                dataSource: chartData,
+                                pointColorMapper: (ChartData data, _) =>
+                                    data.color,
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y,
+                              ),
+                            ],
+                          ),
                         ),
-                      );
-                    } else {
-                      return Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 16,
-                        ),
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: const BoxDecoration(
-                          color: lightGreyColor,
-                        ),
-                        child: Row(
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                'Under Probation',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: darkColor,
+                        12.heightBox,
+                        // Salary Details
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                child: Text(
+                                  'Salary Details:',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SecondaryButton(
-                              title: 'Review & Update',
-                              onTap: () {},
-                              fontSize: 14,
-                              titleColor: whiteColor,
-                              backgroundColor: whiteColor,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
-                8.heightBox,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Attendance Report:',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                              SecondaryButton(
+                                title: 'More info',
+                                onTap: () {},
+                                fontSize: 14,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SecondaryButton(
-                        title: 'More info',
-                        onTap: () {},
-                        fontSize: 14,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
-                  child: SfCircularChart(
-                    legend: const Legend(
-                      isResponsive: true,
-                      // toggleSeriesVisibility: false,
-                      isVisible: true,
-                    ),
-                    selectionGesture: ActivationMode.singleTap,
-                    annotations: <CircularChartAnnotation>[
-                      CircularChartAnnotation(
-                        angle: 300,
-                        radius: '40%',
-                        widget: const Text('25%'),
-                      ),
-                      CircularChartAnnotation(
-                        angle: 200,
-                        radius: '40%',
-                        widget: const Text('38%'),
-                      ),
-                      CircularChartAnnotation(
-                        angle: 100,
-                        radius: '40%',
-                        widget: const Text('34%'),
-                      ),
-                      CircularChartAnnotation(
-                        angle: 0,
-                        radius: '40%',
-                        widget: const Text('52%'),
-                      ),
-                    ],
-                    series: <CircularSeries>[
-                      // Render pie chart
-                      PieSeries<ChartData, String>(
-                        dataSource: chartData,
-                        pointColorMapper: (ChartData data, _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y,
-                      ),
-                    ],
-                  ),
-                ),
-                12.heightBox,
-                // Salary Details
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Text(
-                          'Salary Details:',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                        SizedBox(
+                          height: 200,
+                          child: SfCircularChart(
+                            legend: const Legend(
+                              isResponsive: true,
+                              isVisible: true,
+                            ),
+                            selectionGesture: ActivationMode.singleTap,
+                            annotations: <CircularChartAnnotation>[
+                              CircularChartAnnotation(
+                                angle: 300,
+                                radius: '40%',
+                                widget: const Text('25%'),
+                              ),
+                              CircularChartAnnotation(
+                                angle: 200,
+                                radius: '40%',
+                                widget: const Text('38%'),
+                              ),
+                              CircularChartAnnotation(
+                                angle: 100,
+                                radius: '40%',
+                                widget: const Text('34%'),
+                              ),
+                              CircularChartAnnotation(
+                                angle: 0,
+                                radius: '40%',
+                                widget: const Text('52%'),
+                              ),
+                            ],
+                            series: <CircularSeries>[
+                              // Render pie chart
+                              PieSeries<ChartData, String>(
+                                dataSource: chartData,
+                                pointColorMapper: (ChartData data, _) =>
+                                    data.color,
+                                xValueMapper: (ChartData data, _) => data.x,
+                                yValueMapper: (ChartData data, _) => data.y,
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SecondaryButton(
-                        title: 'More info',
-                        onTap: () {},
-                        fontSize: 14,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
-                  child: SfCircularChart(
-                    legend: const Legend(
-                      isResponsive: true,
-                      isVisible: true,
-                    ),
-                    selectionGesture: ActivationMode.singleTap,
-                    annotations: <CircularChartAnnotation>[
-                      CircularChartAnnotation(
-                        angle: 300,
-                        radius: '40%',
-                        widget: const Text('25%'),
-                      ),
-                      CircularChartAnnotation(
-                        angle: 200,
-                        radius: '40%',
-                        widget: const Text('38%'),
-                      ),
-                      CircularChartAnnotation(
-                        angle: 100,
-                        radius: '40%',
-                        widget: const Text('34%'),
-                      ),
-                      CircularChartAnnotation(
-                        angle: 0,
-                        radius: '40%',
-                        widget: const Text('52%'),
-                      ),
-                    ],
-                    series: <CircularSeries>[
-                      // Render pie chart
-                      PieSeries<ChartData, String>(
-                        dataSource: chartData,
-                        pointColorMapper: (ChartData data, _) => data.color,
-                        xValueMapper: (ChartData data, _) => data.x,
-                        yValueMapper: (ChartData data, _) => data.y,
-                      ),
-                    ],
-                  ),
-                ),
-                16.heightBox,
-                // Delete employee & Disable Employee Buttons
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                        16.heightBox,
+                        // Delete employee & Disable Employee Buttons
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              padding: const MaterialStatePropertyAll(
+                                EdgeInsets.symmetric(vertical: 16),
+                              ),
+                              backgroundColor: const MaterialStatePropertyAll(
+                                textGreyColor,
+                              ),
+                              elevation: const MaterialStatePropertyAll(3),
+                            ),
+                            child: const Center(
+                              child: Text('Disable Account'),
+                            ),
+                          ),
                         ),
-                      ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      backgroundColor: const MaterialStatePropertyAll(
-                        textGreyColor,
-                      ),
-                      elevation: const MaterialStatePropertyAll(3),
-                    ),
-                    child: const Center(
-                      child: Text('Disable Account'),
-                    ),
-                  ),
-                ),
-                12.heightBox,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                        12.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              padding: const MaterialStatePropertyAll(
+                                EdgeInsets.symmetric(vertical: 16),
+                              ),
+                              backgroundColor:
+                                  const MaterialStatePropertyAll(redColor),
+                              elevation: const MaterialStatePropertyAll(3),
+                            ),
+                            child: const Center(
+                              child: Text('Delete Account'),
+                            ),
+                          ),
                         ),
-                      ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16),
-                      ),
-                      backgroundColor: const MaterialStatePropertyAll(redColor),
-                      elevation: const MaterialStatePropertyAll(3),
-                    ),
-                    child: const Center(
-                      child: Text('Delete Account'),
+                        24.heightBox,
+                      ],
                     ),
                   ),
-                ),
-                24.heightBox,
-              ],
-            ),
-          ),
+                );
+              case EmployeeDetailStatus.failure:
+                return const Center(
+                  child: Text(
+                    'No Employee Profile',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+            }
+          },
         ),
       ),
     );

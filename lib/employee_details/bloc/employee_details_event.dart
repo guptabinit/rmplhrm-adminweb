@@ -17,12 +17,12 @@ final class EmployeeDetailsFetched extends EmployeeDetailsEvent {
 }
 
 final class EmployeeDetailsSelected extends EmployeeDetailsEvent {
-  const EmployeeDetailsSelected(this.employee);
+  const EmployeeDetailsSelected(this.uid);
 
   @override
-  List<Object?> get props => [employee];
+  List<Object?> get props => [uid];
 
-  final Employee employee;
+  final String uid;
 }
 
 final class EmployeeDetailsDeselected extends EmployeeDetailsEvent {

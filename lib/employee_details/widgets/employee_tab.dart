@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
+import 'package:rmpl_hrm_admin/employee_profile/employee_profile.dart';
+import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class EmployeeTab extends StatelessWidget {
@@ -63,14 +65,15 @@ class EmployeeTab extends StatelessWidget {
           SecondaryButton(
             title: 'View more',
             onTap: () {
-              // Navigator.of(context).push(
-              //   EmployeeProfilePage.route(
-              //     context.read<EmployeeDetailsBloc>(),
-              //   ),
-              // );
               context.read<EmployeeDetailsBloc>().add(
-                    EmployeeDetailsSelected(employee),
+                    EmployeeDetailsSelected(employee.uid ?? ''),
                   );
+              Navigator.of(context).push(
+                EmployeeProfilePage.route(
+                  context.read<EmployeeDetailsBloc>(),
+                  context.read<UpdateEmployeeProfileCubit>(),
+                ),
+              );
             },
             fontSize: 14,
           ),

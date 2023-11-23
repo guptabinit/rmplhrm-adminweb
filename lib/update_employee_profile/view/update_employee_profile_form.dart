@@ -799,7 +799,7 @@ class _SaveButton extends StatelessWidget {
                               uid: context
                                   .read<EmployeeDetailsBloc>()
                                   .state
-                                  .selectedEmployee!
+                                  .selectedEmployee
                                   .uid!,
                               branch: '', // TODO: use real branch name
                             );

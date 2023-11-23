@@ -34,25 +34,46 @@ class EmployeeDetailsBloc
         employees: employees,
         status: EmployeeDetailsStatus.success,
       ),
-      onError: (_, __) {
-        print(_);
-        print(__);
-        return state.copyWith(
-          status: EmployeeDetailsStatus.failure,
-        );
-      },
+      onError: (_, __) => state.copyWith(
+        status: EmployeeDetailsStatus.failure,
+      ),
     );
   }
 
-  void _selectEmployee(
+  Future<void> _selectEmployee(
     EmployeeDetailsSelected event,
     Emitter<EmployeeDetailsState> emit,
-  ) {
+  ) async {
     emit(
       state.copyWith(
-        selectedEmployee: event.employee,
+        employeeDetailStatus: EmployeeDetailStatus.loading,
       ),
     );
+    await Future.delayed(const Duration(seconds: 5));
+    try {
+      final employee = await _employeeRepository.getEmployee(
+        event.uid,
+      );
+      emit(
+        state.copyWith(
+          employeeDetailStatus: EmployeeDetailStatus.success,
+          selectedEmployee: employee,
+        ),
+      );
+    } on EmployeeNotFoundFailure catch (e) {
+      emit(
+        state.copyWith(
+          employeeDetailStatus: EmployeeDetailStatus.failure,
+          errorMessage: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          employeeDetailStatus: EmployeeDetailStatus.failure,
+        ),
+      );
+    }
   }
 
   void _deselectEmployee(

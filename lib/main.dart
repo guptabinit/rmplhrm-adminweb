@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_api_client/employee_api_client.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday_api_client/holiday_api_client.dart';
 import 'package:leave_api_client/leave_api_client.dart';
@@ -17,12 +19,23 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final app = await Firebase.initializeApp(
+    name: 'secondary',
+    options: Firebase.app().options,
+  );
+
   final firestore = FirebaseFirestore.instance;
+  final firebaseStorage = FirebaseStorage.instance;
+  final firebaseAuth = FirebaseAuth.instanceFor(app: app);
 
   final holidayApi = HolidayApiClient(firestore: firestore);
   final notificationApi = NotificationApiClient(firestore: firestore);
   final leaveApi = LeaveApiClient(firestore: firestore);
-  final employeeApi = EmployeeApiClient(firestore: firestore);
+  final employeeApi = EmployeeApiClient(
+    firestore: firestore,
+    firebaseStorage: firebaseStorage,
+    firebaseAuth: firebaseAuth,
+  );
 
   await bootstrap(
     holidayApi: holidayApi,

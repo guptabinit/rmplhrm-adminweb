@@ -27,7 +27,9 @@ class EmployeeDetailsPage extends StatelessWidget {
             ),
         ),
         BlocProvider(
-          create: (_) => UpdateEmployeeProfileCubit(),
+          create: (_) => UpdateEmployeeProfileCubit(
+            employeeRepository: context.read<EmployeeRepository>(),
+          ),
         ),
       ],
       child: BlocListener<EmployeeDetailsBloc, EmployeeDetailsState>(

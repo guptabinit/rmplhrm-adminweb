@@ -4,7 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
+import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
@@ -125,7 +127,7 @@ class _ChangeProfilePicture extends StatelessWidget {
                     .read<EmployeeDetailsBloc>()
                     .state
                     .selectedEmployee
-                    ?.profileUrl;
+                    ?.profilePic;
 
                 return (state.profileImage.isValid &&
                         state.profileImage.value?.isNotEmpty == true)
@@ -686,12 +688,12 @@ class _BasicSalaryField extends StatelessWidget {
           builder: (context, state) {
             return CustomTextFormField(
               text: 'Basic Salary',
-              initialValue: state.basicSalary.value,
+              initialValue: state.basicSalary.value?.toString(),
               inputType: TextInputType.number,
               onChanged: (String? value) {
                 context
                     .read<UpdateEmployeeProfileCubit>()
-                    .basicSalaryChanged(value);
+                    .basicSalaryChanged(double.tryParse(value!));
               },
               errorText: state.basicSalary.displayError?.text,
             );
@@ -783,10 +785,26 @@ class _SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
       builder: (context, state) {
-        return MainButton(
-          title: 'Save Changes',
-          onTap: !state.isValid ? null : () {},
-        );
+        return state.status.isInProgress
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : MainButton(
+                title: 'Save Changes',
+                onTap: !state.isValid
+                    ? null
+                    : () {
+                        context.read<UpdateEmployeeProfileCubit>().update(
+                              creator: context.read<AppBloc>().state.user.id,
+                              uid: context
+                                  .read<EmployeeDetailsBloc>()
+                                  .state
+                                  .selectedEmployee!
+                                  .uid!,
+                              branch: '', // TODO: use real branch name
+                            );
+                      },
+              );
       },
     );
   }

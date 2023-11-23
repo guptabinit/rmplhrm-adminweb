@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:employee_repository/employee_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
@@ -6,7 +9,10 @@ import 'package:formz/formz.dart';
 part 'add_employee_state.dart';
 
 class AddEmployeeCubit extends Cubit<AddEmployeeState> {
-  AddEmployeeCubit() : super(const AddEmployeeState());
+  AddEmployeeCubit({
+    required EmployeeRepository employeeRepository,
+  })  : _employeeRepository = employeeRepository,
+        super(const AddEmployeeState());
 
   void employeeProfileImage(String? value) {
     final profileImage = RequiredImage.dirty(value);
@@ -359,7 +365,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
     );
   }
 
-  void basicSalaryChanged(String? value) {
+  void basicSalaryChanged(double? value) {
     final basicSalary = BasicSalary.dirty(value);
     emit(
       state.copyWith(
@@ -440,14 +446,43 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
     );
   }
 
-  void submit() {
+  Future<void> submit({
+    required String creator,
+    required String branch,
+  }) async {
     if (!state.isValid) return;
     emit(
       state.copyWith(
         status: FormzSubmissionStatus.inProgress,
       ),
     );
-    try {} catch (_) {
+    try {
+      await _employeeRepository.createEmployee(
+        creator: creator,
+        eid: state.employeeId.value!,
+        password: state.password.value!,
+        branch: branch,
+        firstName: state.firstName.value!,
+        lastName: state.lastName.value!,
+        dob: DateTime.parse(state.dateOfBirth.value!),
+        designation: state.designation.value!,
+        dateJoined: DateTime.parse(state.dateJoined.value!),
+        fathersName: state.fathersName.value!,
+        address: state.address.value!,
+        email: state.email.value!,
+        aadharNumber: state.aadharCard.value!,
+        panNumber: state.panCard.value!,
+        basicSalary: state.basicSalary.value!,
+        hra: state.hra.value!,
+        fieldWorkAllowance: state.fieldWorkAllowance.value!,
+        file: File(state.profilePicture.value!),
+      );
+      emit(
+        state.copyWith(
+          status: FormzSubmissionStatus.success,
+        ),
+      );
+    } catch (_) {
       emit(
         state.copyWith(
           status: FormzSubmissionStatus.failure,
@@ -455,4 +490,6 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
       );
     }
   }
+
+  final EmployeeRepository _employeeRepository;
 }

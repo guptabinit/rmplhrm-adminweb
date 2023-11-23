@@ -9,7 +9,7 @@ part of 'employee.dart';
 Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       aadharNumber: json['aadharNumber'] as String?,
       address: json['address'] as String?,
-      basicSalary: json['basicSalary'] as String?,
+      basicSalary: (json['basicSalary'] as num?)?.toDouble(),
       branch: json['branch'] as String?,
       dateJoined:
           const TimestampConverter().fromJson(json['dateJoined'] as Timestamp?),
@@ -27,7 +27,7 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       probation: json['probation'] as bool?,
       probationTill: const TimestampConverter()
           .fromJson(json['probationTill'] as Timestamp?),
-      profileUrl: json['profileUrl'] as String?,
+      profilePic: json['profilePic'] as String?,
       uid: json['uid'] as String?,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp?),
@@ -56,7 +56,7 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'probation': instance.probation,
       'probationTill':
           const TimestampConverter().toJson(instance.probationTill),
-      'profileUrl': instance.profileUrl,
+      'profilePic': instance.profilePic,
       'uid': instance.uid,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'creator': const DocumentReferenceConverter().toJson(instance.creator),

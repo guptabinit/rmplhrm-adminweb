@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
 import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 
@@ -36,7 +37,39 @@ class UpdateEmployeeProfilePage extends StatelessWidget {
           value: _bloc,
         ),
       ],
-      child: const UpdateEmployeeProfileForm(),
+      child:
+          BlocListener<UpdateEmployeeProfileCubit, UpdateEmployeeProfileState>(
+        listenWhen: (previous, current) => previous.status != current.status,
+        listener: (context, state) {
+          if (state.status.isFailure) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(
+                    state.errorMessage ?? 'Something went wrong',
+                  ),
+                ),
+              );
+          }
+
+          if (state.status.isSuccess) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text(
+                    'Employee profile updated successfully',
+                  ),
+                ),
+              );
+          }
+        },
+        child: const UpdateEmployeeProfileForm(),
+      ),
     );
   }
 }

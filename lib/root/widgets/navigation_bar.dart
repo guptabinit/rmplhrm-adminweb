@@ -7,7 +7,9 @@ import 'package:rmpl_hrm_admin/utils/box.dart';
 
 class NavigationBar extends StatelessWidget {
   const NavigationBar({
-    required this.route, required this.selected, super.key,
+    required this.route,
+    required this.selected,
+    super.key,
   });
 
   final AppRoute route;
@@ -15,43 +17,41 @@ class NavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: selected ? primaryColor.withOpacity(0.3) : Colors.transparent,
-        ),
-        child: InkWell(
-          onTap: () {
-            context.read<RootCubit>().navigateTo(route);
-            Navigator.of(context).pop();
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/Home.svg',
-                  colorFilter: const ColorFilter.mode(
-                    darkColor,
-                    BlendMode.srcIn,
+    return Container(
+      margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: selected ? primaryColor.withOpacity(0.3) : Colors.transparent,
+      ),
+      child: InkWell(
+        onTap: () {
+          context.read<RootCubit>().navigateTo(route);
+          Navigator.of(context).pop();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          child: Row(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/Home.svg',
+                colorFilter: const ColorFilter.mode(
+                  darkColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+              12.widthBox,
+              Expanded(
+                child: Text(
+                  route.name,
+                  style: const TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                12.widthBox,
-                Expanded(
-                  child: Text(
-                    route.name,
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                const Icon(Icons.arrow_forward_ios),
-              ],
-            ),
+              ),
+              const Icon(Icons.arrow_forward_ios),
+            ],
           ),
         ),
       ),

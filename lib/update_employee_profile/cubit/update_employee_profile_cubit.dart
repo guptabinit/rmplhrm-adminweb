@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:employee_api/employee_api.dart';
+import 'package:employee_repository/employee_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
@@ -6,7 +10,10 @@ import 'package:formz/formz.dart';
 part 'update_employee_profile_state.dart';
 
 class UpdateEmployeeProfileCubit extends Cubit<UpdateEmployeeProfileState> {
-  UpdateEmployeeProfileCubit() : super(const UpdateEmployeeProfileState());
+  UpdateEmployeeProfileCubit({
+    required EmployeeRepository employeeRepository,
+  })  : _employeeRepository = employeeRepository,
+        super(const UpdateEmployeeProfileState());
 
   void employeeProfileImage(String? value) {
     final profileImage = OptionalImage.dirty(value);
@@ -359,7 +366,7 @@ class UpdateEmployeeProfileCubit extends Cubit<UpdateEmployeeProfileState> {
     );
   }
 
-  void basicSalaryChanged(String? value) {
+  void basicSalaryChanged(double? value) {
     final basicSalary = BasicSalary.dirty(value);
     emit(
       state.copyWith(
@@ -457,4 +464,66 @@ class UpdateEmployeeProfileCubit extends Cubit<UpdateEmployeeProfileState> {
   }
 
   void reset() => emit(const UpdateEmployeeProfileState());
+
+  Future<void> update({
+    required String creator,
+    required String uid,
+    required String branch,
+  }) async {
+    if (!state.isValid) return;
+    emit(
+      state.copyWith(
+        status: FormzSubmissionStatus.inProgress,
+      ),
+    );
+    try {
+      await _employeeRepository.updateEmployee(
+        creator: creator,
+        uid: uid,
+        eid: state.employeeId.value,
+        password: state.password.value,
+        branch: branch,
+        firstName: state.firstName.value,
+        lastName: state.lastName.value,
+        dob: state.dateOfBirth.value != null
+            ? DateTime.parse(state.dateOfBirth.value!)
+            : null,
+        designation: state.designation.value,
+        dateJoined: state.dateJoined.value != null
+            ? DateTime.parse(state.dateJoined.value!)
+            : null,
+        fathersName: state.fathersName.value,
+        address: state.address.value,
+        email: state.email.value,
+        aadharNumber: state.aadharCard.value,
+        panNumber: state.panCard.value,
+        basicSalary: state.basicSalary.value,
+        hra: state.hra.value,
+        fieldWorkAllowance: state.fieldWorkAllowance.value,
+        file: state.profileImage.value != null
+            ? File(state.profileImage.value!)
+            : null,
+      );
+      emit(
+        state.copyWith(
+          status: FormzSubmissionStatus.success,
+        ),
+      );
+    } on SignUpWithEmailAndPasswordFailure catch (e) {
+      emit(
+        state.copyWith(
+          status: FormzSubmissionStatus.failure,
+          errorMessage: e.message,
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          status: FormzSubmissionStatus.failure,
+        ),
+      );
+    }
+  }
+
+  final EmployeeRepository _employeeRepository;
 }

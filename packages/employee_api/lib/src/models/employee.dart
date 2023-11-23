@@ -29,7 +29,7 @@ class Employee extends Equatable {
     this.password,
     this.probation,
     this.probationTill,
-    this.profileUrl,
+    this.profilePic,
     this.uid,
     this.createdAt,
     this.creator,
@@ -68,7 +68,7 @@ class Employee extends Equatable {
         password,
         probation,
         probationTill,
-        profileUrl,
+        profilePic,
         uid,
         createdAt,
         creator,
@@ -76,7 +76,7 @@ class Employee extends Equatable {
 
   final String? aadharNumber;
   final String? address;
-  final String? basicSalary;
+  final double? basicSalary;
   final String? branch;
   final DateTime? dateJoined;
   final String? designation;
@@ -93,7 +93,7 @@ class Employee extends Equatable {
   final String? email;
   final bool? probation;
   final DateTime? probationTill;
-  final String? profileUrl;
+  final String? profilePic;
   final String? uid;
   final DateTime? createdAt;
   final DocumentReference? creator;

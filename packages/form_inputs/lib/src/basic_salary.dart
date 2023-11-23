@@ -5,19 +5,19 @@ enum BasicSalaryValidationError {
   invalid,
 }
 
-class BasicSalary extends FormzInput<String?, BasicSalaryValidationError> {
-  const BasicSalary.pure() : super.pure('');
+class BasicSalary extends FormzInput<double?, BasicSalaryValidationError> {
+  const BasicSalary.pure() : super.pure(null);
 
-  const BasicSalary.dirty([super.value = '']) : super.dirty();
+  const BasicSalary.dirty([super.value]) : super.dirty();
 
   static final _basicSalaryRegex = RegExp(r'^[0-9]+(\.[0-9]+)?$');
 
   @override
-  BasicSalaryValidationError? validator(String? value) {
-    if (value == null || value.isEmpty) {
+  BasicSalaryValidationError? validator(double? value) {
+    if (value == null || value == 0) {
       return BasicSalaryValidationError.required;
     }
-    if (!_basicSalaryRegex.hasMatch(value)) {
+    if (!_basicSalaryRegex.hasMatch(value.toString())) {
       return BasicSalaryValidationError.invalid;
     }
     return null;

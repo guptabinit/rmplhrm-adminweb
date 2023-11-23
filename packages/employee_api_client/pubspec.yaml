@@ -11,8 +11,11 @@ dependencies:
   cloud_firestore: ^4.13.1
   employee_api:
     path: ../employee_api
+  firebase_auth: ^4.14.1
+  firebase_storage: ^11.5.2
   flutter:
     sdk: flutter
+  mime: ^1.0.4
 
 dev_dependencies:
   flutter_test:

@@ -112,7 +112,7 @@ class EmployeeProfileView extends StatelessWidget {
                               builder: (context, state) {
                                 return CachedNetworkImage(
                                   imageUrl:
-                                      '${state.selectedEmployee?.profileUrl}',
+                                      '${state.selectedEmployee?.profilePic}',
                                   fit: BoxFit.cover,
                                   progressIndicatorBuilder:
                                       (context, url, downloadProgress) =>

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
+import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rmpl_hrm_admin/add_employee/cubit/add_employee_cubit.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
@@ -639,7 +641,9 @@ class _BasicSalaryField extends StatelessWidget {
               text: 'Basic Salary',
               inputType: TextInputType.number,
               onChanged: (String? value) {
-                context.read<AddEmployeeCubit>().basicSalaryChanged(value);
+                context
+                    .read<AddEmployeeCubit>()
+                    .basicSalaryChanged(double.tryParse(value!));
               },
               errorText: state.basicSalary.displayError?.text,
             );
@@ -729,10 +733,21 @@ class _SaveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddEmployeeCubit, AddEmployeeState>(
       builder: (context, state) {
-        return MainButton(
-          title: 'Save Changes',
-          onTap: !state.isValid ? null : () {},
-        );
+        return state.status.isInProgress
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : MainButton(
+                title: 'Save Changes',
+                onTap: !state.isValid
+                    ? null
+                    : () {
+                        context.read<AddEmployeeCubit>().submit(
+                              creator: context.read<AppBloc>().state.user.id,
+                              branch: '', // TODO use actual branch name
+                            );
+                      },
+              );
       },
     );
   }

@@ -17,6 +17,12 @@ dependencies:
     path: packages/admin_profile_api_client
   admin_profile_repository:
     path: packages/admin_profile_repository
+  attendance_api:
+    path: packages/attendance_api
+  attendance_api_client:
+    path: packages/attendance_api_client
+  attendance_repository:
+    path: packages/attendance_repository
   authentication_repository:
     path: packages/authentication_repository
   employee_api:

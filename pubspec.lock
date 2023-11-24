@@ -62,6 +62,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  attendance_api:
+    dependency: "direct main"
+    description:
+      path: "packages/attendance_api"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  attendance_api_client:
+    dependency: "direct main"
+    description:
+      path: "packages/attendance_api_client"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  attendance_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/attendance_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   authentication_repository:
     dependency: "direct main"
     description:

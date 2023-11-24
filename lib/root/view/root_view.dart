@@ -5,6 +5,7 @@ import 'package:rmpl_hrm_admin/add_holiday/view/add_holiday_page.dart';
 import 'package:rmpl_hrm_admin/add_notification/add_notification.dart';
 import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
+import 'package:rmpl_hrm_admin/attendance/attendance.dart';
 import 'package:rmpl_hrm_admin/components/drawer_header.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/constants/consts.dart';
@@ -14,7 +15,6 @@ import 'package:rmpl_hrm_admin/leave/leave.dart';
 import 'package:rmpl_hrm_admin/notifications/view/notifications_page.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
-import 'package:rmpl_hrm_admin/screens/attendance_screen.dart';
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
 import 'package:rmpl_hrm_admin/screens/salary_details_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -23,7 +23,7 @@ const routes = <Widget>[
   AdminDashboardScreen(),
   EmployeeDetailsPage(),
   NotificationsPage(),
-  AttendanceScreen(),
+  AttendancePage(),
   HolidaysPage(),
   LeavePage(),
   SalaryDetailScreen(),

@@ -1,4 +1,5 @@
 import 'package:admin_profile_api_client/admin_profile_api_client.dart';
+import 'package:attendance_api_client/attendance_api_client.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:employee_api_client/employee_api_client.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,6 +39,7 @@ Future<void> main() async {
     firebaseAuth: firebaseAuth,
   );
   final adminProfileApi = AdminProfileApiClient(firestore: firestore);
+  final attendanceApi = AttendanceApiClient(firestore: firestore);
 
   await bootstrap(
     holidayApi: holidayApi,
@@ -45,5 +47,6 @@ Future<void> main() async {
     leaveApi: leaveApi,
     employeeApi: employeeApi,
     adminProfileApi: adminProfileApi,
+    attendanceApi: attendanceApi,
   );
 }

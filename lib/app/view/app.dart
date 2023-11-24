@@ -1,4 +1,5 @@
 import 'package:admin_profile_repository/admin_profile_repository.dart';
+import 'package:attendance_repository/attendance_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
     required this.leaveRepository,
     required this.employeeRepository,
     required this.adminProfileRepository,
+    required this.attendanceRepository,
     super.key,
   });
 
@@ -43,6 +45,9 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider.value(
           value: adminProfileRepository,
+        ),
+        RepositoryProvider.value(
+          value: attendanceRepository,
         ),
       ],
       child: MultiBlocProvider(
@@ -70,6 +75,7 @@ class App extends StatelessWidget {
   final LeaveRepository leaveRepository;
   final EmployeeRepository employeeRepository;
   final AdminProfileRepository adminProfileRepository;
+  final AttendanceRepository attendanceRepository;
 }
 
 class AppView extends StatelessWidget {

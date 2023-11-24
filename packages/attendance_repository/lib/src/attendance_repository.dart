@@ -1,7 +1,18 @@
-/// {@template attendance_repository}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
+import 'package:attendance_api/attendance_api.dart';
+
 class AttendanceRepository {
-  /// {@macro attendance_repository}
-  const AttendanceRepository();
+  const AttendanceRepository({
+    required AttendanceApi api,
+  }) : _api = api;
+
+  Stream<List<Attendance>> getAttendances({
+    required String creator,
+    required DateTime createAt,
+  }) =>
+      _api.getAttendances(
+        creator: creator,
+        createAt: createAt,
+      );
+
+  final AttendanceApi _api;
 }

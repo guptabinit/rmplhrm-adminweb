@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:admin_profile_api/admin_profile_api.dart';
 import 'package:admin_profile_repository/admin_profile_repository.dart';
+import 'package:attendance_api/attendance_api.dart';
+import 'package:attendance_repository/attendance_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:employee_api/employee_api.dart';
@@ -21,6 +23,7 @@ Future<void> bootstrap({
   required LeaveApi leaveApi,
   required EmployeeApi employeeApi,
   required AdminProfileApi adminProfileApi,
+  required AttendanceApi attendanceApi,
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -38,6 +41,7 @@ Future<void> bootstrap({
   final leaveRepository = LeaveRepository(api: leaveApi);
   final employeeRepository = EmployeeRepository(api: employeeApi);
   final adminProfileRepository = AdminProfileRepository(api: adminProfileApi);
+  final attendanceRepository = AttendanceRepository(api: attendanceApi);
 
   await authenticationRepository.user.first;
 
@@ -49,6 +53,7 @@ Future<void> bootstrap({
       leaveRepository: leaveRepository,
       employeeRepository: employeeRepository,
       adminProfileRepository: adminProfileRepository,
+      attendanceRepository: attendanceRepository,
     ),
   );
 }

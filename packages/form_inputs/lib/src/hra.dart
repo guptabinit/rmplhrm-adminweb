@@ -5,14 +5,21 @@ enum HRAValidationError {
   invalid,
 }
 
-class HRA extends FormzInput<String?, HRAValidationError> {
-  const HRA.pure() : super.pure('');
+class HRA extends FormzInput<double?, HRAValidationError> {
+  const HRA.pure() : super.pure(null);
 
-  const HRA.dirty([super.value = '']) : super.dirty();
+  const HRA.dirty([super.value]) : super.dirty();
+
+  static final _hraRegex = RegExp(r'^[0-9]+(\.[0-9]+)?$');
 
   @override
-  HRAValidationError? validator(String? value) {
-    if (value == null || value.isEmpty) return HRAValidationError.required;
+  HRAValidationError? validator(double? value) {
+    if (value == null || value == 0) {
+      return HRAValidationError.required;
+    }
+    if (!_hraRegex.hasMatch(value.toString())) {
+      return HRAValidationError.invalid;
+    }
     return null;
   }
 }

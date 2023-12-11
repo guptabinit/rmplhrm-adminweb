@@ -37,7 +37,7 @@ class EmployeeRepository {
     required String aadharNumber,
     required String panNumber,
     required double basicSalary,
-    required String hra,
+    required double hra,
     required String fieldWorkAllowance,
     required File file,
   }) async =>
@@ -79,7 +79,7 @@ class EmployeeRepository {
     String? aadharNumber,
     String? panNumber,
     double? basicSalary,
-    String? hra,
+    double? hra,
     String? fieldWorkAllowance,
     File? file,
   }) async =>

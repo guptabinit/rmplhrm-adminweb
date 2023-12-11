@@ -38,6 +38,24 @@ class EmployeeApiClient extends EmployeeApi {
   }
 
   @override
+  Future<Iterable<String>> getEmployeeIds({
+    required String creator,
+  }) async {
+    try {
+      final result = await _firestore
+          .collection('employees')
+          .where(
+            'creator',
+            isEqualTo: _firestore.collection('admin').doc(creator),
+          )
+          .get();
+      return result.docs.map((e) => e.id);
+    } catch (e) {
+      throw EmployeeNotFoundFailure();
+    }
+  }
+
+  @override
   Future<Employee> getEmployee({
     required String id,
   }) async {
@@ -70,7 +88,7 @@ class EmployeeApiClient extends EmployeeApi {
     required String aadharNumber,
     required String panNumber,
     required double basicSalary,
-    required String hra,
+    required double hra,
     required String fieldWorkAllowance,
     required File file,
   }) async {
@@ -126,10 +144,6 @@ class EmployeeApiClient extends EmployeeApi {
     }
   }
 
-  final FirebaseFirestore _firestore;
-  final FirebaseStorage _firebaseStorage;
-  final FirebaseAuth _firebaseAuth;
-
   @override
   Future<void> updateEmployee({
     required String creator,
@@ -148,7 +162,7 @@ class EmployeeApiClient extends EmployeeApi {
     String? aadharNumber,
     String? panNumber,
     double? basicSalary,
-    String? hra,
+    double? hra,
     String? fieldWorkAllowance,
     File? file,
   }) async {
@@ -201,4 +215,8 @@ class EmployeeApiClient extends EmployeeApi {
       throw const SignUpWithEmailAndPasswordFailure();
     }
   }
+
+  final FirebaseFirestore _firestore;
+  final FirebaseStorage _firebaseStorage;
+  final FirebaseAuth _firebaseAuth;
 }

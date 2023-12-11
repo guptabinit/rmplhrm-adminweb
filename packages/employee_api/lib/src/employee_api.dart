@@ -9,6 +9,10 @@ abstract class EmployeeApi {
     required String creator,
   });
 
+  Future<Iterable<String>> getEmployeeIds({
+    required String creator,
+  });
+
   Future<Employee> getEmployee({
     required String id,
   });
@@ -29,7 +33,7 @@ abstract class EmployeeApi {
     required String aadharNumber,
     required String panNumber,
     required double basicSalary,
-    required String hra,
+    required double hra,
     required String fieldWorkAllowance,
     required File file,
   });
@@ -51,7 +55,7 @@ abstract class EmployeeApi {
     String? aadharNumber,
     String? panNumber,
     double? basicSalary,
-    String? hra,
+    double? hra,
     String? fieldWorkAllowance,
     File? file,
   });

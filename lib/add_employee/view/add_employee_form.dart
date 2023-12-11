@@ -679,7 +679,9 @@ class _HRAField extends StatelessWidget {
               text: 'HRA',
               inputType: TextInputType.number,
               onChanged: (String? value) {
-                context.read<AddEmployeeCubit>().hraChanged(value);
+                context
+                    .read<AddEmployeeCubit>()
+                    .hraChanged(double.tryParse(value ?? ''));
               },
               errorText: state.hra.displayError?.text,
             );

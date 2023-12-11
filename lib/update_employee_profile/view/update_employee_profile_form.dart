@@ -727,10 +727,12 @@ class _HRAField extends StatelessWidget {
           builder: (context, state) {
             return CustomTextFormField(
               text: 'HRA',
-              initialValue: state.hra.value,
+              initialValue: '${state.hra.value}',
               inputType: TextInputType.number,
               onChanged: (String? value) {
-                context.read<UpdateEmployeeProfileCubit>().hraChanged(value);
+                context
+                    .read<UpdateEmployeeProfileCubit>()
+                    .hraChanged(double.tryParse(value ?? ''));
               },
               errorText: state.hra.displayError?.text,
             );

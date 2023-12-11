@@ -392,7 +392,7 @@ class AddEmployeeCubit extends Cubit<AddEmployeeState> {
     );
   }
 
-  void hraChanged(String? value) {
+  void hraChanged(double? value) {
     final hra = HRA.dirty(value);
     emit(
       state.copyWith(

@@ -19,7 +19,7 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
       fathersName: json['fathersName'] as String?,
       fieldWorkAllowance: json['fieldWorkAllowance'] as String?,
       firstName: json['firstName'] as String?,
-      hra: json['hra'] as String?,
+      hra: (json['hra'] as num?)?.toDouble(),
       isActive: json['isActive'] as bool?,
       lastName: json['lastName'] as String?,
       panNumber: json['panNumber'] as String?,

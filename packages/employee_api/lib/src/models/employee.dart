@@ -85,7 +85,7 @@ class Employee extends Equatable {
   final String? fathersName;
   final String? fieldWorkAllowance;
   final String? firstName;
-  final String? hra;
+  final double? hra;
   final bool? isActive;
   final String? lastName;
   final String? panNumber;

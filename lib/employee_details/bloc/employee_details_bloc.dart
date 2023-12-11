@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:employee_api/employee_api.dart';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 part 'employee_details_event.dart';
 part 'employee_details_state.dart';
@@ -34,9 +35,13 @@ class EmployeeDetailsBloc
         employees: employees,
         status: EmployeeDetailsStatus.success,
       ),
-      onError: (_, __) => state.copyWith(
-        status: EmployeeDetailsStatus.failure,
-      ),
+      onError: (_, __) {
+        _.log();
+        __.log();
+        return state.copyWith(
+          status: EmployeeDetailsStatus.failure,
+        );
+      },
     );
   }
 

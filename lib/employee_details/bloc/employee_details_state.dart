@@ -20,6 +20,8 @@ final class EmployeeDetailsState extends Equatable {
     this.employeeDetailStatus = EmployeeDetailStatus.initial,
     this.employees = const [],
     this.selectedEmployee = Employee.empty,
+    this.searchResults = const [],
+    this.searching = false,
     this.errorMessage,
   });
 
@@ -28,6 +30,8 @@ final class EmployeeDetailsState extends Equatable {
     EmployeeDetailStatus? employeeDetailStatus,
     List<Employee>? employees,
     Employee? selectedEmployee,
+    List<Employee>? searchResults,
+    bool? searching,
     String? errorMessage,
   }) {
     return EmployeeDetailsState(
@@ -35,6 +39,8 @@ final class EmployeeDetailsState extends Equatable {
       employeeDetailStatus: employeeDetailStatus ?? this.employeeDetailStatus,
       employees: employees ?? this.employees,
       selectedEmployee: selectedEmployee ?? this.selectedEmployee,
+      searching: searching ?? this.searching,
+      searchResults: searchResults ?? this.searchResults,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -45,6 +51,8 @@ final class EmployeeDetailsState extends Equatable {
         employeeDetailStatus,
         employees,
         selectedEmployee,
+        searching,
+        searchResults,
         errorMessage,
       ];
 
@@ -52,6 +60,8 @@ final class EmployeeDetailsState extends Equatable {
   final EmployeeDetailStatus employeeDetailStatus;
   final List<Employee> employees;
   final Employee selectedEmployee;
+  final List<Employee> searchResults;
+  final bool searching;
   final String? errorMessage;
 }
 

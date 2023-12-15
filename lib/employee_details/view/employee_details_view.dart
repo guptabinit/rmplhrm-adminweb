@@ -30,46 +30,25 @@ class EmployeeDetailsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
+              TextField(
+                maxLines: 1,
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintText: 'Search employee',
+                  hintStyle: const TextStyle(color: textGreyColor),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(36.0),
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(36),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: lightGreyColor,
-                        offset: Offset(1, 1),
-                        blurRadius: 6,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.search,
-                        color: textGreyColor,
-                      ),
-                      8.widthBox,
-                      const Text(
-                        'Search employee',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: textGreyColor,
-                        ),
-                      ),
-                    ],
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: textGreyColor,
                   ),
                 ),
+                onChanged: (value) {
+                  context.read<EmployeeDetailsBloc>().add(
+                        EmployeeDetailsSearch(value),
+                      );
+                },
               ),
               16.heightBox,
               BlocBuilder<EmployeeDetailsBloc, EmployeeDetailsState>(
@@ -108,16 +87,29 @@ class EmployeeDetailsView extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return ListView.separated(
-                          separatorBuilder: (_, __) => 12.heightBox,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: state.employees.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final employee = state.employees[index];
-                            return EmployeeTab(employee: employee);
-                          },
-                        );
+                        if (state.searching) {
+                          return ListView.separated(
+                            separatorBuilder: (_, __) => 12.heightBox,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: state.searchResults.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final employee = state.searchResults[index];
+                              return EmployeeTab(employee: employee);
+                            },
+                          );
+                        } else {
+                          return ListView.separated(
+                            separatorBuilder: (_, __) => 12.heightBox,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: state.employees.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final employee = state.employees[index];
+                              return EmployeeTab(employee: employee);
+                            },
+                          );
+                        }
                       }
                     case EmployeeDetailsStatus.failure:
                       return Center(

@@ -19,6 +19,18 @@ class EmployeeApiClient extends EmployeeApi {
   Stream<List<Employee>> getEmployees({
     required String creator,
   }) {
+    final patternLower = 'Durga'.toLowerCase();
+    final patternUpper = patternLower.substring(
+          0,
+          patternLower.length - 1,
+        ) +
+        String.fromCharCode(
+          patternLower.codeUnitAt(
+                patternLower.length - 1,
+              ) +
+              1,
+        );
+
     return _firestore
         .collection('employees')
         .where(

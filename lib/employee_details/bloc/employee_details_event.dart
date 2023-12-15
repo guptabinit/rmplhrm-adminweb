@@ -31,3 +31,12 @@ final class EmployeeDetailsDeselected extends EmployeeDetailsEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class EmployeeDetailsSearch extends EmployeeDetailsEvent {
+  const EmployeeDetailsSearch(this.searchQuery);
+
+  @override
+  List<Object?> get props => [searchQuery];
+
+  final String searchQuery;
+}

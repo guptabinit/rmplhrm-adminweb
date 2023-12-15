@@ -4,6 +4,7 @@ import 'package:holiday_api/holiday_api.dart';
 import 'package:holiday_repository/holiday_repository.dart';
 
 part 'holidays_event.dart';
+
 part 'holidays_state.dart';
 
 class HolidaysBloc extends Bloc<HolidaysEvent, HolidaysState> {
@@ -22,19 +23,18 @@ class HolidaysBloc extends Bloc<HolidaysEvent, HolidaysState> {
     emit(state.copyWith(status: HolidaysStatus.loading));
 
     await emit.forEach<List<Holiday>>(
-        _holidayRepository.getHolidays(
-          creator: event.creator,
-          date: state.date ?? DateTime.now(),
-        ),
-        onData: (holidays) => state.copyWith(
-              holidays: holidays,
-              status: HolidaysStatus.success,
-            ),
-        onError: (_, __) {
-          return state.copyWith(
-            status: HolidaysStatus.failure,
-          );
-        });
+      _holidayRepository.getHolidays(
+        creator: event.creator,
+        date: state.date ?? DateTime.now(),
+      ),
+      onData: (holidays) => state.copyWith(
+        holidays: holidays,
+        status: HolidaysStatus.success,
+      ),
+      onError: (_, __) => state.copyWith(
+        status: HolidaysStatus.failure,
+      ),
+    );
   }
 
   void _onHolidaysDateChanged(

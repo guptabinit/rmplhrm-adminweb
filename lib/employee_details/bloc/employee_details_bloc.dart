@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:employee_api/employee_api.dart';
 import 'package:employee_repository/employee_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 part 'employee_details_event.dart';
+
 part 'employee_details_state.dart';
 
 class EmployeeDetailsBloc
@@ -14,6 +14,7 @@ class EmployeeDetailsBloc
   })  : _employeeRepository = employeeRepository,
         super(const EmployeeDetailsState()) {
     on<EmployeeDetailsFetched>(_fetchEmployeeDetails);
+    on<EmployeeDetailsSearch>(_searchEmployeeDetails);
     on<EmployeeDetailsSelected>(_selectEmployee);
     on<EmployeeDetailsDeselected>(_deselectEmployee);
   }
@@ -35,14 +36,33 @@ class EmployeeDetailsBloc
         employees: employees,
         status: EmployeeDetailsStatus.success,
       ),
-      onError: (_, __) {
-        _.log();
-        __.log();
-        return state.copyWith(
-          status: EmployeeDetailsStatus.failure,
-        );
-      },
+      onError: (_, __) => state.copyWith(
+        status: EmployeeDetailsStatus.failure,
+      ),
     );
+  }
+
+  void _searchEmployeeDetails(
+    EmployeeDetailsSearch event,
+    Emitter<EmployeeDetailsState> emit,
+  ) {
+    if (event.searchQuery.isEmpty || event.searchQuery == '') {
+      emit(state.copyWith(searching: false, searchResults: []));
+    } else {
+      final employees = state.employees.where((element) {
+        if (element.firstName == null || element.lastName == null) return false;
+        final firstName = (element.firstName ?? '').toLowerCase();
+        final lastName = (element.lastName ?? '').toLowerCase();
+        final q = event.searchQuery.toLowerCase();
+        return firstName.contains(
+              q.toLowerCase(),
+            ) ||
+            lastName.contains(
+              q.toLowerCase(),
+            );
+      }).toList();
+      emit(state.copyWith(searching: true, searchResults: employees));
+    }
   }
 
   Future<void> _selectEmployee(

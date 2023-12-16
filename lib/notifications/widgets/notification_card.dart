@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart' hide Notification;
-import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/utils/box.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notification_api/notification_api.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
+import 'package:rmpl_hrm_admin/constants/colors.dart';
+import 'package:rmpl_hrm_admin/notifications/notifications.dart';
+import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -73,9 +76,23 @@ class NotificationCard extends StatelessWidget {
               ),
               4.widthBox,
               IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.remove_red_eye_rounded,
+                onPressed: () {
+                  if (notification.id == null) return;
+                  final visible = notification.isVisible != null
+                      ? !notification.isVisible!
+                      : true;
+                  context.read<NotificationsBloc>().add(
+                        NotificationsToggle(
+                          id: notification.id!,
+                          visible: visible,
+                          creator: context.read<AppBloc>().state.user.id,
+                        ),
+                      );
+                },
+                icon: Icon(
+                  notification.isVisible == false
+                      ? Icons.remove_red_eye_rounded
+                      : Icons.remove_red_eye_outlined,
                   color: primaryColor,
                 ),
               ),

@@ -12,6 +12,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   })  : _notificationRepository = notificationRepository,
         super(const NotificationsState()) {
     on<NotificationsFetched>(_onNotificationsFetched);
+    on<NotificationsToggle>(_onNotificationsToggle);
   }
 
   Future<void> _onNotificationsFetched(
@@ -35,6 +36,35 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
         status: NotificationStatus.failure,
       ),
     );
+  }
+
+  Future<void> _onNotificationsToggle(
+    NotificationsToggle event,
+    Emitter<NotificationsState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        toggleStatus: ToggleStatus.loading,
+      ),
+    );
+    try {
+      await _notificationRepository.toggleVisibility(
+        creator: event.creator,
+        id: event.id,
+        visible: event.visible,
+      );
+      emit(
+        state.copyWith(
+          toggleStatus: ToggleStatus.success,
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          toggleStatus: ToggleStatus.failure,
+        ),
+      );
+    }
   }
 
   final NotificationRepository _notificationRepository;

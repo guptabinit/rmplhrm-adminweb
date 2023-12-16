@@ -14,6 +14,12 @@ abstract class NotificationApi {
     required String type,
     required String receiver,
   });
+
+  Future<void> toggleVisibility({
+    required String id,
+    required bool visible,
+    required String creator,
+  });
 }
 
 class CreateNotificationFailure implements Exception {
@@ -27,6 +33,23 @@ class CreateNotificationFailure implements Exception {
         return const CreateNotificationFailure('The query requires an index.');
       default:
         return const CreateNotificationFailure();
+    }
+  }
+
+  final String message;
+}
+
+class ToggleNotificationFailure implements Exception {
+  const ToggleNotificationFailure([
+    this.message = 'Failed to toggle notification visibility',
+  ]);
+
+  factory ToggleNotificationFailure.fromCode(String code) {
+    switch (code.toLowerCase()) {
+      case 'failed_precondition':
+        return const ToggleNotificationFailure('The query requires an index.');
+      default:
+        return const ToggleNotificationFailure();
     }
   }
 

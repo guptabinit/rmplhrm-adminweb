@@ -15,3 +15,22 @@ final class NotificationsFetched extends NotificationsEvent {
   @override
   List<Object?> get props => [creator];
 }
+
+final class NotificationsToggle extends NotificationsEvent {
+  const NotificationsToggle({
+    required this.id,
+    required this.visible,
+    required this.creator,
+  });
+
+  final String id;
+  final bool visible;
+  final String creator;
+
+  @override
+  List<Object?> get props => [
+        id,
+        visible,
+        creator,
+      ];
+}

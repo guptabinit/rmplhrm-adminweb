@@ -33,6 +33,28 @@ class NotificationApiClient extends NotificationApi {
   }
 
   @override
+  Future<void> toggleVisibility({
+    required String id,
+    required bool visible,
+    required String creator,
+  }) async {
+    try {
+      await _firestore
+          .collection(
+            'notifications',
+          )
+          .doc(id)
+          .update({
+        'isVisible': visible,
+      });
+    } on FirebaseException catch (e) {
+      throw ToggleNotificationFailure.fromCode(e.code);
+    } catch (_) {
+      throw const ToggleNotificationFailure();
+    }
+  }
+
+  @override
   Stream<List<Notification>> getAllNotifications({
     required String creator,
   }) {

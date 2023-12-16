@@ -21,7 +21,29 @@ class NotificationsPage extends StatelessWidget {
             context.read<AppBloc>().state.user.id,
           ),
         ),
-      child: const NotificationView(),
+      child: BlocListener<NotificationsBloc, NotificationsState>(
+        listener: (context, state) {
+          if (state.toggleStatus.isSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.green,
+                content: Text('Notification toggled'),
+              ),
+            );
+          }
+          if (state.toggleStatus.isFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.red,
+                content: Text('Failed to toggle notification'),
+              ),
+            );
+          }
+        },
+        listenWhen: (previous, current) =>
+            previous.toggleStatus != current.toggleStatus,
+        child: const NotificationView(),
+      ),
     );
   }
 }

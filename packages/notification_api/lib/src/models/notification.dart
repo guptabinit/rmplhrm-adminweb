@@ -26,6 +26,10 @@ class Notification extends Equatable {
 
   Map<String, dynamic> toJson() => _$NotificationToJson(this);
 
+  static const empty = Notification(id: '-');
+
+  bool get isEmpty => empty == this;
+
   @override
   List<Object?> get props => [
         branch,

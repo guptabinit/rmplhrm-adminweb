@@ -19,17 +19,20 @@ final class NotificationsState extends Equatable {
     this.status = NotificationStatus.initial,
     this.toggleStatus = ToggleStatus.initial,
     this.notifications = const [],
+    this.selectedNotification,
   });
 
   NotificationsState copyWith({
     NotificationStatus? status,
     ToggleStatus? toggleStatus,
     List<Notification>? notifications,
+    Notification? selectedNotification,
   }) =>
       NotificationsState(
         status: status ?? this.status,
         toggleStatus: toggleStatus ?? this.toggleStatus,
         notifications: notifications ?? this.notifications,
+        selectedNotification: selectedNotification ?? this.selectedNotification,
       );
 
   @override
@@ -37,11 +40,13 @@ final class NotificationsState extends Equatable {
         status,
         toggleStatus,
         notifications,
+        selectedNotification,
       ];
 
   final NotificationStatus status;
   final ToggleStatus toggleStatus;
   final List<Notification> notifications;
+  final Notification? selectedNotification;
 }
 
 extension NotificationStatusX on NotificationStatus {

@@ -13,6 +13,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
         super(const NotificationsState()) {
     on<NotificationsFetched>(_onNotificationsFetched);
     on<NotificationsToggle>(_onNotificationsToggle);
+    on<SelectedNotification>(_onSelectedNotification);
+    on<DeselectedNotification>(_onDeselectedNotification);
   }
 
   Future<void> _onNotificationsFetched(
@@ -65,6 +67,28 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
         ),
       );
     }
+  }
+
+  void _onSelectedNotification(
+    SelectedNotification event,
+    Emitter<NotificationsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedNotification: event.notification,
+      ),
+    );
+  }
+
+  void _onDeselectedNotification(
+    DeselectedNotification event,
+    Emitter<NotificationsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedNotification: Notification.empty,
+      ),
+    );
   }
 
   final NotificationRepository _notificationRepository;

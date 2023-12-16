@@ -12,7 +12,7 @@ import 'package:rmpl_hrm_admin/constants/consts.dart';
 import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
 import 'package:rmpl_hrm_admin/holidays/view/holidays_page.dart';
 import 'package:rmpl_hrm_admin/leave/leave.dart';
-import 'package:rmpl_hrm_admin/notifications/view/notifications_page.dart';
+import 'package:rmpl_hrm_admin/notifications/notifications.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
@@ -96,7 +96,11 @@ class RootView extends StatelessWidget {
                   AddEmployeePage.route(),
                 );
               } else if (selectedRoute.index == 2) {
-                await Navigator.of(context).push(AddNotificationPage.route());
+                await Navigator.of(context).push(
+                  AddNotificationPage.route(
+                    context.read<AddNotificationCubit>(),
+                  ),
+                );
               } else if (selectedRoute.index == 4) {
                 await Navigator.of(context).push(AddHolidayPage.route());
               } else {

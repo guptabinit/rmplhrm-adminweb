@@ -128,7 +128,7 @@ class _ChangeProfilePicture extends StatelessWidget {
                     .read<EmployeeDetailsBloc>()
                     .state
                     .selectedEmployee
-                    ?.profilePic;
+                    .profilePic;
 
                 return (state.profileImage.isValid &&
                         state.profileImage.value?.isNotEmpty == true)

@@ -34,3 +34,16 @@ final class NotificationsToggle extends NotificationsEvent {
         creator,
       ];
 }
+
+final class SelectedNotification extends NotificationsEvent {
+  const SelectedNotification(this.notification);
+
+  @override
+  List<Object?> get props => [notification];
+
+  final Notification notification;
+}
+
+final class DeselectedNotification extends NotificationsEvent {
+  const DeselectedNotification();
+}

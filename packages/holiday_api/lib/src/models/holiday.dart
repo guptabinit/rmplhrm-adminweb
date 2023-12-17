@@ -23,6 +23,12 @@ class Holiday extends Equatable {
 
   Map<String, dynamic> toJson() => _$HolidayToJson(this);
 
+  static const Holiday empty = Holiday(id: '-');
+
+  bool get isEmpty => this == empty;
+
+  bool get isNotEmpty => this != empty;
+
   final String? id;
   final DocumentReference? creator;
   final DateTime? date;

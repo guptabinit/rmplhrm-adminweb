@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:holiday_api/holiday_api.dart';
 
 class HolidayApiClient extends HolidayApi {
@@ -38,6 +37,40 @@ class HolidayApiClient extends HolidayApi {
   }
 
   @override
+  Future<void> deleteHoliday({
+    required String creator,
+    required String id,
+  }) async {
+    try {
+      final doc = await _firestore
+          .collection(
+            'holidays',
+          )
+          .where(
+            'id',
+            isEqualTo: id,
+          )
+          .where(
+            'creator',
+            isEqualTo: _firestore
+                .collection(
+                  'admin',
+                )
+                .doc(creator),
+          )
+          .get();
+      if (!doc.docs.first.exists) {
+        throw DeleteHolidayException.fromCode('not-found');
+      }
+      await _firestore.collection('holidays').doc(id).delete();
+    } on FirebaseException catch (e) {
+      throw DeleteHolidayException.fromCode(e.code);
+    } catch (_) {
+      throw const DeleteHolidayException();
+    }
+  }
+
+  @override
   Stream<List<Holiday>> getHolidays({
     required String creator,
     required DateTime date,
@@ -70,5 +103,47 @@ class HolidayApiClient extends HolidayApi {
               )
               .toList(),
         );
+  }
+
+  @override
+  Future<void> updateHoliday({
+    required String id,
+    required String creator,
+    required DateTime date,
+    required String title,
+  }) async {
+    try {
+      final doc = await _firestore
+          .collection(
+            'holidays',
+          )
+          .where(
+            'id',
+            isEqualTo: id,
+          )
+          .where(
+            'creator',
+            isEqualTo: _firestore
+                .collection(
+                  'admin',
+                )
+                .doc(creator),
+          )
+          .get();
+      if (!doc.docs.first.exists) {
+        throw UpdateHolidayException.fromCode('not-found');
+      }
+      await _firestore.collection('holidays').doc(id).update({
+        'id': id,
+        'creator': _firestore.collection('admin').doc(creator),
+        'updatedAt': FieldValue.serverTimestamp(),
+        'date': Timestamp.fromDate(date),
+        'title': title,
+      });
+    } on FirebaseException catch (e) {
+      throw UpdateHolidayException.fromCode(e.code);
+    } catch (e) {
+      throw const UpdateHolidayException();
+    }
   }
 }

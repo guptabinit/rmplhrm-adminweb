@@ -25,6 +25,23 @@ class NotificationRepository {
         receiver: receiver,
       );
 
+  Future<void> updateNotification({
+    required String id,
+    required String creator,
+    String? branch,
+    String? message,
+    String? type,
+    String? receiver,
+  }) =>
+      _api.updateNotification(
+        id: id,
+        creator: creator,
+        branch: branch,
+        message: message,
+        receiver: receiver,
+        type: type,
+      );
+
   Future<void> toggleVisibility({
     required String id,
     required bool visible,

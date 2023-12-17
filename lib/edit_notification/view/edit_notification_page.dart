@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rmpl_hrm_admin/add_notification/add_notification.dart';
 import 'package:rmpl_hrm_admin/edit_notification/edit_notification.dart';
 import 'package:rmpl_hrm_admin/notifications/notifications.dart';
 
@@ -12,7 +11,7 @@ class EditNotificationPage extends StatelessWidget {
   });
 
   static Route<void> route(
-    AddNotificationCubit cubit,
+    EditNotificationCubit cubit,
     NotificationsBloc bloc,
   ) =>
       MaterialPageRoute(
@@ -22,7 +21,7 @@ class EditNotificationPage extends StatelessWidget {
         ),
       );
 
-  final AddNotificationCubit cubit;
+  final EditNotificationCubit cubit;
   final NotificationsBloc bloc;
 
   @override

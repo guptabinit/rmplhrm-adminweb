@@ -61,9 +61,10 @@ class EditNotificationCubit extends Cubit<EditNotificationState> {
     );
   }
 
-  Future<void> addNotification({
+  Future<void> updateNotification({
+    required String id,
     required String creator,
-    required String branch,
+    String? branch,
   }) async {
     if (!state.isValid) return;
     emit(
@@ -72,7 +73,8 @@ class EditNotificationCubit extends Cubit<EditNotificationState> {
       ),
     );
     try {
-      await _notificationRepository.createNotification(
+      await _notificationRepository.updateNotification(
+        id: id,
         creator: creator,
         branch: branch,
         message: state.message.value!,

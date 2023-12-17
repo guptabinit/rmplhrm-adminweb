@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notification_repository/notification_repository.dart';
 import 'package:rmpl_hrm_admin/add_notification/add_notification.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/edit_notification/edit_notification.dart';
@@ -14,13 +15,22 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<NotificationsBloc>()
-        ..add(
-          NotificationsFetched(
-            context.read<AppBloc>().state.user.id,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(
+          value: context.read<NotificationsBloc>()
+            ..add(
+              NotificationsFetched(
+                context.read<AppBloc>().state.user.id,
+              ),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => EditNotificationCubit(
+            notificationRepository: context.read<NotificationRepository>(),
           ),
         ),
+      ],
       child: MultiBlocListener(
         listeners: [
           BlocListener<NotificationsBloc, NotificationsState>(
@@ -54,14 +64,14 @@ class NotificationsPage extends StatelessWidget {
                   state.selectedNotification?.isEmpty == false) {
                 final selectedNotification = state.selectedNotification;
 
-                context.read<AddNotificationCubit>()
+                context.read<EditNotificationCubit>()
                   ..selectNotificationReceiver(selectedNotification?.receiver)
                   ..selectNotificationType(selectedNotification?.type)
                   ..changeNotificationMessage(selectedNotification?.message);
 
                 Navigator.of(context).push(
                   EditNotificationPage.route(
-                    context.read<AddNotificationCubit>(),
+                    context.read<EditNotificationCubit>(),
                     context.read<NotificationsBloc>(),
                   ),
                 );

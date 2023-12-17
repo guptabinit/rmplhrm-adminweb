@@ -76,5 +76,43 @@ class NotificationApiClient extends NotificationApi {
         );
   }
 
+  @override
+  Future<void> updateNotification({
+    required String id,
+    required String creator,
+    String? branch,
+    String? message,
+    String? type,
+    String? receiver,
+  }) async {
+    try {
+      final doc = await _firestore
+          .collection('notifications')
+          .where('id', isEqualTo: id)
+          .where(
+            'creator',
+            isEqualTo: _firestore.collection('admin').doc(creator),
+          )
+          .get();
+
+      if (!doc.docs.first.exists) {
+        throw UpdateNotificationFailure.fromCode('not-found');
+      }
+
+      final data = <String, dynamic>{};
+
+      if (branch != null) data['branch'] = branch;
+      if (message != null) data['message'] = message;
+      if (type != null) data['type'] = type;
+      if (receiver != null) data['receiver'] = receiver;
+
+      await _firestore.collection('notifications').doc(id).update(data);
+    } on FirebaseException catch (e) {
+      throw UpdateNotificationFailure.fromCode(e.code);
+    } catch (_) {
+      throw const UpdateNotificationFailure();
+    }
+  }
+
   final FirebaseFirestore _firestore;
 }

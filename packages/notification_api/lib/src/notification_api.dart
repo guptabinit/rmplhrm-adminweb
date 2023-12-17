@@ -20,6 +20,15 @@ abstract class NotificationApi {
     required bool visible,
     required String creator,
   });
+
+  Future<void> updateNotification({
+    required String id,
+    required String creator,
+    String? branch,
+    String? message,
+    String? type,
+    String? receiver,
+  });
 }
 
 class CreateNotificationFailure implements Exception {
@@ -33,6 +42,25 @@ class CreateNotificationFailure implements Exception {
         return const CreateNotificationFailure('The query requires an index.');
       default:
         return const CreateNotificationFailure();
+    }
+  }
+
+  final String message;
+}
+
+class UpdateNotificationFailure implements Exception {
+  const UpdateNotificationFailure([
+    this.message = 'Failed to update notification',
+  ]);
+
+  factory UpdateNotificationFailure.fromCode(String code) {
+    switch (code.toLowerCase()) {
+      case 'failed_precondition':
+        return const UpdateNotificationFailure('The query requires an index.');
+      case 'not-found':
+        return const UpdateNotificationFailure('Notification not found.');
+      default:
+        return const UpdateNotificationFailure();
     }
   }
 

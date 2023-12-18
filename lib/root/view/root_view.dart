@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/add_employee/add_employee.dart';
 import 'package:rmpl_hrm_admin/add_holiday/view/add_holiday_page.dart';
 import 'package:rmpl_hrm_admin/add_notification/add_notification.dart';
+import 'package:rmpl_hrm_admin/add_salary_detail/add_salary_detail.dart';
 import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
@@ -14,9 +15,9 @@ import 'package:rmpl_hrm_admin/holidays/view/holidays_page.dart';
 import 'package:rmpl_hrm_admin/leave/leave.dart';
 import 'package:rmpl_hrm_admin/notifications/notifications.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
+import 'package:rmpl_hrm_admin/salary_details/salary_details.dart';
 import 'package:rmpl_hrm_admin/screens/admin_dashboard_screen.dart';
 import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
-import 'package:rmpl_hrm_admin/screens/salary_details_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 const routes = <Widget>[
@@ -26,7 +27,7 @@ const routes = <Widget>[
   AttendancePage(),
   HolidaysPage(),
   LeavePage(),
-  SalaryDetailScreen(),
+  SalaryDetailsPage(),
   ProbationListScreen(),
 ];
 
@@ -91,6 +92,10 @@ class RootView extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               if (selectedRoute.index == 7) {
+              } else if (selectedRoute.index == 6) {
+                await Navigator.of(context).push(
+                  AddSalaryDetailPage.route(),
+                );
               } else if (selectedRoute.index == 1) {
                 await Navigator.of(context).push(
                   AddEmployeePage.route(),
@@ -127,6 +132,7 @@ class RootView extends StatelessWidget {
                 selectedRoute.index == 1 ||
                         selectedRoute.index == 2 ||
                         selectedRoute.index == 4 ||
+                        selectedRoute.index == 6 ||
                         selectedRoute.index == 7
                     ? Icons.add
                     : Icons.logout,

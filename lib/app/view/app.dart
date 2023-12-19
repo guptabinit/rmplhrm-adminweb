@@ -11,6 +11,7 @@ import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/splash/splash.dart';
+import 'package:salary_repository/salary_repository.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
     required this.employeeRepository,
     required this.adminProfileRepository,
     required this.attendanceRepository,
+    required this.salaryRepository,
     super.key,
   });
 
@@ -49,6 +51,9 @@ class App extends StatelessWidget {
         RepositoryProvider.value(
           value: attendanceRepository,
         ),
+        RepositoryProvider.value(
+          value: salaryRepository,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -76,6 +81,7 @@ class App extends StatelessWidget {
   final EmployeeRepository employeeRepository;
   final AdminProfileRepository adminProfileRepository;
   final AttendanceRepository attendanceRepository;
+  final SalaryRepository salaryRepository;
 }
 
 class AppView extends StatelessWidget {

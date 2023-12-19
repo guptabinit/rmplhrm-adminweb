@@ -1,7 +1,8 @@
-/// {@template salary_api}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
-class SalaryApi {
-  /// {@macro salary_api}
+abstract class SalaryApi {
   const SalaryApi();
+
+  Future<void> updateSalary({
+    required String employeeId,
+    required double amount,
+  });
 }

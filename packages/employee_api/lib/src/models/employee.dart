@@ -11,6 +11,7 @@ part 'employee.g.dart';
 @DocumentReferenceConverter()
 class Employee extends Equatable {
   const Employee({
+    this.salaryDetails,
     this.aadharNumber,
     this.address,
     this.basicSalary,
@@ -72,6 +73,7 @@ class Employee extends Equatable {
         uid,
         createdAt,
         creator,
+        salaryDetails,
       ];
 
   final String? aadharNumber;
@@ -97,4 +99,33 @@ class Employee extends Equatable {
   final String? uid;
   final DateTime? createdAt;
   final DocumentReference? creator;
+  final SalaryDetails? salaryDetails;
+}
+
+@JsonSerializable()
+@TimestampConverter()
+@DocumentReferenceConverter()
+class SalaryDetails {
+  const SalaryDetails({this.salaryDetails});
+
+  factory SalaryDetails.fromJson(Map<String, dynamic> json) =>
+      _$SalaryDetailsFromJson(json);
+
+  final Map<String, Map<String, SalaryDetail>>? salaryDetails;
+}
+
+@JsonSerializable()
+@TimestampConverter()
+@DocumentReferenceConverter()
+class SalaryDetail {
+  const SalaryDetail({
+    this.createdAt,
+    this.amount,
+  });
+
+  factory SalaryDetail.fromJson(Map<String, dynamic> json) =>
+      _$SalaryDetailFromJson(json);
+
+  final DateTime? createdAt;
+  final double? amount;
 }

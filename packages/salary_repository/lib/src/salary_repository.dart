@@ -1,7 +1,18 @@
-/// {@template salary_repository}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
+import 'package:salary_api/salary_api.dart';
+
 class SalaryRepository {
-  /// {@macro salary_repository}
-  const SalaryRepository();
+  const SalaryRepository({
+    required SalaryApi api,
+  }) : _api = api;
+
+  Future<void> updateSalary({
+    required String employeeId,
+    required double amount,
+  }) =>
+      _api.updateSalary(
+        employeeId: employeeId,
+        amount: amount,
+      );
+
+  final SalaryApi _api;
 }

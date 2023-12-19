@@ -17,6 +17,12 @@ dependencies:
     path: packages/admin_profile_api_client
   admin_profile_repository:
     path: packages/admin_profile_repository
+  salary_api:
+    path: packages/salary_api
+  salary_api_client:
+    path: packages/salary_api_client
+  salary_repository:
+    path: packages/salary_repository
   attendance_api:
     path: packages/attendance_api
   attendance_api_client:

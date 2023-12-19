@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/components/divider_with_padding.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/employee_details/bloc/employee_details_bloc.dart';
+import 'package:rmpl_hrm_admin/salary_details/bloc/update_salary_details_bloc.dart';
 
 class SalaryDetailsView extends StatelessWidget {
   const SalaryDetailsView({super.key});
@@ -50,7 +51,13 @@ class SalaryDetailsView extends StatelessWidget {
                           final employee = state.employees[index];
                           return CheckboxListTile(
                             controlAffinity: ListTileControlAffinity.leading,
-                            value: false,
+                            value: context
+                                .watch<UpdateSalaryDetailsBloc>()
+                                .state
+                                .selectedEmployees
+                                .any(
+                                  (element) => element.uid == employee.uid,
+                                ),
                             onChanged: (value) {},
                             title: Text(
                               '${employee.firstName} ${employee.lastName}',
@@ -66,7 +73,7 @@ class SalaryDetailsView extends StatelessWidget {
                               ),
                             ),
                             secondary: IconButton(
-                               icon: Icon(
+                              icon: Icon(
                                 Icons.edit,
                                 color: Theme.of(context).primaryColor,
                               ),

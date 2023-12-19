@@ -11,6 +11,7 @@ import 'package:leave_api_client/leave_api_client.dart';
 import 'package:notification_api_client/notification_api_client.dart';
 import 'package:rmpl_hrm_admin/bootstrap.dart';
 import 'package:rmpl_hrm_admin/firebase_options.dart';
+import 'package:salary_api_client/salary_api_client.dart';
 
 late Size mq;
 
@@ -40,6 +41,7 @@ Future<void> main() async {
   );
   final adminProfileApi = AdminProfileApiClient(firestore: firestore);
   final attendanceApi = AttendanceApiClient(firestore: firestore);
+  final salaryApi = SalaryApiClient(firestore: firestore);
 
   await bootstrap(
     holidayApi: holidayApi,
@@ -48,5 +50,6 @@ Future<void> main() async {
     employeeApi: employeeApi,
     adminProfileApi: adminProfileApi,
     attendanceApi: attendanceApi,
+    salaryApi: salaryApi,
   );
 }

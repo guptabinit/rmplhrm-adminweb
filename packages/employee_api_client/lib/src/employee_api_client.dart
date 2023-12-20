@@ -219,4 +219,20 @@ class EmployeeApiClient extends EmployeeApi {
   final FirebaseFirestore _firestore;
   final FirebaseStorage _firebaseStorage;
   final FirebaseAuth _firebaseAuth;
+
+  @override
+  Future<void> toggleEmployeeActive({
+    required String id,
+    required bool isActive,
+  }) async {
+    try {
+      await _firestore.collection('employees').doc(id).update({
+        'isActive': isActive,
+      });
+    } on FirebaseAuthException catch (e) {
+      throw EmployeeIsActiveToggleFailure.fromCode(e.code);
+    } catch (_) {
+      throw const EmployeeIsActiveToggleFailure();
+    }
+  }
 }

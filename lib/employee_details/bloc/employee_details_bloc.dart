@@ -74,7 +74,6 @@ class EmployeeDetailsBloc
         employeeDetailStatus: EmployeeDetailStatus.loading,
       ),
     );
-    await Future.delayed(const Duration(seconds: 5));
     try {
       final employee = await _employeeRepository.getEmployee(
         event.uid,

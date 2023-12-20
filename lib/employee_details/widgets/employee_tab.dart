@@ -59,6 +59,16 @@ class EmployeeTab extends StatelessWidget {
                     color: textGreyColor,
                   ),
                 ),
+                8.heightBox,
+                Text(
+                  'Status: ${employee.isActive == true ? 'Active' : 'Disabled'}',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: employee.isActive == true ? greenColor : redColor,
+                  ),
+                ),
               ],
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/employee_details/bloc/employee_details_bloc.dart';
+import 'package:rmpl_hrm_admin/employee_profile/bloc/employee_profile_bloc.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -461,28 +462,63 @@ class EmployeeProfileView extends StatelessWidget {
                           ),
                         ),
                         16.heightBox,
-                        // Delete employee & Disable Employee Buttons
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              padding: const MaterialStatePropertyAll(
-                                EdgeInsets.symmetric(vertical: 16),
-                              ),
-                              backgroundColor: const MaterialStatePropertyAll(
-                                textGreyColor,
-                              ),
-                              elevation: const MaterialStatePropertyAll(3),
-                            ),
-                            child: const Center(
-                              child: Text('Disable Account'),
-                            ),
+                          child: BlocBuilder<EmployeeProfileBloc,
+                              EmployeeProfileState>(
+                            builder: (context, state) {
+                              final selectedEmployee = context
+                                  .watch<EmployeeDetailsBloc>()
+                                  .state
+                                  .selectedEmployee;
+                              return state.status.isLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : ElevatedButton(
+                                      onPressed: () {
+                                        context.read<EmployeeProfileBloc>().add(
+                                              ToggleIsActiveEmployeeProfile(
+                                                id: selectedEmployee.uid!,
+                                                isActive:
+                                                    !selectedEmployee.isActive!,
+                                              ),
+                                            );
+                                      },
+                                      style: ButtonStyle(
+                                        shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                          ),
+                                        ),
+                                        padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.symmetric(vertical: 16),
+                                        ),
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                          selectedEmployee.isActive == false
+                                              ? greenColor
+                                              : redColor,
+                                        ),
+                                        elevation:
+                                            const MaterialStatePropertyAll(
+                                          3,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          selectedEmployee.isActive == true
+                                              ? 'Disable Account'
+                                              : 'Enable Account',
+                                          style: const TextStyle(
+                                            color: whiteColor,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                            },
                           ),
                         ),
                         12.heightBox,
@@ -504,7 +540,12 @@ class EmployeeProfileView extends StatelessWidget {
                               elevation: const MaterialStatePropertyAll(3),
                             ),
                             child: const Center(
-                              child: Text('Delete Account'),
+                              child: Text(
+                                'Delete Account',
+                                style: TextStyle(
+                                  color: whiteColor,
+                                ),
+                              ),
                             ),
                           ),
                         ),

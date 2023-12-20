@@ -105,5 +105,14 @@ class EmployeeRepository {
         file: file,
       );
 
+  Future<void> toggleEmployeeActive({
+    required String id,
+    required bool isActive,
+  }) =>
+      _api.toggleEmployeeActive(
+        id: id,
+        isActive: isActive,
+      );
+
   final EmployeeApi _api;
 }

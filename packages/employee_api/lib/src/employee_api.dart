@@ -17,6 +17,11 @@ abstract class EmployeeApi {
     required String id,
   });
 
+  Future<void> toggleEmployeeActive({
+    required String id,
+    required bool isActive,
+  });
+
   Future<void> createEmployee({
     required String creator,
     required String eid,
@@ -67,6 +72,21 @@ class EmployeeNotFoundFailure implements Exception {
   ]);
 
   EmployeeNotFoundFailure.fromMessage(String message) : this(message);
+
+  final String message;
+}
+
+class EmployeeIsActiveToggleFailure implements Exception {
+  const EmployeeIsActiveToggleFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  factory EmployeeIsActiveToggleFailure.fromCode(String code) {
+    switch (code) {
+      default:
+        return const EmployeeIsActiveToggleFailure();
+    }
+  }
 
   final String message;
 }

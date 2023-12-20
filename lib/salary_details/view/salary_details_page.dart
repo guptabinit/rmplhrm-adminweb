@@ -81,6 +81,33 @@ class SalaryDetailsPage extends StatelessWidget {
               }
             },
           ),
+          BlocListener<UpdateSalaryDetailsBloc, UpdateSalaryDetailsState>(
+            listenWhen: (previous, current) =>
+                previous.removeSalaryDetailsStatus !=
+                current.removeSalaryDetailsStatus,
+            listener: (context, state) {
+              if (state.removeSalaryDetailsStatus.isSuccess) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Salary detail removed.'),
+                    ),
+                  );
+              }
+              if (state.removeSalaryDetailsStatus.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('Failed to remove salary detail.'),
+                    ),
+                  );
+              }
+            },
+          ),
         ],
         child: const SalaryDetailsView(),
       ),

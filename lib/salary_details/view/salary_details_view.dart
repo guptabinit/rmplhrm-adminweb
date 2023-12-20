@@ -32,7 +32,15 @@ class SalaryDetailsView extends StatelessWidget {
                 return ListView.builder(
                   itemCount: state.employees.length,
                   itemBuilder: (context, index) {
+                    final date = DateTime.now();
+                    final year = date.year;
+                    final month = date.month;
                     final employee = state.employees[index];
+                    final amount =
+                        employee.salaryDetails?['$year']?['$month']?.amount;
+                    final totalSalary =
+                        (employee.basicSalary ?? 0) + (employee.hra ?? 0);
+                    final salary = amount ?? totalSalary;
                     return CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       value: context
@@ -46,7 +54,7 @@ class SalaryDetailsView extends StatelessWidget {
                         if (value == true) {
                           context.read<UpdateSalaryDetailsBloc>().add(
                                 UpdateSalaryDetailAction(
-                                  employee,
+                                  employee: employee,
                                 ),
                               );
                         } else {
@@ -63,20 +71,80 @@ class SalaryDetailsView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(
-                        'INR ${(employee.basicSalary ?? 0) + (employee.hra ?? 0)}',
+                        'INR $salary',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
-                      secondary: IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: () {},
-                      ),
+                      secondary: context
+                              .watch<UpdateSalaryDetailsBloc>()
+                              .state
+                              .selectedEmployees
+                              .any(
+                                (element) => element.uid == employee.uid,
+                              )
+                          ? null
+                          : IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () async {
+                                final amount = await showDialog<String>(
+                                  context: context,
+                                  builder: (context) {
+                                    final controller = TextEditingController();
+                                    return AlertDialog(
+                                      title: const Text('Update Salary'),
+                                      content: TextFormField(
+                                        minLines: 1,
+                                        controller: controller,
+                                        decoration: const InputDecoration(
+                                          hintText: 'Amount',
+                                        ),
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(
+                                          decimal: true,
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          child: const Text('Update'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(
+                                              controller.text,
+                                            );
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(
+                                              null,
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                if (context.mounted) {
+                                  final am = double.tryParse(
+                                    amount ?? '',
+                                  );
+                                  if (am != null && am > 0) {
+                                    context.read<UpdateSalaryDetailsBloc>().add(
+                                          UpdateSalaryDetailAction(
+                                            employee: employee,
+                                            amount: am,
+                                          ),
+                                        );
+                                  }
+                                }
+                              },
+                            ),
                     );
                   },
                 );

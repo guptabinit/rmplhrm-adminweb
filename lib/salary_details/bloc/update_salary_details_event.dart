@@ -35,12 +35,16 @@ final class UpdateSalaryDetailsAction extends UpdateSalaryDetailsEvent {
 }
 
 final class UpdateSalaryDetailAction extends UpdateSalaryDetailsEvent {
-  const UpdateSalaryDetailAction(this.employee);
+  const UpdateSalaryDetailAction({
+    required this.employee,
+    this.amount,
+  });
 
   @override
-  List<Object?> get props => [employee];
+  List<Object?> get props => [employee, amount];
 
   final Employee employee;
+  final double? amount;
 }
 
 final class SelectAllSalaryDetails extends UpdateSalaryDetailsEvent {

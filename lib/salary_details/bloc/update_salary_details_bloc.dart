@@ -63,7 +63,8 @@ class UpdateSalaryDetailsBloc
     try {
       await _salaryRepository.updateSalary(
         employeeId: event.employee.uid!,
-        amount: (event.employee.basicSalary ?? 0) + (event.employee.hra ?? 0),
+        amount: event.amount ??
+            (event.employee.basicSalary ?? 0) + (event.employee.hra ?? 0),
       );
       emit(
         state.copyWith(

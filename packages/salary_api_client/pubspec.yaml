@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.13.1
+  employee_api:
+    path: ../employee_api
   firebase_core: ^2.24.2
   flutter:
     sdk: flutter

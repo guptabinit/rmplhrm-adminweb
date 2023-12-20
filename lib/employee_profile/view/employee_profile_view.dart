@@ -49,26 +49,32 @@ class EmployeeProfileView extends StatelessWidget {
             ),
           ),
           actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  UpdateEmployeeProfilePage.route(
-                    context.read<UpdateEmployeeProfileCubit>(),
-                    context.read<EmployeeDetailsBloc>(),
-                  ),
-                );
+            BlocBuilder<EmployeeDetailsBloc, EmployeeDetailsState>(
+              builder: (context, state) {
+                return state.employeeDetailStatus.isSuccess
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            UpdateEmployeeProfilePage.route(
+                              context.read<UpdateEmployeeProfileCubit>(),
+                              context.read<EmployeeDetailsBloc>(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: whiteColor,
+                          ),
+                          child: const Icon(
+                            Icons.info_outline,
+                            color: primaryColor,
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink();
               },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: whiteColor,
-                ),
-                child: const Icon(
-                  Icons.info_outline,
-                  color: primaryColor,
-                ),
-              ),
             ),
             16.widthBox,
           ],

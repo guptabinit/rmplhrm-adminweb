@@ -99,18 +99,6 @@ class Employee extends Equatable {
   final String? uid;
   final DateTime? createdAt;
   final DocumentReference? creator;
-  final SalaryDetails? salaryDetails;
-}
-
-@JsonSerializable()
-@TimestampConverter()
-@DocumentReferenceConverter()
-class SalaryDetails {
-  const SalaryDetails({this.salaryDetails});
-
-  factory SalaryDetails.fromJson(Map<String, dynamic> json) =>
-      _$SalaryDetailsFromJson(json);
-
   final Map<String, Map<String, SalaryDetail>>? salaryDetails;
 }
 

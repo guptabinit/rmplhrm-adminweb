@@ -14,5 +14,12 @@ class SalaryRepository {
         amount: amount,
       );
 
+  Future<void> removeSalary({
+    required String employeeId,
+  }) =>
+      _api.removeSalary(
+        employeeId: employeeId,
+      );
+
   final SalaryApi _api;
 }

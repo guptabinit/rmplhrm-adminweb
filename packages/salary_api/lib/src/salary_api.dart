@@ -5,4 +5,8 @@ abstract class SalaryApi {
     required String employeeId,
     required double amount,
   });
+
+  Future<void> removeSalary({
+    required String employeeId,
+  });
 }

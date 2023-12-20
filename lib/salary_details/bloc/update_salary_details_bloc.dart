@@ -13,7 +13,10 @@ class UpdateSalaryDetailsBloc
   })  : _salaryRepository = salaryRepository,
         super(const UpdateSalaryDetailsState()) {
     on<UpdateSalaryDetailsAction>(_onUpdateSalaryDetails);
+    on<UpdateSalaryDetailAction>(_onUpdateSalaryDetail);
     on<SelectedEmployeeChangedEvent>(_onSelectedEmployeeChanged);
+    on<UnselectedEmployeeChangedEvent>(_onUnselectedEmployeeChanged);
+    on<SelectAllSalaryDetails>(_onSelectAllSalaryDetails);
   }
 
   Future<void> _onUpdateSalaryDetails(
@@ -36,12 +39,74 @@ class UpdateSalaryDetailsBloc
       emit(
         state.copyWith(
           status: UpdateSalaryDetailsStatus.success,
+          selectedEmployees: event.employees.toSet(),
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
           status: UpdateSalaryDetailsStatus.failure,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onUpdateSalaryDetail(
+    UpdateSalaryDetailAction event,
+    Emitter<UpdateSalaryDetailsState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        status: UpdateSalaryDetailsStatus.loading,
+      ),
+    );
+    try {
+      await _salaryRepository.updateSalary(
+        employeeId: event.employee.uid!,
+        amount: (event.employee.basicSalary ?? 0) + (event.employee.hra ?? 0),
+      );
+      emit(
+        state.copyWith(
+          status: UpdateSalaryDetailsStatus.success,
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          status: UpdateSalaryDetailsStatus.failure,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onUnselectedEmployeeChanged(
+    UnselectedEmployeeChangedEvent event,
+    Emitter<UpdateSalaryDetailsState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        removeSalaryDetailsStatus: RemoveSalaryDetailsStatus.loading,
+      ),
+    );
+    try {
+      await _salaryRepository.removeSalary(
+        employeeId: event.employee.uid!,
+      );
+
+      emit(
+        state.copyWith(
+          removeSalaryDetailsStatus: RemoveSalaryDetailsStatus.success,
+          selectedEmployees: state.selectedEmployees
+              .where(
+                (element) => element.uid != event.employee.uid,
+              )
+              .toSet(),
+        ),
+      );
+    } catch (_) {
+      emit(
+        state.copyWith(
+          removeSalaryDetailsStatus: RemoveSalaryDetailsStatus.failure,
         ),
       );
     }
@@ -57,6 +122,17 @@ class UpdateSalaryDetailsBloc
           ...state.selectedEmployees,
           event.employee,
         },
+      ),
+    );
+  }
+
+  void _onSelectAllSalaryDetails(
+    SelectAllSalaryDetails event,
+    Emitter<UpdateSalaryDetailsState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedEmployees: event.employees.toSet(),
       ),
     );
   }

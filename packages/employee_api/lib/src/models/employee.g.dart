@@ -7,10 +7,14 @@ part of 'employee.dart';
 // **************************************************************************
 
 Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
-      salaryDetails: json['salaryDetails'] == null
-          ? null
-          : SalaryDetails.fromJson(
-              json['salaryDetails'] as Map<String, dynamic>),
+      salaryDetails: (json['salaryDetails'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(
+            k,
+            (e as Map<String, dynamic>).map(
+              (k, e) =>
+                  MapEntry(k, SalaryDetail.fromJson(e as Map<String, dynamic>)),
+            )),
+      ),
       aadharNumber: json['aadharNumber'] as String?,
       address: json['address'] as String?,
       basicSalary: (json['basicSalary'] as num?)?.toDouble(),
@@ -64,23 +68,6 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'uid': instance.uid,
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'creator': const DocumentReferenceConverter().toJson(instance.creator),
-      'salaryDetails': instance.salaryDetails,
-    };
-
-SalaryDetails _$SalaryDetailsFromJson(Map<String, dynamic> json) =>
-    SalaryDetails(
-      salaryDetails: (json['salaryDetails'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(
-            k,
-            (e as Map<String, dynamic>).map(
-              (k, e) =>
-                  MapEntry(k, SalaryDetail.fromJson(e as Map<String, dynamic>)),
-            )),
-      ),
-    );
-
-Map<String, dynamic> _$SalaryDetailsToJson(SalaryDetails instance) =>
-    <String, dynamic>{
       'salaryDetails': instance.salaryDetails,
     };
 

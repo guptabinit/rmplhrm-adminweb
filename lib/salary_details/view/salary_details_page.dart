@@ -33,22 +33,55 @@ class SalaryDetailsPage extends StatelessWidget {
           ),
         ),
       ],
-      child: BlocListener<EmployeeDetailsBloc, EmployeeDetailsState>(
-        listenWhen: (previous, current) =>
-            previous.employees != current.employees,
-        listener: (context, state) {
-          if (state.status.isSuccess) {
-            for (var element in state.employees) {
-              if (element.salaryDetails != null) {
-                context.read<UpdateSalaryDetailsBloc>().add(
-                      SelectedEmployeeChangedEvent(
-                        element,
-                      ),
-                    );
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<EmployeeDetailsBloc, EmployeeDetailsState>(
+            listenWhen: (previous, current) =>
+                previous.employees != current.employees,
+            listener: (context, state) {
+              if (state.status.isSuccess) {
+                final date = DateTime.now();
+                final year = date.year;
+                final month = date.month;
+                for (var element in state.employees) {
+                  if (element.salaryDetails?['$year']?['$month'] != null) {
+                    context.read<UpdateSalaryDetailsBloc>().add(
+                          SelectedEmployeeChangedEvent(
+                            element,
+                          ),
+                        );
+                  }
+                }
               }
-            }
-          }
-        },
+            },
+          ),
+          BlocListener<UpdateSalaryDetailsBloc, UpdateSalaryDetailsState>(
+            listenWhen: (previous, current) =>
+                previous.status != current.status,
+            listener: (context, state) {
+              if (state.status.isSuccess) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Salary detail updated.'),
+                    ),
+                  );
+              }
+              if (state.status.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('Failed to update salary detail.'),
+                    ),
+                  );
+              }
+            },
+          ),
+        ],
         child: const SalaryDetailsView(),
       ),
     );

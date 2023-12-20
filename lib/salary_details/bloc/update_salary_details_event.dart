@@ -16,8 +16,35 @@ final class SelectedEmployeeChangedEvent extends UpdateSalaryDetailsEvent {
   List<Object?> get props => [employee];
 }
 
+final class UnselectedEmployeeChangedEvent extends UpdateSalaryDetailsEvent {
+  const UnselectedEmployeeChangedEvent(this.employee);
+
+  @override
+  List<Object?> get props => [employee];
+
+  final Employee employee;
+}
+
 final class UpdateSalaryDetailsAction extends UpdateSalaryDetailsEvent {
   const UpdateSalaryDetailsAction(this.employees);
+
+  @override
+  List<Object?> get props => [employees];
+
+  final List<Employee> employees;
+}
+
+final class UpdateSalaryDetailAction extends UpdateSalaryDetailsEvent {
+  const UpdateSalaryDetailAction(this.employee);
+
+  @override
+  List<Object?> get props => [employee];
+
+  final Employee employee;
+}
+
+final class SelectAllSalaryDetails extends UpdateSalaryDetailsEvent {
+  const SelectAllSalaryDetails(this.employees);
 
   @override
   List<Object?> get props => [employees];

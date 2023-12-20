@@ -7,6 +7,8 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  employee_repository:
+    path: ../employee_repository
   flutter:
     sdk: flutter
   salary_api:

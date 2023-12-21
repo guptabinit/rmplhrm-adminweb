@@ -2,23 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
+import 'package:rmpl_hrm_admin/models/models.dart';
 import 'package:rmpl_hrm_admin/resources/auth_methods.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key, this.isLogoutTrigger = false});
-  final bool isLogoutTrigger;
 
-  static Route<void> route(
-    bool isLogoutTrigger,
-  ) {
-    return MaterialPageRoute(
-      builder: (_) => AdminDashboardScreen(
-        isLogoutTrigger: isLogoutTrigger,
-      ),
-    );
-  }
+  final bool isLogoutTrigger;
 
   @override
   State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
@@ -62,7 +54,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast,),
+            decelerationRate: ScrollDecelerationRate.fast,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -75,23 +68,26 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       Text(
                         'Punch In',
                         style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       Text(
                         'Punch Out',
                         style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       Text(
                         'Working Hours',
                         style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
@@ -110,9 +106,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         child: Text(
                           inTime,
                           style: const TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,),
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                       Expanded(
@@ -120,17 +117,19 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         child: Text(
                           outTime,
                           style: const TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,),
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                       Text(
                         workingHours,
                         style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,),
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       28.widthBox,
                     ],
@@ -143,45 +142,52 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 child: Text(
                   'Attendance',
                   style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,),
+                    fontFamily: 'Inter',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               SizedBox(
                 height: 220,
                 child: SfCircularChart(
-                    legend: const Legend(
-                      isResponsive: true,
-                      // toggleSeriesVisibility: false,
-                      isVisible: true,
-                      // title: LegendTitle(
-                      //     text: 'Attendance Report',
-                      //     textStyle: TextStyle(
-                      //       fontFamily: 'Inter',
-                      //       fontWeight: FontWeight.w600,
-                      //       fontSize: 14,
-                      //     ))
+                  legend: const Legend(
+                    isResponsive: true,
+                    isVisible: true,
+                  ),
+                  selectionGesture: ActivationMode.singleTap,
+                  annotations: <CircularChartAnnotation>[
+                    CircularChartAnnotation(
+                      angle: 300,
+                      radius: '40%',
+                      widget: const Text('25%'),
                     ),
-                    selectionGesture: ActivationMode.singleTap,
-                    annotations: <CircularChartAnnotation>[
-                      CircularChartAnnotation(
-                          angle: 300, radius: '40%', widget: const Text('25%'),),
-                      CircularChartAnnotation(
-                          angle: 200, radius: '40%', widget: const Text('38%'),),
-                      CircularChartAnnotation(
-                          angle: 100, radius: '40%', widget: const Text('34%'),),
-                      CircularChartAnnotation(
-                          angle: 0, radius: '40%', widget: const Text('52%'),),
-                    ],
-                    series: <CircularSeries>[
-                      // Render pie chart
-                      PieSeries<ChartData, String>(
-                          dataSource: chartData,
-                          pointColorMapper: (ChartData data, _) => data.color,
-                          xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y,),
-                    ],),
+                    CircularChartAnnotation(
+                      angle: 200,
+                      radius: '40%',
+                      widget: const Text('38%'),
+                    ),
+                    CircularChartAnnotation(
+                      angle: 100,
+                      radius: '40%',
+                      widget: const Text('34%'),
+                    ),
+                    CircularChartAnnotation(
+                      angle: 0,
+                      radius: '40%',
+                      widget: const Text('52%'),
+                    ),
+                  ],
+                  series: <CircularSeries>[
+                    // Render pie chart
+                    PieSeries<ChartData, String>(
+                      dataSource: chartData,
+                      pointColorMapper: (ChartData data, _) => data.color,
+                      xValueMapper: (ChartData data, _) => data.x,
+                      yValueMapper: (ChartData data, _) => data.y,
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -194,9 +200,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         const Text(
                           'Attendance Report',
                           style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,),
+                            fontFamily: 'Inter',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         SecondaryButton(
                           title: 'View all',
@@ -205,25 +212,31 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       ],
                     ),
                     8.heightBox,
-                    const Text.rich(TextSpan(children: [
+                    const Text.rich(
                       TextSpan(
-                        text: '7 already in',
-                        style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: greenColor,
-                            fontWeight: FontWeight.w500,),
+                        children: [
+                          TextSpan(
+                            text: '7 already in',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: greenColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          TextSpan(text: '    '),
+                          TextSpan(
+                            text: '2 remaining',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: redColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
-                      TextSpan(text: '    '),
-                      TextSpan(
-                        text: '2 remaining',
-                        style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: redColor,
-                            fontWeight: FontWeight.w500,),
-                      ),
-                    ],),),
+                    ),
                     const Divider(
                       color: textGreyColor,
                     ),
@@ -239,10 +252,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           child: Text(
                             'Riya punched in at 10:35 AM',
                             style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 14,
-                                color: darkColor,
-                                fontWeight: FontWeight.w400,),
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: darkColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
@@ -260,10 +274,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           child: Text(
                             'Riya punched in at 10:35 AM',
                             style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 14,
-                                color: darkColor,
-                                fontWeight: FontWeight.w400,),
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: darkColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
@@ -281,10 +296,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           child: Text(
                             'Riya punched in at 10:35 AM',
                             style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 14,
-                                color: darkColor,
-                                fontWeight: FontWeight.w400,),
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: darkColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
@@ -302,10 +318,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                           child: Text(
                             'Riya punched in at 10:35 AM',
                             style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 14,
-                                color: darkColor,
-                                fontWeight: FontWeight.w400,),
+                              fontFamily: 'Inter',
+                              fontSize: 14,
+                              color: darkColor,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
@@ -317,9 +334,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         const Text(
                           'Probation',
                           style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,),
+                            fontFamily: 'Inter',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         SecondaryButton(
                           title: 'View all',
@@ -333,37 +351,41 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     const Text(
                       '1.Riya punched in at 10:35 AM',
                       style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          color: darkColor,
-                          fontWeight: FontWeight.w400,),
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        color: darkColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     8.heightBox,
                     const Text(
                       '2.Ashish punched in at 10:25 AM',
                       style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          color: darkColor,
-                          fontWeight: FontWeight.w400,),
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        color: darkColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     8.heightBox,
                     const Text(
                       '3.Akash punched in at 10:10 AM',
                       style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          color: darkColor,
-                          fontWeight: FontWeight.w400,),
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        color: darkColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     8.heightBox,
                     const Text(
                       '4.Vishesh punched in at 10:00 AM',
                       style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          color: darkColor,
-                          fontWeight: FontWeight.w400,),
+                        fontFamily: 'Inter',
+                        fontSize: 14,
+                        color: darkColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     28.heightBox,
                   ],
@@ -375,12 +397,4 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       ),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.x, this.y, this.color);
-
-  final String x;
-  final double y;
-  Color color;
 }

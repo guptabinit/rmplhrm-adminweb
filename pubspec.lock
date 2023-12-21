@@ -1015,6 +1015,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
+  probation_api:
+    dependency: "direct main"
+    description:
+      path: "packages/probation_api"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  probation_api_client:
+    dependency: "direct main"
+    description:
+      path: "packages/probation_api_client"
+      relative: true
+    source: path
+    version: "0.1.0+1"
+  probation_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/probation_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   provider:
     dependency: transitive
     description:

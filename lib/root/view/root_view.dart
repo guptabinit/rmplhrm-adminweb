@@ -14,9 +14,9 @@ import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
 import 'package:rmpl_hrm_admin/holidays/view/holidays_page.dart';
 import 'package:rmpl_hrm_admin/leave/leave.dart';
 import 'package:rmpl_hrm_admin/notifications/notifications.dart';
+import 'package:rmpl_hrm_admin/probation/probation.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/salary_details/salary_details.dart';
-import 'package:rmpl_hrm_admin/screens/probation_list_screen.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 
 const routes = <Widget>[
@@ -27,7 +27,7 @@ const routes = <Widget>[
   HolidaysPage(),
   LeavePage(),
   SalaryDetailsPage(),
-  ProbationListScreen(),
+  ProbationPage(),
 ];
 
 class RootView extends StatelessWidget {

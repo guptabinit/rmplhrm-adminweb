@@ -1,7 +1,17 @@
-/// {@template probation_repository}
-/// A Very Good Project created by Very Good CLI.
-/// {@endtemplate}
+import 'package:employee_api/employee_api.dart';
+import 'package:probation_api/probation_api.dart';
+
 class ProbationRepository {
-  /// {@macro probation_repository}
-  const ProbationRepository();
+  const ProbationRepository({
+    required ProbationApi api,
+  }) : _api = api;
+
+  Stream<Iterable<Employee>> getProbationEmployees({
+    required String creator,
+  }) =>
+      _api.getProbationEmployees(
+        creator: creator,
+      );
+
+  final ProbationApi _api;
 }

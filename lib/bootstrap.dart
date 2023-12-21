@@ -15,6 +15,8 @@ import 'package:leave_api/leave_api.dart';
 import 'package:leave_repository/leave_repository.dart';
 import 'package:notification_api/notification_api.dart';
 import 'package:notification_repository/notification_repository.dart';
+import 'package:probation_api/probation_api.dart';
+import 'package:probation_repository/probation_repository.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:salary_api/salary_api.dart';
 import 'package:salary_repository/salary_repository.dart';
@@ -27,6 +29,7 @@ Future<void> bootstrap({
   required AdminProfileApi adminProfileApi,
   required AttendanceApi attendanceApi,
   required SalaryApi salaryApi,
+  required ProbationApi probationApi,
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -46,6 +49,7 @@ Future<void> bootstrap({
   final adminProfileRepository = AdminProfileRepository(api: adminProfileApi);
   final attendanceRepository = AttendanceRepository(api: attendanceApi);
   final salaryRepository = SalaryRepository(api: salaryApi);
+  final probationRepository = ProbationRepository(api: probationApi);
 
   await authenticationRepository.user.first;
 
@@ -59,6 +63,7 @@ Future<void> bootstrap({
       adminProfileRepository: adminProfileRepository,
       attendanceRepository: attendanceRepository,
       salaryRepository: salaryRepository,
+      probationRepository: probationRepository,
     ),
   );
 }

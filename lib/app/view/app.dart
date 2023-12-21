@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday_repository/holiday_repository.dart';
 import 'package:leave_repository/leave_repository.dart';
 import 'package:notification_repository/notification_repository.dart';
+import 'package:probation_repository/probation_repository.dart';
 import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
@@ -23,6 +24,7 @@ class App extends StatelessWidget {
     required this.adminProfileRepository,
     required this.attendanceRepository,
     required this.salaryRepository,
+    required this.probationRepository,
     super.key,
   });
 
@@ -54,6 +56,9 @@ class App extends StatelessWidget {
         RepositoryProvider.value(
           value: salaryRepository,
         ),
+        RepositoryProvider.value(
+          value: probationRepository,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -82,6 +87,7 @@ class App extends StatelessWidget {
   final AdminProfileRepository adminProfileRepository;
   final AttendanceRepository attendanceRepository;
   final SalaryRepository salaryRepository;
+  final ProbationRepository probationRepository;
 }
 
 class AppView extends StatelessWidget {

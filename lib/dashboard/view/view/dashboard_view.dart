@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/models/models.dart';
+import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -198,7 +200,11 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 SecondaryButton(
                                   title: 'View all',
-                                  onTap: () {},
+                                  onTap: () {
+                                    context.read<RootCubit>().navigateTo(
+                                          AppRoute.attendance,
+                                        );
+                                  },
                                 ),
                               ],
                             ),
@@ -270,43 +276,6 @@ class DashboardView extends StatelessWidget {
                                       ),
                                     ),
                                   ],
-                                );
-                              },
-                            ),
-                            28.heightBox,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Probation',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SecondaryButton(
-                                  title: 'View all',
-                                  onTap: () {},
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              color: textGreyColor,
-                            ),
-                            ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: 5,
-                              separatorBuilder: (_, __) => 8.heightBox,
-                              itemBuilder: (context, index) {
-                                return Text(
-                                  '${index + 1}. Riya punched in at 10:35 AM',
-                                  style: const TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    color: darkColor,
-                                    fontWeight: FontWeight.w400,
-                                  ),
                                 );
                               },
                             ),

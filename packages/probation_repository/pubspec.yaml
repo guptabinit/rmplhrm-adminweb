@@ -8,8 +8,12 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
+  employee_api:
+    path: ../employee_api
   flutter:
     sdk: flutter
+  probation_api:
+    path: ../probation_api
 
 dev_dependencies:
   flutter_test:

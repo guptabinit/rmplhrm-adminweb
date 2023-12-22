@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/employee_details/bloc/employee_details_bloc.dart';
@@ -9,7 +10,6 @@ import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class EmployeeProfileView extends StatelessWidget {
   const EmployeeProfileView({super.key});
@@ -17,12 +17,6 @@ class EmployeeProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    final chartData = <ChartData>[
-      ChartData('25% Attendance', 25, Colors.purple[300]!),
-      ChartData('8% Leave', 38, Colors.red[300]!),
-      ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
-      ChartData('Others', 52, Colors.green[500]!),
-    ];
     return PopScope(
       canPop: true,
       onPopInvoked: (_) {
@@ -171,7 +165,10 @@ class EmployeeProfileView extends StatelessWidget {
                                           ),
                                           errorWidget: (context, url, error) =>
                                               const Center(
-                                                  child: Icon(Icons.error)),
+                                            child: Icon(
+                                              Icons.error,
+                                            ),
+                                          ),
                                         );
                                       },
                                     ),
@@ -252,7 +249,6 @@ class EmployeeProfileView extends StatelessWidget {
                           endIndent: 16,
                           indent: 16,
                         ),
-
                         BlocBuilder<EmployeeDetailsBloc, EmployeeDetailsState>(
                           buildWhen: (previous, current) =>
                               previous.selectedEmployee !=
@@ -330,138 +326,192 @@ class EmployeeProfileView extends StatelessWidget {
                           },
                         ),
                         8.heightBox,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                child: Text(
-                                  'Attendance Report:',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              SecondaryButton(
-                                title: 'More info',
-                                onTap: () {},
-                                fontSize: 14,
-                              ),
-                            ],
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          child: Text(
+                            'Attendance Record:',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: 200,
-                          child: SfCircularChart(
-                            legend: const Legend(
-                              isResponsive: true,
-                              // toggleSeriesVisibility: false,
-                              isVisible: true,
+                        8.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: 123,
+                            decoration: const BoxDecoration(
+                              color: Color(
+                                0xFFD9D9D9,
+                              ),
                             ),
-                            selectionGesture: ActivationMode.singleTap,
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                angle: 300,
-                                radius: '40%',
-                                widget: const Text('25%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 200,
-                                radius: '40%',
-                                widget: const Text('38%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 100,
-                                radius: '40%',
-                                widget: const Text('34%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 0,
-                                radius: '40%',
-                                widget: const Text('52%'),
-                              ),
-                            ],
-                            series: <CircularSeries>[
-                              // Render pie chart
-                              PieSeries<ChartData, String>(
-                                dataSource: chartData,
-                                pointColorMapper: (ChartData data, _) =>
-                                    data.color,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                              ),
-                            ],
+                          ),
+                        ),
+                        8.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                          ),
+                          child: MainButton(
+                            title: 'View day by day',
+                            onTap: () {},
                           ),
                         ),
                         12.heightBox,
-                        // Salary Details
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                child: Text(
-                                  'Salary Details:',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              SecondaryButton(
-                                title: 'More info',
-                                onTap: () {},
-                                fontSize: 14,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 200,
-                          child: SfCircularChart(
-                            legend: const Legend(
-                              isResponsive: true,
-                              isVisible: true,
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Salary Details:',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
                             ),
-                            selectionGesture: ActivationMode.singleTap,
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                angle: 300,
-                                radius: '40%',
-                                widget: const Text('25%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 200,
-                                radius: '40%',
-                                widget: const Text('38%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 100,
-                                radius: '40%',
-                                widget: const Text('34%'),
-                              ),
-                              CircularChartAnnotation(
-                                angle: 0,
-                                radius: '40%',
-                                widget: const Text('52%'),
-                              ),
-                            ],
-                            series: <CircularSeries>[
-                              // Render pie chart
-                              PieSeries<ChartData, String>(
-                                dataSource: chartData,
-                                pointColorMapper: (ChartData data, _) =>
-                                    data.color,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                              ),
-                            ],
                           ),
                         ),
                         16.heightBox,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const Text(
+                              'Total Salary',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            ),
+                            8.heightBox,
+                            Text(
+                              'INR ${(state.selectedEmployee.basicSalary ?? 0) + (state.selectedEmployee.hra ?? 0)}',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: primaryColor,
+                                fontSize: 20,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                                height: 0,
+                              ),
+                            ),
+                            8.heightBox,
+                            Center(
+                              child: Container(
+                                width: 26,
+                                height: 4,
+                                decoration: ShapeDecoration(
+                                  color: const Color(0xFFD9D9D9),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(17),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            8.heightBox,
+                            Text.rich(
+                              textAlign: TextAlign.center,
+                              TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: 'Basic Salary: ',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        'INR ${state.selectedEmployee.basicSalary ?? 0}',
+                                    style: const TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            8.heightBox,
+                            Text.rich(
+                              textAlign: TextAlign.center,
+                              TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: 'HRA:',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        ' INR ${state.selectedEmployee.hra ?? 0}',
+                                    style: const TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w600,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        16.heightBox,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    8,
+                                  ),
+                                ),
+                              ),
+                              padding: const MaterialStatePropertyAll(
+                                EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                              ),
+                              backgroundColor: const MaterialStatePropertyAll(
+                                greenColor,
+                              ),
+                              elevation: const MaterialStatePropertyAll(
+                                3,
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'See live location',
+                                style: TextStyle(
+                                  color: whiteColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        12.heightBox,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: BlocBuilder<EmployeeProfileBloc,

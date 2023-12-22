@@ -38,6 +38,12 @@ class Attendance extends Equatable {
         employee: employee ?? this.employee,
       );
 
+  static const empty = Attendance(employee: Employee.empty);
+
+  bool get isEmpty => this == empty;
+
+  bool get isNotEmpty => this != empty;
+
   @override
   List<Object?> get props => [
         punchedBy,

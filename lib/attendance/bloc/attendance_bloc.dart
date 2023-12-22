@@ -13,6 +13,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         super(AttendanceState()) {
     on<AttendanceLoaded>(_onAttendanceLoaded);
     on<AttendanceDateChanged>(_onAttendanceDateChanged);
+    on<SelectedAttendance>(_onSelectedAttendance);
   }
 
   Future<void> _onAttendanceLoaded(
@@ -36,6 +37,17 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
       onError: (err, __) => state.copyWith(
         status: AttendanceStatus.failure,
         errorMessage: err.toString(),
+      ),
+    );
+  }
+
+  void _onSelectedAttendance(
+    SelectedAttendance event,
+    Emitter<AttendanceState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedAttendance: event.attendance,
       ),
     );
   }

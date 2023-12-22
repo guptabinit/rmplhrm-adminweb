@@ -16,6 +16,12 @@ class Employee extends Equatable {
 
   Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 
+  static const empty = Employee(email: '-');
+
+  bool get isEmpty => empty == this;
+
+  bool get isNotEmpty => empty != this;
+
   @override
   List<Object?> get props => [
         firstName,

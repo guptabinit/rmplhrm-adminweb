@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/edit_attendance/edit_attendance.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
@@ -138,11 +137,11 @@ class AttendanceView extends StatelessWidget {
                                     child: const Text(
                                       'Edit',
                                     ),
-                                    onTap: () => Navigator.of(
-                                      context,
-                                    ).push(
-                                      EditAttendancePage.route(),
-                                    ),
+                                    onTap: () {
+                                      context.read<AttendanceBloc>().add(
+                                            SelectedAttendance(attendance),
+                                          );
+                                    },
                                   ),
                                 ];
                               },

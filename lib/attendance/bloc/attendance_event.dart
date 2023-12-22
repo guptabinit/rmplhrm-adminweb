@@ -18,6 +18,15 @@ final class AttendanceLoaded extends AttendanceEvent {
   final String creator;
 }
 
+final class SelectedAttendance extends AttendanceEvent {
+  const SelectedAttendance(this.attendance);
+
+  @override
+  List<Object?> get props => [attendance];
+
+  final Attendance attendance;
+}
+
 final class AttendanceDateChanged extends AttendanceEvent {
   const AttendanceDateChanged({
     required this.date,

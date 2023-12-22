@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
+import 'package:rmpl_hrm_admin/edit_attendance/edit_attendance.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
 
@@ -106,18 +107,46 @@ class AttendanceView extends StatelessWidget {
                     );
                   case AttendanceStatus.success:
                     return Expanded(
-                      child: ListView.separated(
+                      child: ListView.builder(
                         itemCount: state.attendances.length,
-                        separatorBuilder: (_, __) => 12.heightBox,
                         itemBuilder: (context, index) {
                           final attendance = state.attendances[index];
-                          return Text(
-                            '${index + 1}. ${attendance.employee?.firstName} punched in at ${attendance.punchedIn.onlyTime}',
-                            style: const TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 14,
-                              color: darkColor,
-                              fontWeight: FontWeight.w400,
+                          return ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            visualDensity: const VisualDensity(
+                              horizontal: -4,
+                              vertical: -4,
+                            ),
+                            title: Text(
+                              '${index + 1}. ${attendance.employee?.firstName} punched in at ${attendance.punchedIn.onlyTime}',
+                              style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                color: darkColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            trailing: PopupMenuButton(
+                              itemBuilder: (context) {
+                                return [
+                                  const PopupMenuItem(
+                                    child: Text(
+                                      'Revoke',
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text(
+                                      'Edit',
+                                    ),
+                                    onTap: () => Navigator.of(
+                                      context,
+                                    ).push(
+                                      EditAttendancePage.route(),
+                                    ),
+                                  ),
+                                ];
+                              },
+                              icon: const Icon(Icons.more_vert),
                             ),
                           );
                         },

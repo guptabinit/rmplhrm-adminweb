@@ -128,10 +128,19 @@ class AttendanceView extends StatelessWidget {
                             trailing: PopupMenuButton(
                               itemBuilder: (context) {
                                 return [
-                                  const PopupMenuItem(
-                                    child: Text(
+                                  PopupMenuItem(
+                                    child: const Text(
                                       'Revoke',
                                     ),
+                                    onTap: () {
+                                      context.read<AttendanceBloc>().add(
+                                            AttendanceRevoke(
+                                              createdAt: attendance.createdAt!,
+                                              punchedBy:
+                                                  attendance.punchedBy!.id,
+                                            ),
+                                          );
+                                    },
                                   ),
                                   PopupMenuItem(
                                     child: const Text(

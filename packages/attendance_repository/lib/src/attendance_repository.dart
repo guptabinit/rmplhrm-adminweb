@@ -27,5 +27,14 @@ class AttendanceRepository {
         punchOut: punchOut,
       );
 
+  Future<void> revokeAttendance({
+    required String punchedBy,
+    required DateTime createdAt,
+  }) =>
+      _api.revokeAttendance(
+        punchedBy: punchedBy,
+        createdAt: createdAt,
+      );
+
   final AttendanceApi _api;
 }

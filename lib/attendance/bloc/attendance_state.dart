@@ -7,9 +7,17 @@ enum AttendanceStatus {
   failure,
 }
 
+enum AttendanceRevokeStatus {
+  initial,
+  loading,
+  success,
+  failure,
+}
+
 final class AttendanceState extends Equatable {
   AttendanceState({
     this.status = AttendanceStatus.initial,
+    this.revokeStatus = AttendanceRevokeStatus.initial,
     this.attendances = const [],
     this.selectedAttendance = Attendance.empty,
     DateTime? date,
@@ -18,6 +26,7 @@ final class AttendanceState extends Equatable {
 
   AttendanceState copyWith({
     AttendanceStatus? status,
+    AttendanceRevokeStatus? revokeStatus,
     List<Attendance>? attendances,
     Attendance? selectedAttendance,
     DateTime? date,
@@ -25,6 +34,7 @@ final class AttendanceState extends Equatable {
   }) =>
       AttendanceState(
         status: status ?? this.status,
+        revokeStatus: revokeStatus ?? this.revokeStatus,
         attendances: attendances ?? this.attendances,
         selectedAttendance: selectedAttendance ?? this.selectedAttendance,
         date: date ?? this.date,
@@ -34,6 +44,7 @@ final class AttendanceState extends Equatable {
   @override
   List<Object?> get props => [
         status,
+        revokeStatus,
         attendances,
         selectedAttendance,
         date,
@@ -41,6 +52,7 @@ final class AttendanceState extends Equatable {
       ];
 
   final AttendanceStatus status;
+  final AttendanceRevokeStatus revokeStatus;
   final List<Attendance> attendances;
   final Attendance selectedAttendance;
   final DateTime? date;
@@ -55,4 +67,14 @@ extension AttendanceStatusX on AttendanceStatus {
   bool get isSuccess => this == AttendanceStatus.success;
 
   bool get isFailure => this == AttendanceStatus.failure;
+}
+
+extension AttendanceRevokeStatusX on AttendanceRevokeStatus {
+  bool get isInitial => this == AttendanceRevokeStatus.initial;
+
+  bool get isLoading => this == AttendanceRevokeStatus.loading;
+
+  bool get isSuccess => this == AttendanceRevokeStatus.success;
+
+  bool get isFailure => this == AttendanceRevokeStatus.failure;
 }

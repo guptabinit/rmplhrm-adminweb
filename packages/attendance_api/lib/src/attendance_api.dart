@@ -14,6 +14,11 @@ abstract class AttendanceApi {
     DateTime? punchIn,
     DateTime? punchOut,
   });
+
+  Future<void> revokeAttendance({
+    required String punchedBy,
+    required DateTime createdAt,
+  });
 }
 
 class UpdateAttendanceFailure implements Exception {
@@ -25,6 +30,21 @@ class UpdateAttendanceFailure implements Exception {
     switch (code) {
       default:
         return const UpdateAttendanceFailure();
+    }
+  }
+
+  final String message;
+}
+
+class RevokeAttendanceFailure implements Exception {
+  const RevokeAttendanceFailure([
+    this.message = 'Something went wrong while revoking the attendance',
+  ]);
+
+  factory RevokeAttendanceFailure.fromCode(String code) {
+    switch (code) {
+      default:
+        return const RevokeAttendanceFailure();
     }
   }
 

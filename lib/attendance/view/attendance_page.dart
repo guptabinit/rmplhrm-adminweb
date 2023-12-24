@@ -47,6 +47,19 @@ class AttendancePage extends StatelessWidget {
           ),
           BlocListener<AttendanceBloc, AttendanceState>(
             listenWhen: (previous, current) =>
+                previous.revokeStatus != current.revokeStatus,
+            listener: (context, state) {
+              if (!state.revokeStatus.isSuccess) {
+                context.read<AttendanceBloc>().add(
+                      AttendanceRefresh(
+                        creator: context.read<AppBloc>().state.user.id,
+                      ),
+                    );
+              }
+            },
+          ),
+          BlocListener<AttendanceBloc, AttendanceState>(
+            listenWhen: (previous, current) =>
                 previous.selectedAttendance != current.selectedAttendance,
             listener: (context, state) {
               if (state.selectedAttendance.isNotEmpty) {

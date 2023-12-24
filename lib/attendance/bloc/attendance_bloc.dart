@@ -13,6 +13,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         super(AttendanceState()) {
     on<AttendanceLoaded>(_onAttendanceLoaded);
     on<AttendanceRefresh>(_onAttendanceRefresh);
+    on<AttendanceRevoke>(_onAttendanceRevoke);
     on<AttendanceDateChanged>(_onAttendanceDateChanged);
     on<SelectedAttendance>(_onSelectedAttendance);
   }
@@ -66,6 +67,41 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
         errorMessage: err.toString(),
       ),
     );
+  }
+
+  Future<void> _onAttendanceRevoke(
+    AttendanceRevoke event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        revokeStatus: AttendanceRevokeStatus.loading,
+      ),
+    );
+    try {
+      await _attendanceRepository.revokeAttendance(
+        punchedBy: event.punchedBy,
+        createdAt: event.createdAt,
+      );
+      emit(
+        state.copyWith(
+          revokeStatus: AttendanceRevokeStatus.success,
+        ),
+      );
+    } on RevokeAttendanceFailure catch (e) {
+      emit(
+        state.copyWith(
+          revokeStatus: AttendanceRevokeStatus.failure,
+          errorMessage: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          revokeStatus: AttendanceRevokeStatus.failure,
+        ),
+      );
+    }
   }
 
   void _onSelectedAttendance(

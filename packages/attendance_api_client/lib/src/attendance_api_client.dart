@@ -86,5 +86,26 @@ class AttendanceApiClient extends AttendanceApi {
     }
   }
 
+  @override
+  Future<void> revokeAttendance({
+    required String punchedBy,
+    required DateTime createdAt,
+  }) async {
+    try {
+      await _firestore
+          .collection('common')
+          .doc('attendance')
+          .collection(punchedBy)
+          .doc('${createdAt.year}')
+          .collection('${createdAt.month}')
+          .doc('${createdAt.day}')
+          .delete();
+    } on FirebaseException catch (e) {
+      throw RevokeAttendanceFailure.fromCode(e.code);
+    } catch (e) {
+      throw const RevokeAttendanceFailure();
+    }
+  }
+
   final FirebaseFirestore _firestore;
 }

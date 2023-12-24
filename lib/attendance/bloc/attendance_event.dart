@@ -29,6 +29,19 @@ final class AttendanceRefresh extends AttendanceEvent {
   final String creator;
 }
 
+final class AttendanceRevoke extends AttendanceEvent {
+  const AttendanceRevoke({
+    required this.punchedBy,
+    required this.createdAt,
+  });
+
+  @override
+  List<Object?> get props => [punchedBy, createdAt];
+
+  final String punchedBy;
+  final DateTime createdAt;
+}
+
 final class SelectedAttendance extends AttendanceEvent {
   const SelectedAttendance(this.attendance);
 

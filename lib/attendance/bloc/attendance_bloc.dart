@@ -12,6 +12,7 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
   })  : _attendanceRepository = attendanceRepository,
         super(AttendanceState()) {
     on<AttendanceLoaded>(_onAttendanceLoaded);
+    on<AttendanceRefresh>(_onAttendanceRefresh);
     on<AttendanceDateChanged>(_onAttendanceDateChanged);
     on<SelectedAttendance>(_onSelectedAttendance);
   }
@@ -23,6 +24,32 @@ class AttendanceBloc extends Bloc<AttendanceEvent, AttendanceState> {
     emit(
       state.copyWith(
         status: AttendanceStatus.loading,
+      ),
+    );
+    await emit.forEach(
+      _attendanceRepository.getAttendances(
+        creator: event.creator,
+        createAt: state.date!,
+      ),
+      onData: (attendances) => state.copyWith(
+        status: AttendanceStatus.success,
+        attendances: attendances,
+      ),
+      onError: (err, __) => state.copyWith(
+        status: AttendanceStatus.failure,
+        errorMessage: err.toString(),
+      ),
+    );
+  }
+
+  Future<void> _onAttendanceRefresh(
+    AttendanceRefresh event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        status: AttendanceStatus.loading,
+        attendances: [],
       ),
     );
     await emit.forEach(

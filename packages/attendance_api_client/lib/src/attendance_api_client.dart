@@ -58,5 +58,33 @@ class AttendanceApiClient extends AttendanceApi {
     }
   }
 
+  @override
+  Future<void> updateAttendance({
+    required String punchedBy,
+    required DateTime createdAt,
+    DateTime? punchIn,
+    DateTime? punchOut,
+  }) async {
+    try {
+      final data = <String, dynamic>{};
+
+      if (punchIn != null) data['punchedIn'] = punchIn;
+      if (punchOut != null) data['punchedOut'] = punchOut;
+
+      await _firestore
+          .collection('common')
+          .doc('attendance')
+          .collection(punchedBy)
+          .doc('${createdAt.year}')
+          .collection('${createdAt.month}')
+          .doc('${createdAt.day}')
+          .update(data);
+    } on FirebaseException catch (e) {
+      throw UpdateAttendanceFailure.fromCode(e.code);
+    } catch (e) {
+      throw const UpdateAttendanceFailure();
+    }
+  }
+
   final FirebaseFirestore _firestore;
 }

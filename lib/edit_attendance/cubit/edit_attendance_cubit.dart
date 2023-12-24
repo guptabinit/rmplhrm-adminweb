@@ -47,13 +47,23 @@ class EditAttendanceCubit extends Cubit<EditAttendanceState> {
     );
   }
 
-  Future<void> onUpdate() async {
+  Future<void> onUpdate({
+    required String punchedBy,
+    required DateTime createdAt,
+  }) async {
+    if (!state.isValid) return;
     emit(
       state.copyWith(
         status: FormzSubmissionStatus.inProgress,
       ),
     );
     try {
+      await _repository.updateAttendance(
+        punchedBy: punchedBy,
+        createdAt: createdAt,
+        punchIn: DateTime.parse(state.punchIn.value!),
+        punchOut: DateTime.parse(state.punchOut.value!),
+      );
       emit(
         state.copyWith(
           status: FormzSubmissionStatus.success,

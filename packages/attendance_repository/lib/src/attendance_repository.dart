@@ -14,5 +14,18 @@ class AttendanceRepository {
         createAt: createAt,
       );
 
+  Future<void> updateAttendance({
+    required String punchedBy,
+    required DateTime createdAt,
+    DateTime? punchIn,
+    DateTime? punchOut,
+  }) =>
+      _api.updateAttendance(
+        punchedBy: punchedBy,
+        createdAt: createdAt,
+        punchIn: punchIn,
+        punchOut: punchOut,
+      );
+
   final AttendanceApi _api;
 }

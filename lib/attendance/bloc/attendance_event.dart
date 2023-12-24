@@ -18,6 +18,17 @@ final class AttendanceLoaded extends AttendanceEvent {
   final String creator;
 }
 
+final class AttendanceRefresh extends AttendanceEvent {
+  const AttendanceRefresh({
+    required this.creator,
+  });
+
+  @override
+  List<Object?> get props => [creator];
+
+  final String creator;
+}
+
 final class SelectedAttendance extends AttendanceEvent {
   const SelectedAttendance(this.attendance);
 

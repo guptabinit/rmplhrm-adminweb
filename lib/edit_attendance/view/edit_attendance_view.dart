@@ -1,6 +1,7 @@
 import 'package:attendance_api/attendance_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
 import 'package:rmpl_hrm_admin/components/custom_button.dart';
@@ -135,8 +136,18 @@ class EditAttendanceView extends StatelessWidget {
                     buildWhen: (previous, current) =>
                         previous.punchIn != current.punchIn,
                     builder: (context, state) {
+                      final controller = TextEditingController(
+                        text: DateTime.tryParse(
+                                  state.punchIn.value.toString(),
+                                ) !=
+                                null
+                            ? DateFormat.jm().format(
+                                DateTime.parse(state.punchIn.value.toString()),
+                              )
+                            : '',
+                      );
                       return CustomTextFormField(
-                        initialValue: state.punchIn.value.toString(),
+                        controller: controller,
                         onTap: () async {
                           final time = await showTimePicker(
                             context: context,
@@ -152,6 +163,12 @@ class EditAttendanceView extends StatelessWidget {
                             time.hour,
                             time.minute,
                           );
+
+                          if (context.mounted) {
+                            context
+                                .read<EditAttendanceCubit>()
+                                .punchedInChanged(date.toString());
+                          }
                         },
                         text: 'Punched in',
                         readOnly: true,
@@ -169,8 +186,18 @@ class EditAttendanceView extends StatelessWidget {
                     buildWhen: (previous, current) =>
                         previous.punchOut != current.punchOut,
                     builder: (context, state) {
+                      final controller = TextEditingController(
+                        text: DateTime.tryParse(
+                                  state.punchOut.value.toString(),
+                                ) !=
+                                null
+                            ? DateFormat.jm().format(
+                                DateTime.parse(state.punchOut.value.toString()),
+                              )
+                            : '',
+                      );
                       return CustomTextFormField(
-                        initialValue: state.punchOut.value.toString(),
+                        controller: controller,
                         onTap: () async {
                           final time = await showTimePicker(
                             context: context,
@@ -186,6 +213,12 @@ class EditAttendanceView extends StatelessWidget {
                             time.hour,
                             time.minute,
                           );
+
+                          if (context.mounted) {
+                            context
+                                .read<EditAttendanceCubit>()
+                                .punchedOutChanged(date.toString());
+                          }
                         },
                         text: 'Punched out',
                         readOnly: true,
@@ -194,14 +227,42 @@ class EditAttendanceView extends StatelessWidget {
                     },
                   ),
                   25.heightBox,
-                  CustomButton(
-                    onPress: () {},
-                    child: const Text(
-                      'Update',
-                      style: TextStyle(
-                        color: whiteColor,
-                      ),
-                    ),
+                  BlocBuilder<EditAttendanceCubit, EditAttendanceState>(
+                    buildWhen: (previous, current) =>
+                        previous.status != current.status,
+                    builder: (context, state) {
+                      return state.status.isInProgress
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : CustomButton(
+                              onPress: !state.isValid
+                                  ? null
+                                  : () {
+                                      context
+                                          .read<EditAttendanceCubit>()
+                                          .onUpdate(
+                                            punchedBy: context
+                                                .read<AttendanceBloc>()
+                                                .state
+                                                .selectedAttendance
+                                                .punchedBy!
+                                                .id,
+                                            createdAt: context
+                                                .read<AttendanceBloc>()
+                                                .state
+                                                .selectedAttendance
+                                                .createdAt!,
+                                          );
+                                    },
+                              child: const Text(
+                                'Update',
+                                style: TextStyle(
+                                  color: whiteColor,
+                                ),
+                              ),
+                            );
+                    },
                   ),
                 ],
               ),

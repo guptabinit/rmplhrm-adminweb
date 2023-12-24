@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
+import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/edit_attendance/edit_attendance.dart';
 
 class EditAttendancePage extends StatelessWidget {
@@ -35,7 +38,42 @@ class EditAttendancePage extends StatelessWidget {
           value: cubit,
         ),
       ],
-      child: const EditAttendanceView(),
+      child: BlocListener<EditAttendanceCubit, EditAttendanceState>(
+        listenWhen: (previous, current) => previous.status != current.status,
+        listener: (context, state) {
+          if (state.status.isSuccess) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  backgroundColor: greenColor,
+                  content: Text(
+                    'Attendance Updated',
+                  ),
+                ),
+              );
+            context.read<AttendanceBloc>().add(
+                  AttendanceRefresh(
+                    creator: context.read<AppBloc>().state.user.id,
+                  ),
+                );
+            Navigator.of(context).pop();
+          }
+          if (state.status.isFailure) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  backgroundColor: redColor,
+                  content: Text(
+                    state.errorMessage ?? 'Attendance Update Failed',
+                  ),
+                ),
+              );
+          }
+        },
+        child: const EditAttendanceView(),
+      ),
     );
   }
 }

@@ -132,14 +132,48 @@ class AttendanceView extends StatelessWidget {
                                     child: const Text(
                                       'Revoke',
                                     ),
-                                    onTap: () {
-                                      context.read<AttendanceBloc>().add(
-                                            AttendanceRevoke(
-                                              createdAt: attendance.createdAt!,
-                                              punchedBy:
-                                                  attendance.punchedBy!.id,
+                                    onTap: () async {
+                                      final result = await showDialog<bool>(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title:
+                                                const Text('Revoke Attendance'),
+                                            content: const Text(
+                                              'Are you sure you want to revoke this attendance?',
                                             ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.of(
+                                                  context,
+                                                ).pop(
+                                                  true,
+                                                ),
+                                                child: const Text('Yes'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.of(
+                                                  context,
+                                                ).pop(
+                                                  false,
+                                                ),
+                                                child: const Text('Cancel'),
+                                              ),
+                                            ],
                                           );
+                                        },
+                                      );
+
+                                      if (result == true && context.mounted) {
+                                        context.read<AttendanceBloc>().add(
+                                              AttendanceRevoke(
+                                                createdAt:
+                                                    attendance.createdAt!,
+                                                punchedBy:
+                                                    attendance.punchedBy!.id,
+                                              ),
+                                            );
+                                      }
                                     },
                                   ),
                                   PopupMenuItem(

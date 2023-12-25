@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:holiday_api_client/holiday_api_client.dart';
 import 'package:leave_api_client/leave_api_client.dart';
+import 'package:live_location_api_client/live_location_api_client.dart';
 import 'package:notification_api_client/notification_api_client.dart';
 import 'package:probation_api_client/probation_api_client.dart';
 import 'package:rmpl_hrm_admin/bootstrap.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
   final attendanceApi = AttendanceApiClient(firestore: firestore);
   final salaryApi = SalaryApiClient(firestore: firestore);
   final probationApi = ProbationApiClient(firestore: firestore);
+  final liveLocationApi = LiveLocationApiClient(firestore: firestore);
 
   await bootstrap(
     holidayApi: holidayApi,
@@ -54,5 +56,6 @@ Future<void> main() async {
     attendanceApi: attendanceApi,
     salaryApi: salaryApi,
     probationApi: probationApi,
+    liveLocationApi: liveLocationApi,
   );
 }

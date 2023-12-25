@@ -13,6 +13,8 @@ import 'package:holiday_api/holiday_api.dart';
 import 'package:holiday_repository/holiday_repository.dart';
 import 'package:leave_api/leave_api.dart';
 import 'package:leave_repository/leave_repository.dart';
+import 'package:live_location_api/live_location_api.dart';
+import 'package:live_location_repository/live_location_repository.dart';
 import 'package:notification_api/notification_api.dart';
 import 'package:notification_repository/notification_repository.dart';
 import 'package:probation_api/probation_api.dart';
@@ -30,6 +32,7 @@ Future<void> bootstrap({
   required AttendanceApi attendanceApi,
   required SalaryApi salaryApi,
   required ProbationApi probationApi,
+  required LiveLocationApi liveLocationApi,
 }) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -50,6 +53,7 @@ Future<void> bootstrap({
   final attendanceRepository = AttendanceRepository(api: attendanceApi);
   final salaryRepository = SalaryRepository(api: salaryApi);
   final probationRepository = ProbationRepository(api: probationApi);
+  final liveLocationRepository = LiveLocationRepository(api: liveLocationApi);
 
   await authenticationRepository.user.first;
 
@@ -64,6 +68,7 @@ Future<void> bootstrap({
       attendanceRepository: attendanceRepository,
       salaryRepository: salaryRepository,
       probationRepository: probationRepository,
+      liveLocationRepository: liveLocationRepository,
     ),
   );
 }

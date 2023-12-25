@@ -57,6 +57,12 @@ dependencies:
     path: packages/leave_api_client
   leave_repository:
     path: packages/leave_repository
+  live_location_api:
+    path: packages/live_location_api
+  live_location_api_client:
+    path: packages/live_location_api_client
+  live_location_repository:
+    path: packages/live_location_repository
   probation_api:
     path: packages/probation_api
   probation_api_client:

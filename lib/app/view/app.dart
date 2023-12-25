@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:holiday_repository/holiday_repository.dart';
 import 'package:leave_repository/leave_repository.dart';
+import 'package:live_location_repository/live_location_repository.dart';
 import 'package:notification_repository/notification_repository.dart';
 import 'package:probation_repository/probation_repository.dart';
 import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
@@ -25,6 +26,7 @@ class App extends StatelessWidget {
     required this.attendanceRepository,
     required this.salaryRepository,
     required this.probationRepository,
+    required this.liveLocationRepository,
     super.key,
   });
 
@@ -59,6 +61,9 @@ class App extends StatelessWidget {
         RepositoryProvider.value(
           value: probationRepository,
         ),
+        RepositoryProvider.value(
+          value: liveLocationRepository,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -88,6 +93,7 @@ class App extends StatelessWidget {
   final AttendanceRepository attendanceRepository;
   final SalaryRepository salaryRepository;
   final ProbationRepository probationRepository;
+  final LiveLocationRepository liveLocationRepository;
 }
 
 class AppView extends StatelessWidget {

@@ -485,7 +485,12 @@ class EmployeeProfileView extends StatelessWidget {
                             onPressed: () => Navigator.of(
                               context,
                             ).push(
-                              LiveLocationPage.route(),
+                              LiveLocationPage.route(
+                                context
+                                    .read<EmployeeDetailsBloc>()
+                                    .state
+                                    .selectedEmployee,
+                              ),
                             ),
                             style: ButtonStyle(
                               shape: MaterialStatePropertyAll(

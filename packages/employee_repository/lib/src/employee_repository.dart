@@ -114,5 +114,11 @@ class EmployeeRepository {
         isActive: isActive,
       );
 
+  Future<void> deleteEmployee({
+    required String creator,
+    required String uid,
+  }) =>
+      _api.deleteEmployee(creator: creator, uid: uid);
+
   final EmployeeApi _api;
 }

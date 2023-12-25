@@ -64,6 +64,11 @@ abstract class EmployeeApi {
     String? fieldWorkAllowance,
     File? file,
   });
+
+  Future<void> deleteEmployee({
+    required String creator,
+    required String uid,
+  });
 }
 
 class EmployeeNotFoundFailure implements Exception {
@@ -120,6 +125,23 @@ class SignUpWithEmailAndPasswordFailure implements Exception {
         );
       default:
         return const SignUpWithEmailAndPasswordFailure();
+    }
+  }
+
+  final String message;
+}
+
+class DeleteEmployeeFailure implements Exception {
+  const DeleteEmployeeFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  factory DeleteEmployeeFailure.fromCode(String code) {
+    switch (code) {
+      case 'not_found':
+        return const DeleteEmployeeFailure('Employee not found');
+      default:
+        return const DeleteEmployeeFailure();
     }
   }
 

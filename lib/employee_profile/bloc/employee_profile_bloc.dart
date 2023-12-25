@@ -12,6 +12,7 @@ class EmployeeProfileBloc
   })  : _repository = repository,
         super(const EmployeeProfileState()) {
     on<ToggleIsActiveEmployeeProfile>(_onToggleIsActiveEmployeeProfile);
+    on<DeleteEmployeeProfile>(_onDeleteEmployeeProfile);
   }
 
   Future<void> _onToggleIsActiveEmployeeProfile(
@@ -37,6 +38,34 @@ class EmployeeProfileBloc
       emit(
         state.copyWith(
           status: EmployeeProfileStatus.failure,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onDeleteEmployeeProfile(
+    DeleteEmployeeProfile event,
+    Emitter<EmployeeProfileState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        deleteEmployeeProfileStatus: DeleteEmployeeProfileStatus.loading,
+      ),
+    );
+    try {
+      await _repository.deleteEmployee(
+        creator: event.creator,
+        uid: event.uid,
+      );
+      emit(
+        state.copyWith(
+          deleteEmployeeProfileStatus: DeleteEmployeeProfileStatus.success,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          deleteEmployeeProfileStatus: DeleteEmployeeProfileStatus.failure,
         ),
       );
     }

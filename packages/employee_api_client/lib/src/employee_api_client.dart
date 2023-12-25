@@ -136,6 +136,7 @@ class EmployeeApiClient extends EmployeeApi {
         'creator': _firestore.collection('admin').doc(creator),
         'probation': false,
         'uid': userCredentials.user!.uid,
+        'isActive': true,
       });
     } on FirebaseAuthException catch (e) {
       throw SignUpWithEmailAndPasswordFailure(e.code);
@@ -216,10 +217,6 @@ class EmployeeApiClient extends EmployeeApi {
     }
   }
 
-  final FirebaseFirestore _firestore;
-  final FirebaseStorage _firebaseStorage;
-  final FirebaseAuth _firebaseAuth;
-
   @override
   Future<void> toggleEmployeeActive({
     required String id,
@@ -235,4 +232,48 @@ class EmployeeApiClient extends EmployeeApi {
       throw const EmployeeIsActiveToggleFailure();
     }
   }
+
+  @override
+  Future<void> deleteEmployee({
+    required String creator,
+    required String uid,
+  }) async {
+    try {
+      final user = await _firestore
+          .collection('employees')
+          .where(
+            'creator',
+            isEqualTo: _firestore.collection('admin').doc(creator),
+          )
+          .where(
+            'uid',
+            isEqualTo: uid,
+          )
+          .get();
+
+      if (user.docs.firstOrNull == null) {
+        throw DeleteEmployeeFailure.fromCode('not_found');
+      }
+
+      final employee = Employee.fromJson(user.docs.first.data());
+
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: employee.email ?? '',
+        password: employee.password ?? '',
+      );
+
+      await _firebaseAuth.currentUser?.delete();
+
+      await _firestore.collection('employees').doc(uid).delete();
+    } on FirebaseException catch (e) {
+      throw DeleteEmployeeFailure.fromCode(e.code);
+    } catch (e) {
+      print(e.toString());
+      throw const DeleteEmployeeFailure();
+    }
+  }
+
+  final FirebaseFirestore _firestore;
+  final FirebaseStorage _firebaseStorage;
+  final FirebaseAuth _firebaseAuth;
 }

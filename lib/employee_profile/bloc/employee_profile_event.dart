@@ -19,3 +19,16 @@ final class ToggleIsActiveEmployeeProfile extends EmployeeProfileEvent {
   @override
   List<Object?> get props => [id, isActive];
 }
+
+final class DeleteEmployeeProfile extends EmployeeProfileEvent {
+  const DeleteEmployeeProfile({
+    required this.creator,
+    required this.uid,
+  });
+
+  @override
+  List<Object?> get props => [creator, uid];
+
+  final String creator;
+  final String uid;
+}

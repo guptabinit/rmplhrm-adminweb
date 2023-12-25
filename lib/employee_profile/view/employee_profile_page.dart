@@ -43,39 +43,81 @@ class EmployeeProfilePage extends StatelessWidget {
           ),
         ),
       ],
-      child: BlocListener<EmployeeProfileBloc, EmployeeProfileState>(
-        listenWhen: (previous, current) => previous.status != current.status,
-        listener: (context, state) {
-          if (state.status.isSuccess) {
-            context.read<EmployeeDetailsBloc>().add(
-                  EmployeeDetailsSelected(
-                    context
-                        .read<EmployeeDetailsBloc>()
-                        .state
-                        .selectedEmployee
-                        .uid!,
-                  ),
-                );
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  backgroundColor: Colors.green,
-                  content: Text('Account active status changed.'),
-                ),
-              );
-          }
-          if (state.status.isFailure) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  backgroundColor: Colors.red,
-                  content: Text('Failed to change account active status.'),
-                ),
-              );
-          }
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<EmployeeProfileBloc, EmployeeProfileState>(
+            listenWhen: (previous, current) =>
+                previous.status != current.status,
+            listener: (context, state) {
+              if (state.status.isSuccess) {
+                context.read<EmployeeDetailsBloc>().add(
+                      EmployeeDetailsSelected(
+                        context
+                            .read<EmployeeDetailsBloc>()
+                            .state
+                            .selectedEmployee
+                            .uid!,
+                      ),
+                    );
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Account active status changed.'),
+                    ),
+                  );
+              }
+              if (state.status.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('Failed to change account active status.'),
+                    ),
+                  );
+              }
+            },
+          ),
+          BlocListener<EmployeeProfileBloc, EmployeeProfileState>(
+            listenWhen: (previous, current) =>
+                previous.deleteEmployeeProfileStatus !=
+                current.deleteEmployeeProfileStatus,
+            listener: (context, state) {
+              if (state.deleteEmployeeProfileStatus.isSuccess) {
+                // context.read<EmployeeDetailsBloc>().add(
+                //       EmployeeDetailsSelected(
+                //         context
+                //             .read<EmployeeDetailsBloc>()
+                //             .state
+                //             .selectedEmployee
+                //             .uid!,
+                //       ),
+                //     );
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('Account successfully deleted.'),
+                    ),
+                  );
+                Navigator.of(context).pop();
+              }
+              if (state.deleteEmployeeProfileStatus.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('Failed to delete this account.'),
+                    ),
+                  );
+              }
+            },
+          ),
+        ],
         child: const EmployeeProfileView(),
       ),
     );

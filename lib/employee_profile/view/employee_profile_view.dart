@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
@@ -572,32 +573,95 @@ class EmployeeProfileView extends StatelessWidget {
                           ),
                         ),
                         12.heightBox,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              padding: const MaterialStatePropertyAll(
-                                EdgeInsets.symmetric(vertical: 16),
-                              ),
-                              backgroundColor:
-                                  const MaterialStatePropertyAll(redColor),
-                              elevation: const MaterialStatePropertyAll(3),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Delete Account',
-                                style: TextStyle(
-                                  color: whiteColor,
-                                ),
-                              ),
-                            ),
-                          ),
+                        BlocBuilder<EmployeeProfileBloc, EmployeeProfileState>(
+                          buildWhen: (previous, current) =>
+                              previous.deleteEmployeeProfileStatus !=
+                              current.deleteEmployeeProfileStatus,
+                          builder: (context, state) {
+                            return state.deleteEmployeeProfileStatus.isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        final result = await showDialog<bool>(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title:
+                                                  const Text('Delete Account'),
+                                              content: const Text(
+                                                'Are you sure you want to delete this account?',
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () => Navigator.of(
+                                                    context,
+                                                  ).pop(true),
+                                                  child: const Text('Yes'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () => Navigator.of(
+                                                    context,
+                                                  ).pop(false),
+                                                  child: const Text('Cancel'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+
+                                        if (result == true && context.mounted) {
+                                          context
+                                              .read<EmployeeProfileBloc>()
+                                              .add(
+                                                DeleteEmployeeProfile(
+                                                  creator: context
+                                                      .read<AppBloc>()
+                                                      .state
+                                                      .user
+                                                      .id,
+                                                  uid: context
+                                                      .read<
+                                                          EmployeeDetailsBloc>()
+                                                      .state
+                                                      .selectedEmployee
+                                                      .uid!,
+                                                ),
+                                              );
+                                        }
+                                      },
+                                      style: ButtonStyle(
+                                        shape: MaterialStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.symmetric(vertical: 16),
+                                        ),
+                                        backgroundColor:
+                                            const MaterialStatePropertyAll(
+                                          redColor,
+                                        ),
+                                        elevation:
+                                            const MaterialStatePropertyAll(3),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Delete Account',
+                                          style: TextStyle(
+                                            color: whiteColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                          },
                         ),
                         24.heightBox,
                       ],

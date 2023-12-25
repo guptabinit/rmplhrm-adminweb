@@ -5,8 +5,9 @@ import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
-import 'package:rmpl_hrm_admin/employee_details/bloc/employee_details_bloc.dart';
-import 'package:rmpl_hrm_admin/employee_profile/bloc/employee_profile_bloc.dart';
+import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
+import 'package:rmpl_hrm_admin/employee_profile/employee_profile.dart';
+import 'package:rmpl_hrm_admin/live_location/live_location.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/update_employee_profile/update_employee_profile.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -481,7 +482,11 @@ class EmployeeProfileView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () => Navigator.of(
+                              context,
+                            ).push(
+                              LiveLocationPage.route(),
+                            ),
                             style: ButtonStyle(
                               shape: MaterialStatePropertyAll(
                                 RoundedRectangleBorder(

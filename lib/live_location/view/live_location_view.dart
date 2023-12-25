@@ -75,14 +75,38 @@ class _LiveLocationViewState extends State<LiveLocationView> {
           switch (state.status) {
             case LiveLocationStatus.initial:
             case LiveLocationStatus.loading:
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Container(
+                width: double.infinity,
+                height: double.infinity,
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                margin: const EdgeInsets.only(),
+                decoration: const BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                ),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
             case LiveLocationStatus.success:
               if (state.location == null) {
-                return const Center(
-                  child: Text(
-                    'No location found',
+                return Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  margin: const EdgeInsets.only(),
+                  decoration: const BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'No location found',
+                    ),
                   ),
                 );
               }

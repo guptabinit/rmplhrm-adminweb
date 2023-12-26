@@ -22,6 +22,7 @@ abstract class AttendanceApi {
 
   Stream<AttendanceCount> countAttendances({
     required String creator,
+    required DateTime date,
   });
 }
 

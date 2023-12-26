@@ -11,8 +11,9 @@ class AttendanceCountBloc
     extends Bloc<AttendanceCountEvent, AttendanceCountState> {
   AttendanceCountBloc({required AttendanceRepository repository})
       : _repository = repository,
-        super(const AttendanceCountState()) {
+        super(AttendanceCountState()) {
     on<AttendanceCountLoaded>(_onAttendanceCountLoaded);
+    on<AttendanceCountDate>(_onAttendanceCountDate);
   }
 
   Future<void> _onAttendanceCountLoaded(
@@ -25,13 +26,27 @@ class AttendanceCountBloc
       ),
     );
     await emit.forEach(
-      _repository.countAttendances(creator: event.creator),
+      _repository.countAttendances(
+        creator: event.creator,
+        date: event.date,
+      ),
       onData: (attendanceCount) => state.copyWith(
         status: AttendanceCountStatus.success,
         attendanceCount: attendanceCount,
       ),
       onError: (_, __) => state.copyWith(
         status: AttendanceCountStatus.failure,
+      ),
+    );
+  }
+
+  void _onAttendanceCountDate(
+    AttendanceCountDate event,
+    Emitter<AttendanceCountState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        date: event.date,
       ),
     );
   }

@@ -38,9 +38,11 @@ class AttendanceRepository {
 
   Stream<AttendanceCount> countAttendances({
     required String creator,
+    required DateTime date,
   }) =>
       _api.countAttendances(
         creator: creator,
+        date: date,
       );
 
   final AttendanceApi _api;

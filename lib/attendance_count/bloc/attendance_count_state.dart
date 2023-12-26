@@ -11,15 +11,18 @@ final class AttendanceCountState extends Equatable {
   const AttendanceCountState({
     this.status = AttendanceCountStatus.initial,
     this.attendanceCount = AttendanceCount.empty,
+    this.date,
   });
 
   AttendanceCountState copyWith({
     AttendanceCountStatus? status,
     AttendanceCount? attendanceCount,
+    DateTime? date,
   }) {
     return AttendanceCountState(
       status: status ?? this.status,
       attendanceCount: attendanceCount ?? this.attendanceCount,
+      date: date ?? this.date,
     );
   }
 
@@ -27,10 +30,12 @@ final class AttendanceCountState extends Equatable {
   List<Object?> get props => [
         status,
         attendanceCount,
+        date,
       ];
 
   final AttendanceCountStatus status;
   final AttendanceCount attendanceCount;
+  final DateTime? date;
 }
 
 extension AttendanceCountStatusX on AttendanceCountStatus {

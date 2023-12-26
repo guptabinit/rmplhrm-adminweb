@@ -60,6 +60,11 @@ class AttendanceView extends StatelessWidget {
                       lastDate: DateTime.now(),
                     );
                     if (date != null && context.mounted) {
+                      context.read<AttendanceCountBloc>().add(
+                            AttendanceCountDate(
+                              date: date,
+                            ),
+                          );
                       context.read<AttendanceBloc>().add(
                             AttendanceDateChanged(date: date),
                           );

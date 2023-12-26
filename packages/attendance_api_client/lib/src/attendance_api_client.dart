@@ -111,6 +111,7 @@ class AttendanceApiClient extends AttendanceApi {
   @override
   Stream<AttendanceCount> countAttendances({
     required String creator,
+    required DateTime date,
   }) async* {
     final employeeDocs = _firestore
         .collection('employees')
@@ -126,8 +127,6 @@ class AttendanceApiClient extends AttendanceApi {
             ),
           ),
         );
-
-    final date = DateTime.now();
 
     await for (final employees in employeeDocs) {
       const attendanceCount = AttendanceCount.empty;

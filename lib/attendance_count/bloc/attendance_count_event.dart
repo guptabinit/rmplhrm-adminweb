@@ -8,12 +8,25 @@ sealed class AttendanceCountEvent extends Equatable {
 }
 
 final class AttendanceCountLoaded extends AttendanceCountEvent {
-  const AttendanceCountLoaded({
+  AttendanceCountLoaded({
     required this.creator,
-  });
+    DateTime? date,
+  }) : date = date ?? DateTime.now();
 
   @override
-  List<Object?> get props => [creator];
+  List<Object?> get props => [creator, date];
 
   final String creator;
+  final DateTime date;
+}
+
+final class AttendanceCountDate extends AttendanceCountEvent {
+  AttendanceCountDate({
+    DateTime? date,
+  }) : date = date ?? DateTime.now();
+
+  @override
+  List<Object?> get props => [date];
+
+  final DateTime date;
 }

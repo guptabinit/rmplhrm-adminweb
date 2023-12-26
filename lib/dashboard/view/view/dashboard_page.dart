@@ -29,8 +29,8 @@ class DashboardPage extends StatelessWidget {
         BlocProvider.value(
           value: context.read<AttendanceCountBloc>()
             ..add(
-              AttendanceCountLoaded(
-                creator: context.read<AppBloc>().state.user.id,
+              AttendanceCountDate(
+                date: DateTime.now(),
               ),
             ),
         ),

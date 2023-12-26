@@ -85,7 +85,20 @@ class App extends StatelessWidget {
             ),
           ),
         ],
-        child: const AppView(),
+        child: BlocListener<AttendanceCountBloc, AttendanceCountState>(
+          listenWhen: (previous, current) => previous.date != current.date,
+          listener: (context, state) {
+            if (state.date != null) {
+              context.read<AttendanceCountBloc>().add(
+                    AttendanceCountLoaded(
+                      creator: context.read<AppBloc>().state.user.id,
+                      date: state.date,
+                    ),
+                  );
+            }
+          },
+          child: const AppView(),
+        ),
       ),
     );
   }

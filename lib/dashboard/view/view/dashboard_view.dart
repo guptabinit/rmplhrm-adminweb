@@ -162,7 +162,7 @@ class DashboardView extends StatelessWidget {
                                     PieChartSectionData(
                                       color: Colors.purple[300]!,
                                       title:
-                                          '${presentPercent.toInt()}% Attendance',
+                                          '${presentPercent.toInt()}%',
                                       titleStyle: const TextStyle(
                                         color: whiteColor,
                                       ),
@@ -171,7 +171,7 @@ class DashboardView extends StatelessWidget {
                                     ),
                                     PieChartSectionData(
                                       color: Colors.red[300]!,
-                                      title: '${absentPercent.toInt()}% Leave',
+                                      title: '${absentPercent.toInt()}%',
                                       titleStyle: const TextStyle(
                                         color: whiteColor,
                                       ),

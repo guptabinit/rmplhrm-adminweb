@@ -11,6 +11,8 @@ dependencies:
   attendance_api:
     path: ../attendance_api
   cloud_firestore: ^4.13.1
+  employee_api:
+    path: ../employee_api
   flutter:
     sdk: flutter
   intl: ^0.18.1

@@ -1,5 +1,6 @@
 import 'package:attendance_api/attendance_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_api/employee_api.dart' as e;
 
 class AttendanceApiClient extends AttendanceApi {
   const AttendanceApiClient({
@@ -105,6 +106,56 @@ class AttendanceApiClient extends AttendanceApi {
     } catch (e) {
       throw const RevokeAttendanceFailure();
     }
+  }
+
+  @override
+  Stream<AttendanceCount> countAttendances({
+    required String creator,
+  }) async* {
+    final employeeDocs = _firestore
+        .collection('employees')
+        .where(
+          'creator',
+          isEqualTo: _firestore.collection('admin').doc(creator),
+        )
+        .snapshots()
+        .map(
+          (event) => event.docs.map(
+            (el) => e.Employee.fromJson(
+              el.data(),
+            ),
+          ),
+        );
+
+    final date = DateTime.now();
+
+    await for (final employees in employeeDocs) {
+      const attendanceCount = AttendanceCount.empty;
+      var present = 0;
+      var absent = 0;
+      for (final employee in employees) {
+        final attendanceDoc = await _firestore
+            .collection('common')
+            .doc('attendance')
+            .collection(employee.uid!)
+            .doc('${date.year}')
+            .collection('${date.month}')
+            .doc('${date.day}')
+            .get();
+        if (attendanceDoc.exists) {
+          present = present + 1;
+        } else {
+          absent = absent + 1;
+        }
+      }
+      yield attendanceCount.copyWith(
+        present: present,
+        absent: absent,
+        total: employees.length,
+      );
+    }
+
+    yield AttendanceCount.empty;
   }
 
   final FirebaseFirestore _firestore;

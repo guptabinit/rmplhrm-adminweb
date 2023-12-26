@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:rmpl_hrm_admin/attendance/attendance.dart';
+import 'package:rmpl_hrm_admin/attendance_count/attendance_count.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -69,30 +70,34 @@ class AttendanceView extends StatelessWidget {
               ],
             ),
             16.heightBox,
-            const Text.rich(
-              TextSpan(
-                children: [
+            BlocBuilder<AttendanceCountBloc, AttendanceCountState>(
+              builder: (context, state) {
+                return Text.rich(
                   TextSpan(
-                    text: '7 already in',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      color: greenColor,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    children: [
+                      TextSpan(
+                        text: '${state.attendanceCount.present} already in',
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: greenColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const TextSpan(text: '   '),
+                      TextSpan(
+                        text: '${state.attendanceCount.absent} remaining',
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 14,
+                          color: redColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                  TextSpan(text: '   '),
-                  TextSpan(
-                    text: '2 remaining',
-                    style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 14,
-                      color: redColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
             const Divider(color: textGreyColor),
             12.heightBox,

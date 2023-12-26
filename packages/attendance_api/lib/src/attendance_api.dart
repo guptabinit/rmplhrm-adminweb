@@ -19,6 +19,10 @@ abstract class AttendanceApi {
     required String punchedBy,
     required DateTime createdAt,
   });
+
+  Stream<AttendanceCount> countAttendances({
+    required String creator,
+  });
 }
 
 class UpdateAttendanceFailure implements Exception {

@@ -11,6 +11,7 @@ import 'package:notification_repository/notification_repository.dart';
 import 'package:probation_repository/probation_repository.dart';
 import 'package:rmpl_hrm_admin/admin_profile/admin_profile.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
+import 'package:rmpl_hrm_admin/attendance_count/bloc/attendance_count_bloc.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/splash/splash.dart';
 import 'package:salary_repository/salary_repository.dart';
@@ -76,6 +77,11 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => AdminProfileBloc(
               adminProfileRepository: context.read<AdminProfileRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => AttendanceCountBloc(
+              repository: context.read<AttendanceRepository>(),
             ),
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -6,10 +7,8 @@ import 'package:rmpl_hrm_admin/attendance_count/attendance_count.dart';
 import 'package:rmpl_hrm_admin/components/buttons/secondary_button.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/main.dart';
-import 'package:rmpl_hrm_admin/models/models.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -17,12 +16,6 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
-    final chartData = <ChartData>[
-      ChartData('25% Attendance', 25, Colors.purple[300]!),
-      ChartData('8% Leave', 38, Colors.red[300]!),
-      ChartData('12% Remaining\nWorking Days', 34, Colors.pink[300]!),
-      ChartData('Others', 52, Colors.green[500]!),
-    ];
     return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
@@ -142,43 +135,75 @@ class DashboardView extends StatelessWidget {
               ),
               SizedBox(
                 height: 220,
-                child: SfCircularChart(
-                  legend: const Legend(
-                    isResponsive: true,
-                    isVisible: true,
-                  ),
-                  selectionGesture: ActivationMode.singleTap,
-                  annotations: <CircularChartAnnotation>[
-                    CircularChartAnnotation(
-                      angle: 300,
-                      radius: '40%',
-                      widget: const Text('25%'),
-                    ),
-                    CircularChartAnnotation(
-                      angle: 200,
-                      radius: '40%',
-                      widget: const Text('38%'),
-                    ),
-                    CircularChartAnnotation(
-                      angle: 100,
-                      radius: '40%',
-                      widget: const Text('34%'),
-                    ),
-                    CircularChartAnnotation(
-                      angle: 0,
-                      radius: '40%',
-                      widget: const Text('52%'),
-                    ),
-                  ],
-                  series: <CircularSeries>[
-                    // Render pie chart
-                    PieSeries<ChartData, String>(
-                      dataSource: chartData,
-                      pointColorMapper: (ChartData data, _) => data.color,
-                      xValueMapper: (ChartData data, _) => data.x,
-                      yValueMapper: (ChartData data, _) => data.y,
-                    ),
-                  ],
+                child: BlocBuilder<AttendanceCountBloc, AttendanceCountState>(
+                  buildWhen: (previous, current) =>
+                      previous.attendanceCount != current.attendanceCount,
+                  builder: (context, state) {
+                    final presentPercent = state.attendanceCount.present /
+                        state.attendanceCount.total *
+                        100;
+                    final absentPercent = state.attendanceCount.absent /
+                        state.attendanceCount.total *
+                        100;
+                    return AspectRatio(
+                      aspectRatio: 1.3,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: PieChart(
+                                PieChartData(
+                                  borderData: FlBorderData(
+                                    show: false,
+                                  ),
+                                  centerSpaceRadius: 0,
+                                  sections: [
+                                    PieChartSectionData(
+                                      color: Colors.purple[300]!,
+                                      title:
+                                          '${presentPercent.toInt()}% Attendance',
+                                      titleStyle: const TextStyle(
+                                        color: whiteColor,
+                                      ),
+                                      value: presentPercent,
+                                      radius: 90,
+                                    ),
+                                    PieChartSectionData(
+                                      color: Colors.red[300]!,
+                                      title: '${absentPercent.toInt()}% Leave',
+                                      titleStyle: const TextStyle(
+                                        color: whiteColor,
+                                      ),
+                                      value: absentPercent,
+                                      radius: 90,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Indicator(
+                                color: Colors.purple[300]!,
+                                text: '${presentPercent.toInt()}% Attendance',
+                                isSquare: false,
+                              ),
+                              Indicator(
+                                text: '${absentPercent.toInt()}% Leave',
+                                color: Colors.red[300]!,
+                                isSquare: false,
+                              ),
+                            ],
+                          ),
+                          20.widthBox,
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
               BlocBuilder<AttendanceBloc, AttendanceState>(
@@ -309,6 +334,43 @@ class DashboardView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class Indicator extends StatelessWidget {
+  const Indicator({
+    super.key,
+    required this.color,
+    required this.text,
+    required this.isSquare,
+    this.size = 16,
+    this.textColor,
+  });
+
+  final Color color;
+  final String text;
+  final bool isSquare;
+  final double size;
+  final Color? textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: isSquare ? BoxShape.rectangle : BoxShape.circle,
+            color: color,
+          ),
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        Text(text),
+      ],
     );
   }
 }

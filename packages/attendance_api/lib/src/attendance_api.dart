@@ -24,6 +24,10 @@ abstract class AttendanceApi {
     required String creator,
     required DateTime date,
   });
+
+  Stream<AttendancePercentage> attendancesPercentage({
+    required String creator,
+  });
 }
 
 class UpdateAttendanceFailure implements Exception {

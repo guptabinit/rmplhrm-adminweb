@@ -45,5 +45,12 @@ class AttendanceRepository {
         date: date,
       );
 
+  Stream<AttendancePercentage> attendancesPercentage({
+    required String creator,
+  }) =>
+      _api.attendancesPercentage(
+        creator: creator,
+      );
+
   final AttendanceApi _api;
 }

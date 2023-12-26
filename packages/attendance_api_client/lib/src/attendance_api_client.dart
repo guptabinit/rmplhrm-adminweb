@@ -157,5 +157,57 @@ class AttendanceApiClient extends AttendanceApi {
     yield AttendanceCount.empty;
   }
 
+  @override
+  Stream<AttendancePercentage> attendancesPercentage({
+    required String creator,
+  }) async* {
+    final employeeDocs = _firestore
+        .collection('employees')
+        .where(
+          'creator',
+          isEqualTo: _firestore.collection('admin').doc(creator),
+        )
+        .snapshots()
+        .map(
+          (event) => event.docs.map(
+            (el) => Employee.fromJson(
+              el.data(),
+            ),
+          ),
+        );
+
+    final date = DateTime.now();
+
+    await for (final employees in employeeDocs) {
+      const attendancePercentage = AttendancePercentage.empty;
+      final total = employees.length;
+      var present = 0;
+      var absent = 0;
+      for (final employee in employees) {
+        final attendanceDoc = await _firestore
+            .collection('common')
+            .doc('attendance')
+            .collection(employee.uid!)
+            .doc('${date.year}')
+            .collection('${date.month}')
+            .doc('${date.day}')
+            .get();
+        if (attendanceDoc.exists) {
+          present = present + 1;
+        } else {
+          absent = absent + 1;
+        }
+      }
+
+      yield attendancePercentage.copyWith(
+        present: present,
+        absent: absent,
+        total: total,
+      );
+    }
+
+    yield AttendancePercentage.empty;
+  }
+
   final FirebaseFirestore _firestore;
 }

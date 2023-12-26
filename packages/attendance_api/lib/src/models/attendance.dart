@@ -1,5 +1,5 @@
-import 'package:attendance_api/attendance_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_api/employee_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:json_converter/json_converter.dart';

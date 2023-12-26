@@ -1,6 +1,6 @@
 import 'package:attendance_api/attendance_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:employee_api/employee_api.dart' as e;
+import 'package:employee_api/employee_api.dart';
 
 class AttendanceApiClient extends AttendanceApi {
   const AttendanceApiClient({
@@ -121,7 +121,7 @@ class AttendanceApiClient extends AttendanceApi {
         .snapshots()
         .map(
           (event) => event.docs.map(
-            (el) => e.Employee.fromJson(
+            (el) => Employee.fromJson(
               el.data(),
             ),
           ),

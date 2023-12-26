@@ -32,3 +32,27 @@ final class DeleteEmployeeProfile extends EmployeeProfileEvent {
   final String creator;
   final String uid;
 }
+
+final class MarkEmployeeAsProbation extends EmployeeProfileEvent {
+  const MarkEmployeeAsProbation({
+    required this.uid,
+    required this.date,
+  });
+
+  @override
+  List<Object?> get props => [uid, date];
+
+  final String uid;
+  final DateTime date;
+}
+
+final class RemoveEmployeeFromProbation extends EmployeeProfileEvent {
+  const RemoveEmployeeFromProbation({
+    required this.uid,
+  });
+
+  @override
+  List<Object?> get props => [uid];
+
+  final String uid;
+}

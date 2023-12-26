@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/probation/probation.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -28,7 +29,8 @@ class ProbationView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: BlocBuilder<ProbationBloc, ProbationState>(
               buildWhen: (previous, current) =>
-                  previous.status != current.status,
+                  previous.status != current.status ||
+                  previous.employees != current.employees,
               builder: (context, state) {
                 state.status.log();
                 switch (state.status) {
@@ -63,94 +65,134 @@ class ProbationView extends StatelessWidget {
                         ),
                       );
                     }
-                    return ListView.separated(
-                      separatorBuilder: (_, __) => 12.heightBox,
-                      itemCount: state.employees.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final employee = state.employees.elementAt(index);
-                        return Container(
-                          width: 327,
-                          height: 67,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                width: 1,
-                                color: Color(0xFFD0D0D0),
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        context.read<ProbationBloc>().add(
+                              RefreshProbationEmployees(
+                                context.read<AppBloc>().state.user.id,
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                            );
+                      },
+                      child: ListView.separated(
+                        separatorBuilder: (_, __) => 12.heightBox,
+                        itemCount: state.employees.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final employee = state.employees[index];
+                          return Container(
+                            clipBehavior: Clip.antiAlias,
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  width: 1,
+                                  color: Color(0xFFD0D0D0),
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              shadows: const [
+                                BoxShadow(
+                                  color: Color(0x3F000000),
+                                  blurRadius: 4,
+                                  offset: Offset(2, 2),
+                                  spreadRadius: 0,
+                                )
+                              ],
                             ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(2, 2),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 11,
-                                top: 10,
-                                child: SizedBox(
-                                  width: 305,
-                                  child: Text(
-                                    'Name: ${employee.firstName} ${employee.lastName}',
+                            child: ListTile(
+                              isThreeLine: true,
+                              dense: true,
+                              title: Text(
+                                '${employee.firstName} ${employee.lastName}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    'EID: ${employee.eid}',
                                     style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 14,
+                                      fontSize: 11,
                                       fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
+                                      fontWeight: FontWeight.w500,
                                       height: 0,
                                     ),
                                   ),
-                                ),
+                                  2.heightBox,
+                                  Text(
+                                    '${employee.probationTill?.date}',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  )
+                                ],
                               ),
-                              Positioned(
-                                left: 11,
-                                top: 39,
-                                child: Text(
-                                  'EID: ${employee.eid}',
-                                  style: const TextStyle(
-                                    color: Color(0xFF828282),
-                                    fontSize: 11,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                  ),
-                                ),
+                              trailing:
+                                  BlocBuilder<ProbationBloc, ProbationState>(
+                                buildWhen: (previous, current) =>
+                                    previous.removeStatus !=
+                                    current.removeStatus,
+                                builder: (context, state) {
+                                  return PopupMenuButton(
+                                    itemBuilder: (context) {
+                                      return [
+                                        PopupMenuItem(
+                                          child: const Text(
+                                            'Remove from probation',
+                                          ),
+                                          onTap: () {
+                                            context.read<ProbationBloc>().add(
+                                                  RemoveFromProbation(
+                                                    employee.uid!,
+                                                  ),
+                                                );
+                                          },
+                                        ),
+                                      ];
+                                    },
+                                    icon: const Icon(Icons.more_vert),
+                                    position: PopupMenuPosition.under,
+                                  );
+                                },
                               ),
-                              Positioned(
-                                left: 101,
-                                top: 39,
-                                child: Text(
-                                  'Till Date: ${employee.probationTill?.date}',
-                                  style: const TextStyle(
-                                    color: Color(0xFF828282),
-                                    fontSize: 11,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                            ),
+                          );
+                        },
+                      ),
                     );
                   case ProbationStatus.failure:
-                    return const Center(
-                      child: Text(
-                        'Something went wrong',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+                    return Center(
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Something went wrong',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              context.read<ProbationBloc>().add(
+                                    RefreshProbationEmployees(
+                                      context.read<AppBloc>().state.user.id,
+                                    ),
+                                  );
+                            },
+                            child: const Text('Retry'),
+                          ),
+                        ],
                       ),
                     );
                 }

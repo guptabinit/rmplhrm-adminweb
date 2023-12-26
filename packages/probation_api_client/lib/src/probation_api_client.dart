@@ -8,7 +8,7 @@ class ProbationApiClient implements ProbationApi {
   }) : _firestore = firestore;
 
   @override
-  Stream<Iterable<Employee>> getProbationEmployees({
+  Stream<List<Employee>> getProbationEmployees({
     required String creator,
   }) {
     return _firestore
@@ -18,18 +18,47 @@ class ProbationApiClient implements ProbationApi {
           isEqualTo: _firestore.collection('admin').doc(creator),
         )
         .where('probation', isEqualTo: true)
-        .where(
-          'probationTill',
-          isGreaterThanOrEqualTo: DateTime.now(),
-        )
         .snapshots()
         .map(
-          (event) => event.docs.map(
-            (e) => Employee.fromJson(
-              e.data(),
-            ),
-          ),
+          (event) => event.docs
+              .map(
+                (e) => Employee.fromJson(
+                  e.data(),
+                ),
+              )
+              .toList(),
         );
+  }
+
+  @override
+  Future<void> removeFromProbation(String id) async {
+    try {
+      await _firestore.collection('employees').doc(id).update({
+        'probation': false,
+        'probationTill': null,
+      });
+    } on FirebaseException catch (e) {
+      throw RemoveFromProbationFailure.fromCode(e.code);
+    } catch (_) {
+      throw const RemoveFromProbationFailure();
+    }
+  }
+
+  @override
+  Future<void> addToProbation({
+    required String id,
+    required DateTime date,
+  }) async {
+    try {
+      await _firestore.collection('employees').doc(id).update({
+        'probation': true,
+        'probationTill': Timestamp.fromDate(date),
+      });
+    } on FirebaseException catch (e) {
+      throw AddToProbationFailure.fromCode(e.code);
+    } catch (_) {
+      throw const AddToProbationFailure();
+    }
   }
 
   final FirebaseFirestore _firestore;

@@ -13,5 +13,21 @@ class ProbationRepository {
         creator: creator,
       );
 
+  Future<void> removeFromProbation(
+    String id,
+  ) =>
+      _api.removeFromProbation(
+        id,
+      );
+
+  Future<void> addToProbation({
+    required String id,
+    required DateTime date,
+  }) =>
+      _api.addToProbation(
+        id: id,
+        date: date,
+      );
+
   final ProbationApi _api;
 }

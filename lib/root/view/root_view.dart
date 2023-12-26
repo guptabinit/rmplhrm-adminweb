@@ -90,8 +90,7 @@ class RootView extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () async {
-              if (selectedRoute.index == 7) {
-              } else if (selectedRoute.index == 1) {
+              if (selectedRoute.index == 1) {
                 await Navigator.of(context).push(
                   AddEmployeePage.route(),
                 );
@@ -126,8 +125,7 @@ class RootView extends StatelessWidget {
               child: Icon(
                 selectedRoute.index == 1 ||
                         selectedRoute.index == 2 ||
-                        selectedRoute.index == 4 ||
-                        selectedRoute.index == 7
+                        selectedRoute.index == 4
                     ? Icons.add
                     : Icons.logout,
                 color: primaryColor,

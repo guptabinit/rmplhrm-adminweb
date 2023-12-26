@@ -1,8 +1,8 @@
 import 'package:employee_repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:probation_repository/probation_repository.dart';
 import 'package:rmpl_hrm_admin/employee_details/employee_details.dart';
-import 'package:rmpl_hrm_admin/employee_profile/bloc/employee_profile_bloc.dart';
 import 'package:rmpl_hrm_admin/employee_profile/employee_profile.dart';
 import 'package:rmpl_hrm_admin/update_employee_profile/cubit/update_employee_profile_cubit.dart';
 
@@ -39,7 +39,8 @@ class EmployeeProfilePage extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => EmployeeProfileBloc(
-            repository: context.read<EmployeeRepository>(),
+            employeeRepository: context.read<EmployeeRepository>(),
+            probationRepository: context.read<ProbationRepository>(),
           ),
         ),
       ],
@@ -86,15 +87,6 @@ class EmployeeProfilePage extends StatelessWidget {
                 current.deleteEmployeeProfileStatus,
             listener: (context, state) {
               if (state.deleteEmployeeProfileStatus.isSuccess) {
-                // context.read<EmployeeDetailsBloc>().add(
-                //       EmployeeDetailsSelected(
-                //         context
-                //             .read<EmployeeDetailsBloc>()
-                //             .state
-                //             .selectedEmployee
-                //             .uid!,
-                //       ),
-                //     );
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
@@ -112,6 +104,86 @@ class EmployeeProfilePage extends StatelessWidget {
                     const SnackBar(
                       backgroundColor: Colors.red,
                       content: Text('Failed to delete this account.'),
+                    ),
+                  );
+              }
+            },
+          ),
+          BlocListener<EmployeeProfileBloc, EmployeeProfileState>(
+            listenWhen: (previous, current) =>
+                previous.markProbationEmployeeStatus !=
+                current.markProbationEmployeeStatus,
+            listener: (context, state) {
+              if (state.markProbationEmployeeStatus.isSuccess) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text(
+                        'Account successfully marked as probation employee.',
+                      ),
+                    ),
+                  );
+                context.read<EmployeeDetailsBloc>().add(
+                      EmployeeDetailsSelected(
+                        context
+                            .read<EmployeeDetailsBloc>()
+                            .state
+                            .selectedEmployee
+                            .uid!,
+                      ),
+                    );
+              }
+              if (state.markProbationEmployeeStatus.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(
+                        'Failed to mark this account as probation employee.',
+                      ),
+                    ),
+                  );
+              }
+            },
+          ),
+          BlocListener<EmployeeProfileBloc, EmployeeProfileState>(
+            listenWhen: (previous, current) =>
+                previous.removeProbationEmployeeStatus !=
+                current.removeProbationEmployeeStatus,
+            listener: (context, state) {
+              if (state.removeProbationEmployeeStatus.isSuccess) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text(
+                        'Account successfully removed from probation.',
+                      ),
+                    ),
+                  );
+                context.read<EmployeeDetailsBloc>().add(
+                      EmployeeDetailsSelected(
+                        context
+                            .read<EmployeeDetailsBloc>()
+                            .state
+                            .selectedEmployee
+                            .uid!,
+                      ),
+                    );
+              }
+              if (state.removeProbationEmployeeStatus.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text(
+                        'Failed to remove this account from probation.',
+                      ),
                     ),
                   );
               }

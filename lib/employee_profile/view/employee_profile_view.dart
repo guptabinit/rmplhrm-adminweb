@@ -271,7 +271,7 @@ class EmployeeProfileView extends StatelessWidget {
                                   children: [
                                     const Expanded(
                                       child: Text(
-                                        'Under Probation',
+                                        'Under probation',
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: 16,
@@ -280,12 +280,39 @@ class EmployeeProfileView extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    SecondaryButton(
-                                      title: 'Review & Update',
-                                      onTap: () {},
-                                      fontSize: 14,
-                                      titleColor: whiteColor,
-                                      backgroundColor: whiteColor,
+                                    BlocBuilder<EmployeeProfileBloc,
+                                        EmployeeProfileState>(
+                                      buildWhen: (previous, current) =>
+                                          previous
+                                              .removeProbationEmployeeStatus !=
+                                          current.removeProbationEmployeeStatus,
+                                      builder: (context, eState) {
+                                        return eState
+                                                .removeProbationEmployeeStatus
+                                                .isLoading
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              )
+                                            : SecondaryButton(
+                                                title: 'Remove',
+                                                onTap: () {
+                                                  context
+                                                      .read<
+                                                          EmployeeProfileBloc>()
+                                                      .add(
+                                                        RemoveEmployeeFromProbation(
+                                                          uid: state
+                                                              .selectedEmployee
+                                                              .uid!,
+                                                        ),
+                                                      );
+                                                },
+                                                fontSize: 14,
+                                                titleColor: whiteColor,
+                                                backgroundColor: whiteColor,
+                                              );
+                                      },
                                     ),
                                   ],
                                 ),
@@ -305,7 +332,7 @@ class EmployeeProfileView extends StatelessWidget {
                                   children: [
                                     const Expanded(
                                       child: Text(
-                                        'Under Probation',
+                                        'Mark as probation',
                                         style: TextStyle(
                                           fontFamily: 'Inter',
                                           fontSize: 16,
@@ -314,12 +341,50 @@ class EmployeeProfileView extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    SecondaryButton(
-                                      title: 'Review & Update',
-                                      onTap: () {},
-                                      fontSize: 14,
-                                      titleColor: whiteColor,
-                                      backgroundColor: whiteColor,
+                                    BlocBuilder<EmployeeProfileBloc,
+                                        EmployeeProfileState>(
+                                      buildWhen: (previous, current) =>
+                                          previous
+                                              .markProbationEmployeeStatus !=
+                                          current.markProbationEmployeeStatus,
+                                      builder: (context, eState) {
+                                        return eState
+                                                .markProbationEmployeeStatus
+                                                .isLoading
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              )
+                                            : SecondaryButton(
+                                                title: 'Mark',
+                                                onTap: () async {
+                                                  final date =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    firstDate: DateTime.now(),
+                                                    lastDate:
+                                                        DateTime.now().add(
+                                                      const Duration(days: 365),
+                                                    ),
+                                                  );
+                                                  if (date != null &&
+                                                      context.mounted) {
+                                                    context
+                                                        .read<
+                                                            EmployeeProfileBloc>()
+                                                        .add(
+                                                          MarkEmployeeAsProbation(
+                                                            uid: state
+                                                                .selectedEmployee
+                                                                .uid!,
+                                                            date: date,
+                                                          ),
+                                                        );
+                                                  }
+                                                },
+                                                fontSize: 14,
+                                              );
+                                      },
                                     ),
                                   ],
                                 ),

@@ -86,7 +86,7 @@ class SalaryDetailsView extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '$time',
+                            time ?? 'N/A',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

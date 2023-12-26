@@ -12,3 +12,15 @@ final class ProbationEmployeesFetched extends ProbationEvent {
 
   final String creator;
 }
+
+final class RefreshProbationEmployees extends ProbationEvent {
+  const RefreshProbationEmployees(this.creator);
+
+  final String creator;
+}
+
+final class RemoveFromProbation extends ProbationEvent {
+  const RemoveFromProbation(this.id);
+
+  final String id;
+}

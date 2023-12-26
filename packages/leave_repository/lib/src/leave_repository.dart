@@ -19,5 +19,16 @@ class LeaveRepository {
   }) =>
       _api.getLeave(id: id);
 
+  Future<void> updateLeave({
+    required String id,
+    String? status,
+    String? reason,
+  }) =>
+      _api.updateLeave(
+        id: id,
+        status: status,
+        reason: reason,
+      );
+
   final LeaveApi _api;
 }

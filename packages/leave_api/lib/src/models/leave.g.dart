@@ -9,6 +9,7 @@ part of 'leave.dart';
 Leave _$LeaveFromJson(Map<String, dynamic> json) => Leave(
       user: const DocumentReferenceConverter().fromJson(json['uid']),
       reason: json['reason'] as String?,
+      adminReason: json['adminReason'] as String?,
       id: json['id'] as String?,
       date: const TimestampConverter().fromJson(json['date'] as Timestamp?),
       fromDate:
@@ -26,6 +27,7 @@ Map<String, dynamic> _$LeaveToJson(Leave instance) => <String, dynamic>{
       'under': const DocumentReferenceConverter().toJson(instance.under),
       'id': instance.id,
       'reason': instance.reason,
+      'adminReason': instance.adminReason,
       'date': const TimestampConverter().toJson(instance.date),
       'fromDate': const TimestampConverter().toJson(instance.fromDate),
       'toDate': const TimestampConverter().toJson(instance.toDate),

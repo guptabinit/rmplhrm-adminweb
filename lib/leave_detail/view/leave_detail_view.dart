@@ -1,23 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:leave_api/leave_api.dart';
 import 'package:rmpl_hrm_admin/components/buttons/main_button.dart';
 import 'package:rmpl_hrm_admin/components/custom_textfield.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/leave/leave.dart';
 import 'package:rmpl_hrm_admin/leave_detail/bloc/leave_detail_bloc.dart';
+import 'package:rmpl_hrm_admin/leave_detail/cubit/update_leave_detail_cubit.dart';
 import 'package:rmpl_hrm_admin/main.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
 import 'package:rmpl_hrm_admin/utils/utils.dart';
-
-final applicationList = [
-  'Approve',
-  'Disapprove',
-  'Pending',
-];
-
-String _applicationStatus = 'Pending';
 
 class LeaveDetailView extends StatelessWidget {
   const LeaveDetailView({super.key});
@@ -319,23 +313,45 @@ class LeaveDetailView extends StatelessWidget {
                           color: borderColor,
                         ),
                         12.heightBox,
-                        RadioListTile(
-                          title: const Text('Approve'),
-                          value: applicationList[0],
-                          groupValue: _applicationStatus,
-                          onChanged: (value) {},
-                        ),
-                        RadioListTile(
-                          title: const Text('Disapprove'),
-                          value: applicationList[1],
-                          groupValue: _applicationStatus,
-                          onChanged: (value) {},
-                        ),
-                        RadioListTile(
-                          title: const Text('Pending'),
-                          value: applicationList[2],
-                          groupValue: _applicationStatus,
-                          onChanged: (value) {},
+
+                        BlocBuilder<UpdateLeaveDetailCubit,
+                            UpdateLeaveDetailState>(
+                          buildWhen: (previous, current) =>
+                              previous.leaveStatus != current.leaveStatus,
+                          builder: (context, state) {
+                            return Column(
+                              children: [
+                                {
+                                  'key': 'Approved',
+                                  'value': 'approved',
+                                },
+                                {
+                                  'key': 'Disapprove',
+                                  'value': 'rejected',
+                                },
+                                {
+                                  'key': 'Pending',
+                                  'value': 'pending',
+                                },
+                              ].map((e) {
+                                return RadioListTile(
+                                  title: Text(e['key']!),
+                                  value: e['value'],
+                                  groupValue: context
+                                      .read<UpdateLeaveDetailCubit>()
+                                      .state
+                                      .leaveStatus
+                                      .value
+                                      ?.toLowerCase(),
+                                  onChanged: (value) {
+                                    context
+                                        .read<UpdateLeaveDetailCubit>()
+                                        .onLeaveStatusChanged(value);
+                                  },
+                                );
+                              }).toList(),
+                            );
+                          },
                         ),
                         16.heightBox,
                         Row(
@@ -372,14 +388,50 @@ class LeaveDetailView extends StatelessWidget {
                           ),
                         ),
                         8.heightBox,
-                        const CustomTextFormField(
-                          text: 'Enter a reason (if any)',
-                          maxLines: 5,
+                        BlocBuilder<UpdateLeaveDetailCubit,
+                            UpdateLeaveDetailState>(
+                          buildWhen: (previous, current) =>
+                              previous.reason != current.reason,
+                          builder: (context, state) {
+                            return CustomTextFormField(
+                              text: 'Enter a reason (if any)',
+                              maxLines: 5,
+                              initialValue: context
+                                  .read<UpdateLeaveDetailCubit>()
+                                  .state
+                                  .reason
+                                  .value,
+                              onChanged: (value) {
+                                context
+                                    .read<UpdateLeaveDetailCubit>()
+                                    .onLeaveReasonChanged(value);
+                              },
+                            );
+                          },
                         ),
                         12.heightBox,
-                        MainButton(
-                          title: 'Update Leave Response',
-                          onTap: () {},
+                        BlocBuilder<UpdateLeaveDetailCubit,
+                            UpdateLeaveDetailState>(
+                          buildWhen: (previous, current) =>
+                              previous.status != current.status,
+                          builder: (context, uState) {
+                            return uState.status.isInProgress
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : MainButton(
+                                    title: 'Update Leave Response',
+                                    onTap: !uState.isValid
+                                        ? null
+                                        : () {
+                                            context
+                                                .read<UpdateLeaveDetailCubit>()
+                                                .updateLeaveDetail(
+                                                  state.leave.id!,
+                                                );
+                                          },
+                                  );
+                          },
                         ),
                         24.heightBox,
                       ],

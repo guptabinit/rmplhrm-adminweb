@@ -13,6 +13,7 @@ class NotificationApiClient extends NotificationApi {
     required String message,
     required String type,
     required String receiver,
+    required bool isVisible,
   }) async {
     try {
       final doc = _firestore.collection('notifications').doc();
@@ -25,6 +26,7 @@ class NotificationApiClient extends NotificationApi {
           'type': type,
           'receiver': receiver,
           'createdAt': FieldValue.serverTimestamp(),
+          'isVisible': isVisible,
         },
       );
     } catch (_) {

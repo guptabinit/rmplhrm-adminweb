@@ -57,5 +57,30 @@ class LeaveApiClient extends LeaveApi {
     }
   }
 
+  @override
+  Future<void> updateLeave({
+    required String id,
+    String? status,
+    String? reason,
+  }) async {
+    try {
+      await _firestore
+          .collection(
+            'leave',
+          )
+          .doc(id)
+          .update(
+        {
+          'status': status,
+          'adminReason': reason,
+        },
+      );
+    } on FirebaseException catch (e) {
+      throw UpdateLeaveFailure.fromCode(e.code);
+    } catch (_) {
+      throw const UpdateLeaveFailure();
+    }
+  }
+
   final FirebaseFirestore _firestore;
 }

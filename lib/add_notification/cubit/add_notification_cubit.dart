@@ -78,6 +78,7 @@ class AddNotificationCubit extends Cubit<AddNotificationState> {
         message: state.message.value!,
         type: state.notificationType.value!,
         receiver: state.notificationReceiver.value!,
+        isVisible: true,
       );
       emit(
         state.copyWith(

@@ -16,6 +16,7 @@ class NotificationRepository {
     required String message,
     required String type,
     required String receiver,
+    required bool isVisible,
   }) =>
       _api.createNotification(
         creator: creator,
@@ -23,6 +24,7 @@ class NotificationRepository {
         message: message,
         type: type,
         receiver: receiver,
+        isVisible: isVisible,
       );
 
   Future<void> updateNotification({

@@ -11,6 +11,12 @@ abstract class LeaveApi {
   Future<Leave> getLeave({
     required String id,
   });
+
+  Future<void> updateLeave({
+    required String id,
+    String? status,
+    String? reason,
+  });
 }
 
 class FetchLeaveFailure implements Exception {
@@ -26,6 +32,25 @@ class FetchLeaveFailure implements Exception {
         );
       default:
         throw const FetchLeaveFailure();
+    }
+  }
+
+  final String message;
+}
+
+class UpdateLeaveFailure implements Exception {
+  const UpdateLeaveFailure([
+    this.message = 'Failed to update leave',
+  ]);
+
+  factory UpdateLeaveFailure.fromCode(String code) {
+    switch (code) {
+      case 'not_found':
+        return const UpdateLeaveFailure(
+          'Leave not found',
+        );
+      default:
+        throw const UpdateLeaveFailure();
     }
   }
 

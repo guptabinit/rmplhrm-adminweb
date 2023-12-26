@@ -13,6 +13,7 @@ abstract class NotificationApi {
     required String message,
     required String type,
     required String receiver,
+    required bool isVisible,
   });
 
   Future<void> toggleVisibility({

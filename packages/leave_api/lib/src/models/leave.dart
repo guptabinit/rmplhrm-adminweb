@@ -12,6 +12,7 @@ class Leave extends Equatable {
   const Leave({
     this.user,
     this.reason,
+    this.adminReason,
     this.id,
     this.date,
     this.fromDate,
@@ -44,6 +45,7 @@ class Leave extends Equatable {
         leaveType,
         createdAt,
         under,
+        adminReason,
       ];
 
   @JsonKey(name: 'uid')
@@ -51,6 +53,7 @@ class Leave extends Equatable {
   final DocumentReference? under;
   final String? id;
   final String? reason;
+  final String? adminReason;
   final DateTime? date;
   final DateTime? fromDate;
   final DateTime? toDate;

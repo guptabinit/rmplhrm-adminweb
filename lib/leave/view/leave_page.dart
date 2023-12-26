@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:leave_repository/leave_repository.dart';
 import 'package:rmpl_hrm_admin/app/app.dart';
 import 'package:rmpl_hrm_admin/leave/leave.dart';
+import 'package:rmpl_hrm_admin/leave_detail/cubit/update_leave_detail_cubit.dart';
 import 'package:rmpl_hrm_admin/leave_detail/leave_application_detail.dart';
 
 class LeavePage extends StatelessWidget {
@@ -16,14 +17,23 @@ class LeavePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LeaveBloc(
-        leaveRepository: context.read<LeaveRepository>(),
-      )..add(
-          LeaveDateChanged(
-            DateTime.now(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LeaveBloc(
+            leaveRepository: context.read<LeaveRepository>(),
+          )..add(
+              LeaveDateChanged(
+                DateTime.now(),
+              ),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => UpdateLeaveDetailCubit(
+            repository: context.read<LeaveRepository>(),
           ),
         ),
+      ],
       child: MultiBlocListener(
         listeners: [
           BlocListener<LeaveBloc, LeaveState>(
@@ -46,6 +56,7 @@ class LeavePage extends StatelessWidget {
                 Navigator.of(context).push(
                   LeaveDetailPage.route(
                     context.read<LeaveBloc>(),
+                    context.read<UpdateLeaveDetailCubit>(),
                   ),
                 );
               }

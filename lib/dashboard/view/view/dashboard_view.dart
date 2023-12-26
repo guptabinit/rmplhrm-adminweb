@@ -137,72 +137,93 @@ class DashboardView extends StatelessWidget {
                 height: 220,
                 child: BlocBuilder<AttendanceCountBloc, AttendanceCountState>(
                   buildWhen: (previous, current) =>
+                      previous.status != current.status ||
                       previous.attendanceCount != current.attendanceCount,
                   builder: (context, state) {
-                    final presentPercent = state.attendanceCount.present /
-                        state.attendanceCount.total *
-                        100;
-                    final absentPercent = state.attendanceCount.absent /
-                        state.attendanceCount.total *
-                        100;
-                    return AspectRatio(
-                      aspectRatio: 1.3,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: PieChart(
-                                PieChartData(
-                                  borderData: FlBorderData(
-                                    show: false,
+                    switch (state.status) {
+                      case AttendanceCountStatus.initial:
+                      case AttendanceCountStatus.loading:
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      case AttendanceCountStatus.success:
+                        final presentPercent = state.attendanceCount.present /
+                            state.attendanceCount.total *
+                            100;
+                        final absentPercent = state.attendanceCount.absent /
+                            state.attendanceCount.total *
+                            100;
+                        return AspectRatio(
+                          aspectRatio: 1.3,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: PieChart(
+                                    PieChartData(
+                                      borderData: FlBorderData(
+                                        show: false,
+                                      ),
+                                      centerSpaceRadius: 0,
+                                      sections: [
+                                        PieChartSectionData(
+                                          color: Colors.purple[300]!,
+                                          title: '${presentPercent.toInt()}%',
+                                          titleStyle: const TextStyle(
+                                            color: whiteColor,
+                                          ),
+                                          value: presentPercent,
+                                          radius: 90,
+                                        ),
+                                        PieChartSectionData(
+                                          color: Colors.red[300]!,
+                                          title: '${absentPercent.toInt()}%',
+                                          titleStyle: const TextStyle(
+                                            color: whiteColor,
+                                          ),
+                                          value: absentPercent,
+                                          radius: 90,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  centerSpaceRadius: 0,
-                                  sections: [
-                                    PieChartSectionData(
-                                      color: Colors.purple[300]!,
-                                      title:
-                                          '${presentPercent.toInt()}%',
-                                      titleStyle: const TextStyle(
-                                        color: whiteColor,
-                                      ),
-                                      value: presentPercent,
-                                      radius: 90,
-                                    ),
-                                    PieChartSectionData(
-                                      color: Colors.red[300]!,
-                                      title: '${absentPercent.toInt()}%',
-                                      titleStyle: const TextStyle(
-                                        color: whiteColor,
-                                      ),
-                                      value: absentPercent,
-                                      radius: 90,
-                                    ),
-                                  ],
                                 ),
                               ),
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Indicator(
-                                color: Colors.purple[300]!,
-                                text: '${presentPercent.toInt()}% Attendance',
-                                isSquare: false,
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Indicator(
+                                    color: Colors.purple[300]!,
+                                    text:
+                                        '${presentPercent.toInt()}% Attendance',
+                                    isSquare: false,
+                                  ),
+                                  Indicator(
+                                    text: '${absentPercent.toInt()}% Leave',
+                                    color: Colors.red[300]!,
+                                    isSquare: false,
+                                  ),
+                                ],
                               ),
-                              Indicator(
-                                text: '${absentPercent.toInt()}% Leave',
-                                color: Colors.red[300]!,
-                                isSquare: false,
+                              20.widthBox,
+                            ],
+                          ),
+                        );
+                      case AttendanceCountStatus.failure:
+                        return Center(
+                          child: Column(
+                            children: [
+                              const Text('Something went wrong'),
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text('Retry'),
                               ),
                             ],
                           ),
-                          20.widthBox,
-                        ],
-                      ),
-                    );
+                        );
+                    }
                   },
                 ),
               ),

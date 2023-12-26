@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/root/root.dart';
 import 'package:rmpl_hrm_admin/utils/box.dart';
@@ -32,13 +31,7 @@ class NavigationBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             children: [
-              SvgPicture.asset(
-                'assets/icons/Home.svg',
-                colorFilter: const ColorFilter.mode(
-                  darkColor,
-                  BlendMode.srcIn,
-                ),
-              ),
+              Icon(route.icon),
               12.widthBox,
               Expanded(
                 child: Text(
@@ -50,7 +43,6 @@ class NavigationBar extends StatelessWidget {
                   ),
                 ),
               ),
-              const Icon(Icons.arrow_forward_ios),
             ],
           ),
         ),

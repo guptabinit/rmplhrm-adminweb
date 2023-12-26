@@ -4,6 +4,7 @@ import 'package:leave_api/leave_api.dart';
 import 'package:leave_repository/leave_repository.dart';
 
 part 'leave_event.dart';
+
 part 'leave_state.dart';
 
 class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
@@ -11,7 +12,8 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
     required LeaveRepository leaveRepository,
   })  : _leaveRepository = leaveRepository,
         super(const LeaveState()) {
-    on<LeaveFeatched>(_onLeaveFetched);
+    on<LeaveLoaded>(_onLeaveFetched);
+    on<SelectedLeave>(_onSelectedLeave);
     on<LeaveDateChanged>(_onDateChanged);
   }
 
@@ -26,8 +28,19 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
     );
   }
 
+  void _onSelectedLeave(
+    SelectedLeave event,
+    Emitter<LeaveState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedLeave: event.leave,
+      ),
+    );
+  }
+
   Future<void> _onLeaveFetched(
-    LeaveFeatched event,
+    LeaveLoaded event,
     Emitter<LeaveState> emit,
   ) async {
     emit(
@@ -36,7 +49,10 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
       ),
     );
     await emit.forEach<List<Leave>>(
-      _leaveRepository.getLeaves(state.date!),
+      _leaveRepository.getLeaves(
+        under: event.under,
+        date: state.date!,
+      ),
       onData: (leaves) => state.copyWith(
         status: LeaveStatus.success,
         leaves: leaves,

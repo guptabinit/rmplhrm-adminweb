@@ -12,32 +12,44 @@ class Leave extends Equatable {
   const Leave({
     this.user,
     this.reason,
+    this.id,
     this.date,
     this.fromDate,
     this.toDate,
     this.status,
     this.leaveType,
     this.createdAt,
+    this.under,
   });
 
   factory Leave.fromJson(Map<String, dynamic> json) => _$LeaveFromJson(json);
 
   Map<String, dynamic> toJson() => _$LeaveToJson(this);
 
+  static const empty = Leave(id: '-');
+
+  bool get isEmpty => this == empty;
+
+  bool get isNotEmpty => this != empty;
+
   @override
   List<Object?> get props => [
         user,
         reason,
+        id,
         date,
         fromDate,
         toDate,
         status,
         leaveType,
         createdAt,
+        under,
       ];
 
   @JsonKey(name: 'uid')
   final DocumentReference? user;
+  final DocumentReference? under;
+  final String? id;
   final String? reason;
   final DateTime? date;
   final DateTime? fromDate;

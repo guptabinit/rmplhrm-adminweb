@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rmpl_hrm_admin/constants/colors.dart';
 import 'package:rmpl_hrm_admin/employee_details/bloc/employee_details_bloc.dart';
 import 'package:rmpl_hrm_admin/salary_details/bloc/update_salary_details_bloc.dart';
+import 'package:rmpl_hrm_admin/utils/utils.dart';
 
 class SalaryDetailsView extends StatelessWidget {
   const SalaryDetailsView({super.key});
@@ -41,8 +42,11 @@ class SalaryDetailsView extends StatelessWidget {
                     final totalSalary =
                         (employee.basicSalary ?? 0) + (employee.hra ?? 0);
                     final salary = amount ?? totalSalary;
+                    final time = employee.salaryDetails?['$year']?['$month']
+                        ?.createdAt?.monthDate;
                     return CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
+                      isThreeLine: true,
                       value: context
                           .watch<UpdateSalaryDetailsBloc>()
                           .state
@@ -70,13 +74,26 @@ class SalaryDetailsView extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      subtitle: Text(
-                        'INR $salary',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'INR $salary',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          Text(
+                            '$time',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ],
                       ),
                       secondary: context
                               .watch<UpdateSalaryDetailsBloc>()

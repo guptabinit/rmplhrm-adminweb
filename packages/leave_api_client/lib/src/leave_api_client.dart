@@ -7,9 +7,16 @@ class LeaveApiClient extends LeaveApi {
   }) : _firestore = firestore;
 
   @override
-  Stream<List<Leave>> getLeaves(DateTime date) {
+  Stream<List<Leave>> getLeaves({
+    required String under,
+    required DateTime date,
+  }) {
     return _firestore
         .collection('leave')
+        .where(
+          'under',
+          isEqualTo: _firestore.collection('admin').doc(under),
+        )
         .where(
           'date',
           isGreaterThanOrEqualTo: DateTime(
@@ -31,6 +38,23 @@ class LeaveApiClient extends LeaveApi {
         }).toList();
       },
     );
+  }
+
+  @override
+  Future<Leave> getLeave({
+    required String id,
+  }) async {
+    try {
+      final doc = await _firestore.collection('leave').doc(id).get();
+      if (!doc.exists) {
+        throw FetchLeaveFailure.fromCode('not_found');
+      }
+      return Leave.fromJson(doc.data()!);
+    } on FirebaseException catch (e) {
+      throw FetchLeaveFailure.fromCode(e.code);
+    } catch (_) {
+      throw const FetchLeaveFailure();
+    }
   }
 
   final FirebaseFirestore _firestore;

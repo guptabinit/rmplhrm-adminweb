@@ -107,28 +107,13 @@ class LeaveApplicationCard extends StatelessWidget {
               ),
             ),
             8.heightBox,
-            FutureBuilder(
-              future: leave.user?.get(),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                  case ConnectionState.waiting:
-                  case ConnectionState.active:
-                    return const SizedBox.shrink();
-                  case ConnectionState.done:
-                    final user = User.fromJson(
-                      snapshot.data?.data() as Map<String, dynamic>,
-                    );
-                    return Text(
-                      'Applied by: ${user.fullName}',
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    );
-                }
-              },
+            Text(
+              'Applied by: ${leave.user?.fullName}',
+              style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ],
         ),

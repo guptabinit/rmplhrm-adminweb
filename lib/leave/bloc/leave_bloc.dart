@@ -4,7 +4,6 @@ import 'package:leave_api/leave_api.dart';
 import 'package:leave_repository/leave_repository.dart';
 
 part 'leave_event.dart';
-
 part 'leave_state.dart';
 
 class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
@@ -57,9 +56,12 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         status: LeaveStatus.success,
         leaves: leaves,
       ),
-      onError: (_, __) => state.copyWith(
-        status: LeaveStatus.failure,
-      ),
+      onError: (_, __) {
+        print('EEEEEEEEEEEEEEEEEE $_');
+        return state.copyWith(
+          status: LeaveStatus.failure,
+        );
+      },
     );
   }
 

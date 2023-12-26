@@ -326,7 +326,7 @@ class LeaveDetailView extends StatelessWidget {
                                   'value': 'approved',
                                 },
                                 {
-                                  'key': 'Disapprove',
+                                  'key': 'Rejected',
                                   'value': 'rejected',
                                 },
                                 {

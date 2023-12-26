@@ -33,7 +33,7 @@ class LeaveDetailBloc extends Bloc<LeaveDetailEvent, LeaveDetailState> {
       );
 
       final employee = await _employeeRepository.getEmployee(
-        leave.user!.id,
+        leave.uid!.id,
       );
 
       emit(

@@ -10,8 +10,8 @@ class LeaveApiClient extends LeaveApi {
   Stream<List<Leave>> getLeaves({
     required String under,
     required DateTime date,
-  }) {
-    return _firestore
+  }) async* {
+    final leaves = _firestore
         .collection('leave')
         .where(
           'under',
@@ -38,6 +38,30 @@ class LeaveApiClient extends LeaveApi {
         }).toList();
       },
     );
+
+    await for (final leave in leaves) {
+      final leavesList = <Leave>[];
+      for (final el in leave) {
+        final employee = await el.uid?.get();
+
+        final User? user;
+        if (employee != null && employee.exists) {
+          user = User.fromJson(
+            employee.data()! as Map<String, dynamic>,
+          );
+        } else {
+          user = null;
+        }
+
+        leavesList.add(
+          el.copyWith(
+            user: user,
+          ),
+        );
+      }
+
+      yield leavesList;
+    }
   }
 
   @override

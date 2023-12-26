@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:json_converter/json_converter.dart';
+import 'package:leave_api/leave_api.dart';
 
 part 'leave.g.dart';
 
@@ -10,6 +11,7 @@ part 'leave.g.dart';
 @TimestampConverter()
 class Leave extends Equatable {
   const Leave({
+    this.uid,
     this.user,
     this.reason,
     this.adminReason,
@@ -33,8 +35,39 @@ class Leave extends Equatable {
 
   bool get isNotEmpty => this != empty;
 
+  Leave copyWith({
+    DocumentReference? uid,
+    User? user,
+    String? reason,
+    String? id,
+    DateTime? date,
+    DateTime? fromDate,
+    DateTime? toDate,
+    String? status,
+    String? leaveType,
+    DateTime? createdAt,
+    DocumentReference? under,
+    String? adminReason,
+  }) {
+    return Leave(
+      uid: uid ?? this.uid,
+      user: user ?? this.user,
+      reason: reason ?? this.reason,
+      id: id ?? this.id,
+      date: date ?? this.date,
+      fromDate: fromDate ?? this.fromDate,
+      toDate: toDate ?? this.toDate,
+      status: status ?? this.status,
+      leaveType: leaveType ?? this.leaveType,
+      createdAt: createdAt ?? this.createdAt,
+      under: under ?? this.under,
+      adminReason: adminReason ?? this.adminReason,
+    );
+  }
+
   @override
   List<Object?> get props => [
+        uid,
         user,
         reason,
         id,
@@ -48,8 +81,8 @@ class Leave extends Equatable {
         adminReason,
       ];
 
-  @JsonKey(name: 'uid')
-  final DocumentReference? user;
+  final DocumentReference? uid;
+  final User? user;
   final DocumentReference? under;
   final String? id;
   final String? reason;

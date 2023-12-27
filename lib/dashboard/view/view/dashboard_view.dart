@@ -201,7 +201,7 @@ class DashboardView extends StatelessWidget {
                                     isSquare: false,
                                   ),
                                   Indicator(
-                                    text: '${absentPercent.toInt()}% Leave',
+                                    text: '${absentPercent.toInt()}% Absent',
                                     color: Colors.red[300]!,
                                     isSquare: false,
                                   ),

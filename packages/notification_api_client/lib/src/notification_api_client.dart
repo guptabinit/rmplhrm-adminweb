@@ -84,6 +84,7 @@ class NotificationApiClient extends NotificationApi {
   }) {
     return _firestore
         .collection('notifications')
+        .orderBy('createdAt', descending: true)
         .where(
           'creator',
           isEqualTo: _firestore.collection('admin').doc(creator),

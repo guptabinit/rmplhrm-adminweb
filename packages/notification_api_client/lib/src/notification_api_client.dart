@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:employee_api/employee_api.dart';
+import 'package:http/http.dart' as http;
 import 'package:notification_api/notification_api.dart';
 
 class NotificationApiClient extends NotificationApi {
   NotificationApiClient({
     FirebaseFirestore? firestore,
-  }) : _firestore = firestore ?? FirebaseFirestore.instance;
+    http.Client? client,
+  })  : _firestore = firestore ?? FirebaseFirestore.instance,
+        _client = client ?? http.Client();
 
   @override
   Future<void> createNotification({
@@ -29,6 +35,22 @@ class NotificationApiClient extends NotificationApi {
           'isVisible': isVisible,
         },
       );
+
+      final employees = await _getEmployees(creator: creator);
+
+      if (isVisible) {
+        for (final employee in employees) {
+          for (final token in employee.tokens ?? <String?>[]) {
+            if (token != null) {
+              await _sendNotification(
+                token: token,
+                title: branch,
+                body: message,
+              );
+            }
+          }
+        }
+      }
     } catch (_) {
       throw const CreateNotificationFailure();
     }
@@ -116,5 +138,59 @@ class NotificationApiClient extends NotificationApi {
     }
   }
 
+  Future<List<Employee>> _getEmployees({
+    required String creator,
+  }) async {
+    try {
+      final result = await _firestore
+          .collection('employees')
+          .where(
+            'creator',
+            isEqualTo: _firestore.collection('admin').doc(creator),
+          )
+          .get();
+
+      final docs = result.docs
+          .map(
+            (e) => Employee.fromJson(e.data()),
+          )
+          .toList();
+
+      return docs;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<void> _sendNotification({
+    required String token,
+    required String title,
+    required String body,
+  }) async {
+    const postUrl = 'https://fcm.googleapis.com/fcm/send';
+
+    final data = {
+      'to': token,
+      'notification': {
+        'title': title,
+        'body': body,
+      },
+    };
+
+    final headers = {
+      'content-type': 'application/json',
+      'Authorization':
+          'key=AAAAl41URrc:APA91bH9ZrsSJ89lJTZzuUGQz58RFxLsuNQJzzoKbZdAVef9M-gfGRoqINDafxXvxJ8O35UWC3wKBW5_6QezzjVk7U1VWnCz6d8qmLoQsoj8P2LLIEcNJyVz8Oca1d5XN_okCVoWUU2U',
+    };
+
+    await _client.post(
+      Uri.parse(postUrl),
+      body: json.encode(data),
+      encoding: Encoding.getByName('utf-8'),
+      headers: headers,
+    );
+  }
+
   final FirebaseFirestore _firestore;
+  final http.Client _client;
 }

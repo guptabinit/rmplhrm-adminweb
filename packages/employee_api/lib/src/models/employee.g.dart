@@ -41,6 +41,8 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) => Employee(
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp?),
       creator: const DocumentReferenceConverter().fromJson(json['creator']),
       email: json['email'] as String?,
+      tokens:
+          (json['tokens'] as List<dynamic>?)?.map((e) => e as String?).toList(),
     );
 
 Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
@@ -69,6 +71,7 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'creator': const DocumentReferenceConverter().toJson(instance.creator),
       'salaryDetails': instance.salaryDetails,
+      'tokens': instance.tokens,
     };
 
 SalaryDetail _$SalaryDetailFromJson(Map<String, dynamic> json) => SalaryDetail(

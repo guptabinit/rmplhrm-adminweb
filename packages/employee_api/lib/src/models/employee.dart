@@ -35,6 +35,7 @@ class Employee extends Equatable {
     this.createdAt,
     this.creator,
     this.email,
+    this.tokens,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
@@ -74,6 +75,7 @@ class Employee extends Equatable {
         createdAt,
         creator,
         salaryDetails,
+        tokens,
       ];
 
   final String? aadharNumber;
@@ -100,6 +102,7 @@ class Employee extends Equatable {
   final DateTime? createdAt;
   final DocumentReference? creator;
   final Map<String, Map<String, SalaryDetail>>? salaryDetails;
+  final List<String?>? tokens;
 }
 
 @JsonSerializable()

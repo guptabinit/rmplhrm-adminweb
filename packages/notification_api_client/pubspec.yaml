@@ -9,8 +9,11 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.13.1
+  employee_api:
+    path: ../employee_api
   flutter:
     sdk: flutter
+  http: ^1.1.2
   notification_api:
     path: ../notification_api
 

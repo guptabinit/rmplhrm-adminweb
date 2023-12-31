@@ -24,7 +24,9 @@ class LeavePage extends StatelessWidget {
             leaveRepository: context.read<LeaveRepository>(),
           )..add(
               LeaveDateChanged(
-                DateTime.now(),
+                DateTime.now().add(
+                  const Duration(seconds: 1),
+                ),
               ),
             ),
         ),

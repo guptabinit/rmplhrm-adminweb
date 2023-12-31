@@ -21,7 +21,9 @@ class AttendancePage extends StatelessWidget {
             attendanceRepository: context.read<AttendanceRepository>(),
           )..add(
               AttendanceDateChanged(
-                date: DateTime.now(),
+                date: DateTime.now().add(
+                  const Duration(seconds: 1),
+                ),
               ),
             ),
         ),

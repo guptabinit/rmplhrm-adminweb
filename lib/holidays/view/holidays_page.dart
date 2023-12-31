@@ -27,7 +27,9 @@ class HolidaysPage extends StatelessWidget {
             ),
           )..add(
               HolidaysDateChanged(
-                DateTime.now(),
+                DateTime.now().add(
+                  const Duration(seconds: 1),
+                ),
               ),
             ),
         ),
